@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Wall"))
         {
             isTouchingWall = true;
-            rb.gravityScale = 0.8f;
+            rb.gravityScale = 1f;
 
             wallDirection = collision.GetContact(0).normal.x;
 
@@ -106,8 +106,13 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            rb.gravityScale = 1f;
+            rb.gravityScale = 1.5f;
             transform.rotation = Quaternion.identity;
         }
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
     }
 }
