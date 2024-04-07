@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         float moveInput = Input.GetAxis("Horizontal");
         Debug.Log("Touch: " + isTouchingWall + " Slide: " + isWallSliding);
         if (isTouchingWall)
