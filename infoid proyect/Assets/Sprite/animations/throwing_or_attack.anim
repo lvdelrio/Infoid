@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: falling
+  m_Name: throwing_or_attack
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,42 +21,32 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 106963574594040250, guid: 07a2114f860e1cc468652c32fb9a4e18, type: 3}
-    - time: 0.083333336
-      value: {fileID: 1639522402726149343, guid: 07a2114f860e1cc468652c32fb9a4e18, type: 3}
-    - time: 0.16666667
-      value: {fileID: -5887815425258080907, guid: 07a2114f860e1cc468652c32fb9a4e18, type: 3}
+      value: {fileID: 7124885490575576927, guid: d2248d5d267cbb24c9b9f3765df030b1, type: 3}
+    - time: 0.100000024
+      value: {fileID: -3574526435496659777, guid: d2248d5d267cbb24c9b9f3765df030b1, type: 3}
+    - time: 0.19999993
+      value: {fileID: -555375599307163855, guid: d2248d5d267cbb24c9b9f3765df030b1, type: 3}
+    - time: 0.29999992
+      value: {fileID: -555375599307163855, guid: d2248d5d267cbb24c9b9f3765df030b1, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 12
+  m_SampleRate: 100
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings:
-    - serializedVersion: 2
-      path: 0
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    pptrCurveMapping:
-    - {fileID: 106963574594040250, guid: 07a2114f860e1cc468652c32fb9a4e18, type: 3}
-    - {fileID: 1639522402726149343, guid: 07a2114f860e1cc468652c32fb9a4e18, type: 3}
-    - {fileID: -5887815425258080907, guid: 07a2114f860e1cc468652c32fb9a4e18, type: 3}
+    genericBindings: []
+    pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.25
+    m_StopTime: 0.3099999
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -67,7 +57,7 @@ AnimationClip:
     m_LoopBlendPositionY: 0
     m_LoopBlendPositionXZ: 0
     m_KeepOriginalOrientation: 0
-    m_KeepOriginalPositionY: 1
+    m_KeepOriginalPositionY: 0
     m_KeepOriginalPositionXZ: 0
     m_HeightFromFeet: 0
     m_Mirror: 0

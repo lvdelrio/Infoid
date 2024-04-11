@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //public Animator animator;
     public float jumpForce = 10f;
     public float moveSpeed = 5f;
     public float jumpAngle = 45f;
@@ -27,8 +28,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        float moveInput = Input.GetAxis("Horizontal");
-        Debug.Log("Touch: " + isTouchingWall + " Slide: " + isWallSliding);
+        float moveInputx = Input.GetAxis("Horizontal");
+        float moveInputy = Input.GetAxis("Vertical");
+        Vector2 moveInput = new Vector2(moveInputx, moveInputy).normalized;
+        //Debug.Log("Touch: " + isTouchingWall + " Slide: " + isWallSliding);
         if (isTouchingWall)
         {
             isWallSliding = true;
@@ -70,7 +73,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(moveInputx * moveSpeed,moveInputy * moveSpeed);
         }
 
 
