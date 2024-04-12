@@ -17,7 +17,6 @@ public class TriggerController : MonoBehaviour
     {
         if(Input.GetKey("s")){
             animator.SetBool("bool_falling_fast",true);
-            Debug.Log("weon q pija ctm weon inutil esta wea es mas que true");
 
         }if (Input.GetKeyUp(KeyCode.S))
         {

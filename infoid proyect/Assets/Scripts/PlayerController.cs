@@ -5,7 +5,9 @@ public class PlayerController : MonoBehaviour
 {
     //public Animator animator;
     public float jumpForce = 10f;
-    public float moveSpeed = 5f;
+    public float moveSpeed = 7f;
+    public float distance;
+    public float FallingCosnt = 5f;
     public float jumpAngle = 45f;
     public float slidingSpeed = 2f;
     public float wallSlideRotation = 45f;
@@ -73,10 +75,12 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.velocity = new Vector2(moveInputx * moveSpeed,moveInputy * moveSpeed);
+            rb.velocity = new Vector2(moveInputx * moveSpeed, moveInputy != 0 ? moveInputy * moveSpeed : -FallingCosnt);
+
+            Debug.Log(moveInputy + "y and speed" + moveSpeed);
         }
 
-
+        distance += rb.velocity.y * Time.fixedDeltaTime;
 
         if (!isWallSliding)
         {
