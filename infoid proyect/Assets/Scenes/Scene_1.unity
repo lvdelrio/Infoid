@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 96285016}
   - component: {fileID: 96285017}
   - component: {fileID: 96285018}
+  - component: {fileID: 96285019}
   m_Layer: 0
   m_Name: Square (1)
   m_TagString: Wall
@@ -284,6 +285,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &96285019
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96285015}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &178116775
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +705,7 @@ GameObject:
   - component: {fileID: 963859960}
   - component: {fileID: 963859961}
   - component: {fileID: 963859962}
+  - component: {fileID: 963859963}
   m_Layer: 0
   m_Name: Square
   m_TagString: Wall
@@ -796,6 +825,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &963859963
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963859959}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &1008009216
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1072484411}
-  yOffset: 0
+  downwardSpeed: 0.5
 --- !u!1 &1052333517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,8 +1090,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0063958406, y: 0.0031686425}
-  m_Size: {x: 0.16691375, y: 0.23573148}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.15, y: 0.2}
   m_Direction: 0
 --- !u!212 &1072484410
 SpriteRenderer:
@@ -1143,6 +1199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c1b7f2b79da3a04ea21f47f5f645031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1072484414}
   jumpForce: 15
   moveSpeed: 11.5
   distance: 0
@@ -1188,6 +1245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1072484414}
+  player: {fileID: 0}
 --- !u!1 &1465457043
 GameObject:
   m_ObjectHideFlags: 0

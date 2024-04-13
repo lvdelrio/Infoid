@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //public Animator animator;
+    public Animator animator;
     public float jumpForce = 10f;
     public float moveSpeed = 7f;
     public float distance;
@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
         if (isTouchingWall)
         {
             rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -slidingSpeed, float.MaxValue));
+            transform.rotation = Quaternion.Euler(0, 0, -90);
+            transform.localScale = new Vector3(7, -7, 1);
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -80,7 +82,9 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(moveInputx * moveSpeed, moveInputy != 0 ? moveInputy * moveSpeed : -FallingCosnt);
 
-            Debug.Log(moveInputy + "y and speed" + moveSpeed);
+            //Debug.Log(moveInputy + "y and speed" + moveSpeed);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.localScale = new Vector3(7, 7, 1);
         }
 
         float currentYPosition = transform.position.y;
@@ -101,7 +105,7 @@ public class PlayerController : MonoBehaviour
             verticalCollider.enabled = true;
         } */
          float verticalExtent = Camera.main.orthographicSize; // Half the height of the camera view
-        Debug.Log("soy vertical"+verticalExtent);
+        //Debug.Log("soy vertical"+verticalExtent);
         float minY = Camera.main.transform.position.y - (verticalExtent-5);
         float maxY = Camera.main.transform.position.y + (verticalExtent-2);
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minY, maxY), transform.position.z);
@@ -112,6 +116,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Wall"))
         {
             isTouchingWall = true;
+            animator.SetBool("onWall",true);
             rb.gravityScale = 1f;
 
             wallDirection = collision.GetContact(0).normal.x;
@@ -135,6 +140,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.gravityScale = 1.5f;
             transform.rotation = Quaternion.identity;
+            animator.SetBool("onWall",false);
         }
     }
 
