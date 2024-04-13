@@ -3,17 +3,13 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform player; 
-    public float yOffset = 0f; 
+    public float downwardSpeed = 0.5f; 
 
     void Update()
     {
         if (player != null)
         {
-            if (player.position.y < transform.position.y)
-            {
-
-                transform.position = new Vector3(transform.position.x, player.position.y + yOffset, transform.position.z);
-            }
+            transform.position += Vector3.down * downwardSpeed * Time.deltaTime;
             
         }
     }
