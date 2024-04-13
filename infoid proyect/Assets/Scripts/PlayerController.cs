@@ -37,8 +37,8 @@ public class PlayerController : MonoBehaviour
         if (isTouchingWall)
         {
             isWallSliding = true;
-            horizontalCollider.enabled = true;
-            verticalCollider.enabled = false;
+            // horizontalCollider.enabled = true;
+            // verticalCollider.enabled = false;
         }
         else
         {
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         }
 
         
-        if (isWallSliding)
+        if (isTouchingWall)
         {
             rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -slidingSpeed, float.MaxValue));
 
@@ -60,17 +60,16 @@ public class PlayerController : MonoBehaviour
                     jumpDirection.x *= -1;
                 }
 
-                horizontalCollider.enabled = false;
-                verticalCollider.enabled = true;
+                // horizontalCollider.enabled = false;
+                // verticalCollider.enabled = true;
                 
                 isTouchingWall = false;
                 isWallSliding = false;
 
-                // rb.velocity = new Vector2(0f, jumpDirection.y * jumpForce);
-                rb.AddForce(jumpDirection.normalized * jumpForce, ForceMode2D.Impulse);
-                transform.rotation = Quaternion.identity;
+                rb.velocity = new Vector2(0f, jumpDirection.y * jumpForce);
+                // rb.AddForce(jumpDirection.normalized * jumpForce, ForceMode2D.Impulse);
+                // transform.rotation = Quaternion.identity;
 
-                
             }
         }
         else
@@ -82,11 +81,14 @@ public class PlayerController : MonoBehaviour
 
         distance += rb.velocity.y * Time.fixedDeltaTime;
 
-        if (!isWallSliding)
-        {
-            horizontalCollider.enabled = false;
-            verticalCollider.enabled = true;
-        }
+        // if (!isTouchingWall)
+        // {
+        //     horizontalCollider.enabled = false;
+        //     verticalCollider.enabled = true;
+        // }
+
+        // Debug.Log("WallSliding: " + isWallSliding + " isTouchingWall " + isTouchingWall); //FIX
+        
     }
 
     void OnCollisionEnter2D(Collision2D collision)
