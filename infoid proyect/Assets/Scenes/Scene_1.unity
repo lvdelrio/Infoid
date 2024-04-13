@@ -258,10 +258,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 794165852}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 290, y: 180}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -217, y: -71}
+  m_SizeDelta: {x: 38, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &431060306
 MonoBehaviour:
@@ -829,7 +829,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.5
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -857,14 +857,14 @@ MonoBehaviour:
   jumpForce: 15
   moveSpeed: 11.5
   distance: 0
-  FallingCosnt: 5
-  jumpAngle: 25
-  slidingSpeed: 2
-  wallSlideRotation: 45
+  FallingConst: 5
   rb: {fileID: 1072484412}
   camera: {fileID: 1008009218}
   verticalCollider: {fileID: 1072484409}
-  horizontalCollider: {fileID: 1052333518}
+  wallSlidingSpeed: 2
+  wallJumpDuration: 0.35
+  jumpAngle: 20
+  wallJumpForce: 20
 --- !u!95 &1072484414
 Animator:
   serializedVersion: 5
