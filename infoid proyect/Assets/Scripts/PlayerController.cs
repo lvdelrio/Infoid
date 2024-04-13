@@ -12,12 +12,14 @@ public class PlayerController : MonoBehaviour
     public float slidingSpeed = 2f;
     public float wallSlideRotation = 45f;
     public Rigidbody2D rb;
+    public Camera camera;
     private bool isWallSliding = false;
     private bool isTouchingWall = false;
     private float wallDirection = 0f;
 
     public Collider2D verticalCollider;
     public Collider2D horizontalCollider;
+    private float lastYPosition;
 
     void Start()
     {
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
         verticalCollider.enabled = true;
         horizontalCollider.enabled = false;
+        lastYPosition = transform.position.y;
     }
 
     void Update()
@@ -37,8 +40,8 @@ public class PlayerController : MonoBehaviour
         if (isTouchingWall)
         {
             isWallSliding = true;
-            // horizontalCollider.enabled = true;
-            // verticalCollider.enabled = false;
+            //horizontalCollider.enabled = true;
+            //verticalCollider.enabled = false;
         }
         else
         {
@@ -60,16 +63,17 @@ public class PlayerController : MonoBehaviour
                     jumpDirection.x *= -1;
                 }
 
-                // horizontalCollider.enabled = false;
-                // verticalCollider.enabled = true;
+                //horizontalCollider.enabled = false;
+                //verticalCollider.enabled = true;
                 
                 isTouchingWall = false;
                 isWallSliding = false;
 
-                rb.velocity = new Vector2(0f, jumpDirection.y * jumpForce);
-                // rb.AddForce(jumpDirection.normalized * jumpForce, ForceMode2D.Impulse);
-                // transform.rotation = Quaternion.identity;
+                // rb.velocity = new Vector2(0f, jumpDirection.y * jumpForce);
+                //rb.AddForce(jumpDirection.normalized * jumpForce, ForceMode2D.Impulse);
+                //transform.rotation = Quaternion.identity;
 
+                
             }
         }
         else
@@ -79,17 +83,29 @@ public class PlayerController : MonoBehaviour
             Debug.Log(moveInputy + "y and speed" + moveSpeed);
         }
 
-        distance += rb.velocity.y * Time.fixedDeltaTime;
+        float currentYPosition = transform.position.y;
 
-        // if (!isTouchingWall)
-        // {
-        //     horizontalCollider.enabled = false;
-        //     verticalCollider.enabled = true;
-        // }
+        // Check if the player has moved downward
+        if (currentYPosition < lastYPosition)
+        {
+            // Add only the downward distance
+            distance += lastYPosition - currentYPosition;
+        }
 
-        // Debug.Log("WallSliding: " + isWallSliding + " isTouchingWall " + isTouchingWall); //FIX
-        
-    }
+        // Update lastYPosition to the current position at the end of the frame
+        lastYPosition = currentYPosition;
+
+        /* if (!isWallSliding)
+        {
+            horizontalCollider.enabled = false;
+            verticalCollider.enabled = true;
+        } */
+         float verticalExtent = Camera.main.orthographicSize; // Half the height of the camera view
+        Debug.Log("soy vertical"+verticalExtent);
+        float minY = Camera.main.transform.position.y - (verticalExtent-5);
+        float maxY = Camera.main.transform.position.y + (verticalExtent-2);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minY, maxY), transform.position.z);
+}
 
     void OnCollisionEnter2D(Collision2D collision)
     {

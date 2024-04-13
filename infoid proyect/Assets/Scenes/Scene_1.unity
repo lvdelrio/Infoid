@@ -420,7 +420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 282, y: 126}
+  m_AnchoredPosition: {x: 290, y: 180}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &431060306
@@ -1151,6 +1151,7 @@ MonoBehaviour:
   slidingSpeed: 2
   wallSlideRotation: 45
   rb: {fileID: 1072484412}
+  camera: {fileID: 1008009218}
   verticalCollider: {fileID: 1072484409}
   horizontalCollider: {fileID: 1052333518}
 --- !u!95 &1072484414
