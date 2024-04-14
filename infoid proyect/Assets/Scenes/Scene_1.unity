@@ -149,17 +149,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 178116775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e4418afd6dcd064e9d0038af558039a, type: 3}
+  m_Script: {fileID: 11500000, guid: 03de4d8f91d7453439c2b7bf285cdca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level_segment_start: {fileID: 0}
-  level_segment:
-  - {fileID: 40316255635428381, guid: 796cfbdc87a90b74bbe5b19bfb18e05a, type: 3}
-  - {fileID: 7342282830343563534, guid: abcface388d5cb446a172b5b9356eb4c, type: 3}
-  player: {fileID: 1072484413}
-  obstaclePrefabs:
-  - {fileID: 514951601929996677, guid: fe2c9a1907fd2ab4599d7a7358e37d5f, type: 3}
-  level_segment1_start: {fileID: 4090060790347573340, guid: 4477afef248316446a2c2c68226e6714, type: 3}
+  _levelSegmentStart: {fileID: 0}
+  _levelSegment: []
+  _player: {fileID: 1072484413}
+  _obstaclePrefabs: []
+  _edgeColliderPrefab: {fileID: 0}
+  initialSegmentPosition: {fileID: 0}
+  levelSegmentCount: 5
 --- !u!4 &178116777
 Transform:
   m_ObjectHideFlags: 0

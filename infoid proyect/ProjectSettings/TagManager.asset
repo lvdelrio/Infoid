@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - obstacle
+  - EdgeCollider
   layers:
   - Default
   - TransparentFX
