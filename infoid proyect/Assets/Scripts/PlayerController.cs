@@ -3,16 +3,18 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Objects")]
     public GameController gameController;
+    public Rigidbody2D rb;
+    public Camera camera;
+    public Collider2D verticalCollider;
     public Animator animator;
-    public float jumpForce = 10f;
+    
+    [Header("Player Movement")]
     public float moveSpeed = 7f;
     public float distance;
     public float FallingConst = 5f;
     
-    public Rigidbody2D rb;
-    public Camera camera;
-    public Collider2D verticalCollider;
     private float lastYPosition;
     private float wallDirection = 0f;
 
@@ -20,12 +22,10 @@ public class PlayerController : MonoBehaviour
     bool isTouchingWall = false;
     bool isWallSliding = false;
     private bool canMove;
-    
     public float wallSlidingSpeed;
     public float wallJumpDuration;
     public float jumpAngle = 45f;
     public float wallJumpForce;
-
     bool wallJumping;
     
 
@@ -166,6 +166,9 @@ public class PlayerController : MonoBehaviour
                 //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
                 //camera.GetComponent<CameraController>().ResetCameraPosition();
                 //canMove = true;
+                break;
+            case "Enemy":
+                Debug.Log("PLayer hit enemy");
                 break;
             default:
                 break;

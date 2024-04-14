@@ -909,18 +909,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 639463327}
-  animator: {fileID: 1072484414}
-  jumpForce: 15
-  moveSpeed: 11.5
-  distance: 0
-  FallingConst: 5
   rb: {fileID: 1072484412}
   camera: {fileID: 1008009218}
   verticalCollider: {fileID: 1072484409}
-  wallSlidingSpeed: 0
-  wallJumpDuration: 0
+  animator: {fileID: 1072484414}
+  moveSpeed: 11.5
+  distance: 0
+  FallingConst: 5
+  wallSlidingSpeed: 5
+  wallJumpDuration: 0.25
   jumpAngle: 25
-  wallJumpForce: 0
+  wallJumpForce: 25
 --- !u!95 &1072484414
 Animator:
   serializedVersion: 5
