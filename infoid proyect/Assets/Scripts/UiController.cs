@@ -8,9 +8,7 @@ using UnityEngine.UI;
 public class UiController : MonoBehaviour
 {
     public GameObject player;
-    private float currentDistance;
-
-    public float distance;    
+    public GameController gameController; 
     // PlayerController player;
     Text distanceText;
     private void Awake() {
@@ -24,14 +22,10 @@ public class UiController : MonoBehaviour
     }
     void Update()
     {
-        currentDistance = Vector2.Distance(player.transform.position, new Vector2(0,0));
-        if (currentDistance > distance)
-        {
-            distance = currentDistance;
-        }
+        
         //distanceText.text = distance.ToString("0.00")+" m";
         // int  distance = Mathf.FloorToInt(player.distance);
-         distanceText.text = Mathf.FloorToInt(distance)+" m";
+        distanceText.text = Mathf.FloorToInt(gameController.GetDistance())+" m";
         
     }
 }

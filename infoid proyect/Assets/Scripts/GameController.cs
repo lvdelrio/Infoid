@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
 
     public int score;
     public int currentLevel;
+    private float _distance;
+    private float _currentDistance;
 
 
 
@@ -23,13 +25,29 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        _currentDistance = Vector2.Distance(player.transform.position, new Vector2(0,0));
+        if (_currentDistance > _distance)
+        {
+            _distance = _currentDistance;
+        }
     }
 
     public void IncreaseScore(int value)
     {
         score += value;
     }
+
+    public int GetScore()
+    {
+        return score;
+    }
+
+    public float GetDistance()
+    {
+        return _distance;
+    }
+
+
 
     public void EndLevel()
     {
