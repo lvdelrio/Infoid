@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
             if (isWallSliding)
             {
-                rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
+                rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
                 transform.rotation = Quaternion.Euler(0, 0, -90);
                 transform.localScale = new Vector3(7, -7, 1);
 
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
                 //canMove = true;
                 break;
             case "Enemy":
-                Debug.Log("PLayer hit enemy");
+                Debug.Log("PLayer hit enemy!");
                 break;
             default:
                 break;
