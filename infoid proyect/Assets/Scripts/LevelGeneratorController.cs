@@ -12,20 +12,18 @@ public class LevelGeneratorController : MonoBehaviour
     [SerializeField] private List<GameObject> _obstaclePrefabs;
     [SerializeField] private GameObject _edgeColliderPrefab;
 
-    private Vector3 _lastPosition;
+    private Vector3 _lastSegmentPosition;
     private List<Transform> _activeSegments = new List<Transform>();
+    private List<GameObject> _activeObstacles = new List<GameObject>();
     public Transform initialSegmentPosition;
     private Transform _instantiatedSegmentStart;
+    private GameObject _edgeCollider;
 
     public int levelSegmentCount = 5;
     private int _currentLevelSegmentCount = 0;
 
     private void Awake() {
-        _instantiatedSegmentStart = Instantiate(initialSegmentPosition, new Vector3(0f,0f,0f), Quaternion.identity);
-        _lastPosition = _instantiatedSegmentStart.Find("end_segment").position;
-        for (int i=0; i<_levelSegment.Count; i++){
-            SpawnSegment();
-        }
+        InitiateSegmentCreation();
         
     }
     
@@ -35,7 +33,7 @@ public class LevelGeneratorController : MonoBehaviour
         _instantiatedSegmentStart = null;
         Debug.Log("Destroying starting stage segment");
         }
-        if(Vector3.Distance(_player.GetPosition(), _lastPosition) < PLAYER_DISTANCE) {
+        if(Vector3.Distance(_player.GetPosition(), _lastSegmentPosition) < PLAYER_DISTANCE) {
             SpawnSegment();
         }
         DestroyOldSegments();
@@ -44,23 +42,21 @@ public class LevelGeneratorController : MonoBehaviour
 
     private void SpawnSegment(){
         Transform chosenSegmentPart = _levelSegment[Random.Range(0,_levelSegment.Count)];
-        Transform lastlevelpartTransform = CreateSegment(chosenSegmentPart, _lastPosition);
-        SpawnObstacle(lastlevelpartTransform.Find("Wall_left"),lastlevelpartTransform.Find("Wall_right"));
-        _lastPosition = lastlevelpartTransform.Find("end_segment").position;
-        _activeSegments.Add(lastlevelpartTransform);
+        Transform newestSegment = CreateSegment(chosenSegmentPart, _lastSegmentPosition);
+        SpawnObstacle(newestSegment.Find("Wall_left"),newestSegment.Find("Wall_right"));
+        _lastSegmentPosition = newestSegment.Find("end_segment").position;
+        _activeSegments.Add(newestSegment);
+
         if (_currentLevelSegmentCount >= levelSegmentCount) {
-            Instantiate(_edgeColliderPrefab, lastlevelpartTransform.position, Quaternion.identity);
+            _edgeCollider = Instantiate(_edgeColliderPrefab, newestSegment.position, Quaternion.identity);
             _currentLevelSegmentCount = 0;
         }
-
-
         _currentLevelSegmentCount++;
-
     }
 
+
     private Transform CreateSegment(Transform segment_part, Vector3 spawn_position){
-        Transform levelpartTransform = Instantiate(segment_part, spawn_position, Quaternion.identity);
-        return levelpartTransform;
+        return Instantiate(segment_part, spawn_position, Quaternion.identity);
     } 
 
     private void SpawnObstacle(Transform wallLeft, Transform wallRight) {
@@ -89,7 +85,16 @@ public class LevelGeneratorController : MonoBehaviour
         float obstacleXPosition = Random.Range(minPosX, maxPosX);
         Vector3 obstaclePosition = new Vector3(obstacleXPosition, wallLeft.position.y, 0); 
         GameObject obstacle = Instantiate(obstaclePrefab, obstaclePosition, Quaternion.identity);
+        _activeObstacles.Add(obstacle);
         obstacle.transform.localScale = new Vector3(obstacleWidth, obstacle.transform.localScale.y, obstacle.transform.localScale.z);
+    }
+
+    private void InitiateSegmentCreation(){
+        _instantiatedSegmentStart = Instantiate(initialSegmentPosition, new Vector3(0f,0f,0f), Quaternion.identity);
+        _lastSegmentPosition = _instantiatedSegmentStart.Find("end_segment").position;
+        for (int i=0; i<_levelSegment.Count; i++){
+            SpawnSegment();
+        }
     }
     
     private void DestroyOldSegments() {
@@ -101,6 +106,34 @@ public class LevelGeneratorController : MonoBehaviour
         }
     }
 
+    private void DestroyOldObstacles() {
+        for (int i = _activeObstacles.Count - 1; i >= 0; i--) {
+            if (Vector3.Distance(_player.GetPosition(), _activeObstacles[i].transform.position) > PLAYER_DISTANCE) {
+                Destroy(_activeObstacles[i]);
+                _activeObstacles.RemoveAt(i);
+            }
+        }
+    }
 
+    private void DestroyAllSegments() {
+        foreach (Transform segment in _activeSegments) {
+            Destroy(segment.gameObject);
+        }
+        _activeSegments.Clear();
+    }
 
+    private void DestroyAllObstacles() {
+        foreach (GameObject obstacle in _activeObstacles) {
+            Destroy(obstacle);
+        }
+        _activeObstacles.Clear();
+    }
+
+    public void ResetLevelGenerator() {
+        DestroyAllSegments();
+        DestroyAllObstacles();
+
+        InitiateSegmentCreation();
+        _currentLevelSegmentCount = 0;
+    }
 }
