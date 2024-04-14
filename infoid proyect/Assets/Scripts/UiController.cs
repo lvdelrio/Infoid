@@ -29,9 +29,9 @@ public class UiController : MonoBehaviour
         {
             distance = currentDistance;
         }
-        distanceText.text = distance.ToString("0.00")+" m";
+        //distanceText.text = distance.ToString("0.00")+" m";
         // int  distance = Mathf.FloorToInt(player.distance);
-        // distanceText.text = distance+" m";
+         distanceText.text = Mathf.FloorToInt(distance)+" m";
         
     }
 }

@@ -262,7 +262,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -217, y: -71}
+  m_AnchoredPosition: {x: -158.1, y: -69.2}
   m_SizeDelta: {x: 38, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &431060306
@@ -862,14 +862,13 @@ MonoBehaviour:
   moveSpeed: 11.5
   distance: 0
   FallingConst: 5
-  jumpAngle: 25
-  slidingSpeed: 2
-  wallSlideRotation: 45
   rb: {fileID: 1072484412}
   camera: {fileID: 1008009218}
   verticalCollider: {fileID: 1072484409}
-  wallCheck: {fileID: 0}
   wallSlidingSpeed: 0
+  wallJumpDuration: 0
+  jumpAngle: 25
+  wallJumpForce: 0
 --- !u!95 &1072484414
 Animator:
   serializedVersion: 5
