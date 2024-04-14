@@ -157,6 +157,8 @@ MonoBehaviour:
   - {fileID: 40316255635428381, guid: 796cfbdc87a90b74bbe5b19bfb18e05a, type: 3}
   - {fileID: 7342282830343563534, guid: abcface388d5cb446a172b5b9356eb4c, type: 3}
   player: {fileID: 1072484413}
+  obstaclePrefabs:
+  - {fileID: 514951601929996677, guid: fe2c9a1907fd2ab4599d7a7358e37d5f, type: 3}
   level_segment1_start: {fileID: 4090060790347573340, guid: 4477afef248316446a2c2c68226e6714, type: 3}
 --- !u!4 &178116777
 Transform:
@@ -860,13 +862,14 @@ MonoBehaviour:
   moveSpeed: 11.5
   distance: 0
   FallingConst: 5
+  jumpAngle: 25
+  slidingSpeed: 2
+  wallSlideRotation: 45
   rb: {fileID: 1072484412}
   camera: {fileID: 1008009218}
   verticalCollider: {fileID: 1072484409}
-  wallSlidingSpeed: 2
-  wallJumpDuration: 0.35
-  jumpAngle: 20
-  wallJumpForce: 20
+  wallCheck: {fileID: 0}
+  wallSlidingSpeed: 0
 --- !u!95 &1072484414
 Animator:
   serializedVersion: 5
