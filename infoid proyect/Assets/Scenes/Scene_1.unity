@@ -715,7 +715,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1072484408}
-  downwardSpeed: 5
+  downwardSpeed: 2
+  catchUpMultiplier: 1.2
+  speedUpThreshold: 1
 --- !u!1 &1052333517
 GameObject:
   m_ObjectHideFlags: 0
