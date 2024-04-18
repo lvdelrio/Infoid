@@ -10,17 +10,18 @@ public class SimpleSpawnerController : MonoBehaviour
     public float distanceToSpawn;
     public int maxEnemies;
     
-    private float timer;
+    private List<GameObject> _enemies = new List<GameObject>();
+    private float _timer;
 
     void FixedUpdate()
     {
-        if (timer >= spawnRate && GameObject.FindGameObjectsWithTag("Enemy").Length < maxEnemies)
+        if (_timer >= spawnRate && GameObject.FindGameObjectsWithTag("Enemy").Length < maxEnemies)
         {
 
             SpawnEnemy();
-            timer = 0;
+            _timer = 0;
         }
-        timer += Time.fixedDeltaTime;   
+        _timer += Time.fixedDeltaTime;   
 
     }
 
@@ -28,6 +29,22 @@ public class SimpleSpawnerController : MonoBehaviour
     {
         Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
         Vector3 spawnPosition = new Vector2(Random.Range(-7f, 7f), playerPosition.y - distanceToSpawn);
-        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        _enemies.Add(newEnemy);
+    }
+
+    public void DestroyEnemy(GameObject enemy)
+    {
+        _enemies.Remove(enemy);
+        Destroy(enemy);
+    }
+
+    public void DestroyAllEnemies()
+    {
+        foreach (GameObject enemy in _enemies)
+        {
+            Destroy(enemy);
+        }
+        _enemies.Clear();
     }
 }

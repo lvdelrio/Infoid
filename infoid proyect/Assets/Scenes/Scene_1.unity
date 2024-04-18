@@ -490,6 +490,7 @@ MonoBehaviour:
   player: {fileID: 1072484408}
   levelGenerator: {fileID: 178116775}
   camera: {fileID: 1008009216}
+  enemySpawner: {fileID: 151514116}
   score: 0
   currentLevel: 0
 --- !u!1 &794165847
@@ -717,7 +718,7 @@ MonoBehaviour:
   player: {fileID: 1072484408}
   downwardSpeed: 2
   catchUpMultiplier: 1.2
-  speedUpThreshold: 1
+  speedUp: 1
 --- !u!1 &1052333517
 GameObject:
   m_ObjectHideFlags: 0
