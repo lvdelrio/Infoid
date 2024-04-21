@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public Camera camera;
     public Collider2D verticalCollider;
     public Animator animator;
+    public GameObject grapplingHookPrefab;
+    
     
     [Header("Player Movement")]
     public float moveSpeed = 7f;
@@ -17,6 +20,8 @@ public class PlayerController : MonoBehaviour
     
     private float lastYPosition;
     private float wallDirection = 0f;
+    public float grappleSpeed = 20f;
+    public float grappleLifetime = 1f;
 
     [Header("Wall Jumping System")]
     bool isTouchingWall = false;
@@ -49,6 +54,7 @@ public class PlayerController : MonoBehaviour
             if (isTouchingWall)
             {
                 isWallSliding = true;
+
             }
             else
             {
@@ -100,6 +106,11 @@ public class PlayerController : MonoBehaviour
             float minY = Camera.main.transform.position.y - (verticalExtent - 5);
             float maxY = Camera.main.transform.position.y + (verticalExtent - 2);
             transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minY, maxY), transform.position.z);
+        
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                FireGrapplingHook();
+            }
         }
         else
         {
@@ -135,10 +146,15 @@ public class PlayerController : MonoBehaviour
 
             if (wallDirection > 0)
             {
+                transform.rotation = Quaternion.Euler(0, 0, -90);
+                transform.localScale = new Vector3(7, 7, 1); 
+                Debug.Log(transform.localScale);  
                 Debug.Log("Left");
             }
             else if (wallDirection < 0)
             {
+                transform.rotation = Quaternion.Euler(0, 0, -90);
+                transform.localScale = new Vector3(7, -7, 1);
                 Debug.Log("Right");
             }
         }
@@ -189,5 +205,36 @@ public class PlayerController : MonoBehaviour
     public bool CanMove()
     {
         return canMove;
+    }
+    public void MoveToEnemy(Vector3 enemyPosition)
+    {
+        StartCoroutine(MoveTowardsPosition(enemyPosition));
+    }
+
+    IEnumerator MoveTowardsPosition(Vector3 position)
+    {
+        float startTime = Time.time;
+        Vector3 startPosition = transform.position;
+        float journeyLength = Vector3.Distance(startPosition, position);
+        float journeyTime = journeyLength / grappleSpeed;
+
+        while (Time.time - startTime < journeyTime)
+        {
+            float fracJourney = (Time.time - startTime) / journeyTime;
+            transform.position = Vector3.Lerp(startPosition, position, fracJourney);
+            yield return null;
+        }
+    }
+
+    void FireGrapplingHook()
+    {
+        float offsetDistance = 5.0f;
+        Vector3 spawnPosition = transform.position + Vector3.down * offsetDistance;
+        GameObject grapple = Instantiate(grapplingHookPrefab, spawnPosition, Quaternion.identity);
+        Rigidbody2D rb = grapple.GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(0, grappleSpeed); 
+        Debug.Log("disparo y destruyendo");
+        Destroy(grapple, 2f);
+        Debug.Log("se destruyo en teoria");
     }
 }
