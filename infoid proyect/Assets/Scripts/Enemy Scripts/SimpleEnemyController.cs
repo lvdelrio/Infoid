@@ -37,4 +37,11 @@ public class SimpleEnemyController : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Grappler"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

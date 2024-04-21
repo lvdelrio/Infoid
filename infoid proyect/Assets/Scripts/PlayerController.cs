@@ -237,7 +237,6 @@ public class PlayerController : MonoBehaviour
         GameObject grapple = Instantiate(grapplingHookPrefab, spawnPosition, Quaternion.identity);
         Rigidbody2D rb = grapple.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, grappleSpeed); 
-        Debug.Log("disparo y destruyendo");
         Destroy(grapple, 2f);
         Debug.Log("se destruyo en teoria");
     }
