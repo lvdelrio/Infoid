@@ -315,7 +315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -158.1, y: -69.2}
+  m_AnchoredPosition: {x: -158.09998, y: -69.20001}
   m_SizeDelta: {x: 38, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &431060306
@@ -815,6 +815,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c1b7f2b79da3a04ea21f47f5f645031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!60 &1072484420
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072484408}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 1, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.055286463, y: 0.2803506}
+      - {x: 0.055076137, y: 0.29989058}
+      - {x: 0.04470165, y: 0.29983607}
+      - {x: 0.04524698, y: 0.33009535}
+      - {x: 0.036110185, y: 0.32988825}
+      - {x: 0.035583943, y: 0.33978578}
+      - {x: 0.014825007, y: 0.34024897}
+      - {x: 0.015692595, y: 0.3302632}
+      - {x: 0.0048828996, y: 0.33017382}
+      - {x: -0.0049050176, y: 0.32039514}
+      - {x: -0.014314105, y: 0.3201608}
+      - {x: -0.014114071, y: 0.3300757}
+      - {x: -0.035340328, y: 0.33030573}
+      - {x: -0.034742456, y: 0.32022622}
+      - {x: -0.045871377, y: 0.32023272}
+      - {x: -0.04521325, y: 0.29039475}
+      - {x: -0.05517704, y: 0.2905533}
+      - {x: -0.05551745, y: 0.27027217}
+      - {x: -0.06504053, y: 0.27025145}
+      - {x: -0.06528434, y: 0.22942024}
+      - {x: -0.054993264, y: 0.22971217}
+      - {x: -0.05553746, y: 0.18021153}
+      - {x: -0.17524359, y: 0.1808208}
+      - {x: -0.17521663, y: 0.14960523}
+      - {x: -0.16562295, y: 0.1496776}
+      - {x: -0.16534339, y: 0.13973105}
+      - {x: -0.15507059, y: 0.13994904}
+      - {x: -0.1548189, y: 0.12967724}
+      - {x: -0.14440718, y: 0.12968096}
+      - {x: -0.14431512, y: 0.13954031}
+      - {x: -0.0857621, y: 0.13917628}
+      - {x: -0.08557672, y: 0.1296526}
+      - {x: -0.03556893, y: 0.12922755}
+      - {x: -0.035287704, y: 0.06971218}
+      - {x: -0.025039945, y: 0.06945452}
+      - {x: -0.025079522, y: 0.059890524}
+      - {x: -0.015653916, y: 0.059950467}
+      - {x: -0.015316944, y: 0.049486212}
+      - {x: 0.025364574, y: 0.049782667}
+      - {x: 0.025145993, y: 0.059590798}
+      - {x: 0.035355285, y: 0.059666004}
+      - {x: 0.035488266, y: 0.0691755}
+      - {x: 0.045697916, y: 0.06934117}
+      - {x: 0.04552823, y: 0.12945536}
+      - {x: 0.08533574, y: 0.12919375}
+      - {x: 0.08570391, y: 0.13975611}
+      - {x: 0.15444496, y: 0.13959809}
+      - {x: 0.15448858, y: 0.12963736}
+      - {x: 0.16553795, y: 0.12938449}
+      - {x: 0.16532329, y: 0.13941388}
+      - {x: 0.17504264, y: 0.1397692}
+      - {x: 0.17536655, y: 0.14966823}
+      - {x: 0.185, y: 0.14964125}
+      - {x: 0.18500002, y: 0.17021593}
+      - {x: 0.17546882, y: 0.16978215}
+      - {x: 0.17548373, y: 0.18024422}
+      - {x: 0.06477666, y: 0.18061166}
+      - {x: 0.06510662, y: 0.2802139}
+  m_UseDelaunayMesh: 0
 --- !u!1 &1465457043
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +1049,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2303701813654969168, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1072484420}
   m_SourcePrefab: {fileID: 100100000, guid: 2299a200e22e75d48a112696235de455, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
