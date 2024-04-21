@@ -6,17 +6,23 @@ using UnityEngine;
 public class LevelGeneratorController : MonoBehaviour
 {
     private const float PLAYER_DISTANCE = 60f;
+    [SerializeField] private GameController gameController;
     [SerializeField] private Transform _levelSegmentStart;
     [SerializeField] private List<Transform> _levelSegment;
     [SerializeField] private PlayerController _player; 
     [SerializeField] private List<GameObject> _obstaclePrefabs;
+    [SerializeField] private List<GameObject> _powerUpPrefabs;
     [SerializeField] private GameObject _edgeColliderPrefab;
 
     private Vector3 _lastSegmentPosition;
+
     private List<Transform> _activeSegments = new List<Transform>();
     private List<GameObject> _activeObstacles = new List<GameObject>();
+    private List<GameObject> _activePowerUps = new List<GameObject>();
+
     public Transform initialSegmentPosition;
     private Transform _instantiatedSegmentStart;
+
     private GameObject _edgeCollider;
 
     public int levelSegmentCount = 5;
@@ -43,7 +49,14 @@ public class LevelGeneratorController : MonoBehaviour
     private void SpawnSegment(){
         Transform chosenSegmentPart = _levelSegment[Random.Range(0,_levelSegment.Count)];
         Transform newestSegment = CreateSegment(chosenSegmentPart, _lastSegmentPosition);
-        SpawnObstacle(newestSegment.Find("Wall_left"),newestSegment.Find("Wall_right"));
+        //SpawnPowerUp(newestSegment.Find("Wall_left"),newestSegment.Find("Wall_right"));
+        if(Random.Range(0,2) == 1){
+            SpawnObstacle(newestSegment.Find("Wall_left"),newestSegment.Find("Wall_right"));
+        }
+        if(gameController.RollLuck(8,10)){
+            SpawnPowerUp(newestSegment.Find("Wall_left"),newestSegment.Find("Wall_right"));
+            Debug.Log("Power up spawned");
+        }
         _lastSegmentPosition = newestSegment.Find("end_segment").position;
         _activeSegments.Add(newestSegment);
 
@@ -61,8 +74,8 @@ public class LevelGeneratorController : MonoBehaviour
         return Instantiate(segment_part, spawn_position, Quaternion.identity);
     } 
 
-    private void SpawnObstacle(Transform wallLeft, Transform wallRight) {
-        if (_obstaclePrefabs == null || _obstaclePrefabs.Count == 0) {
+    private void SpawnObject(Transform wallLeft, Transform wallRight, List<GameObject> objectList, List<GameObject> activeObjects) {
+        if (objectList == null || objectList.Count == 0) {
             Debug.LogError("Obstacle prefabs list is empty or not assigned!");
             return;
         }
@@ -73,23 +86,31 @@ public class LevelGeneratorController : MonoBehaviour
         float spaceBetweenWalls = wallRightPosition - wallLeftPosition;
 
         // Randomly pick an obstacle prefab
-        GameObject obstaclePrefab = _obstaclePrefabs[Random.Range(0, _obstaclePrefabs.Count)];
-        Collider2D obstacleCollider = obstaclePrefab.GetComponent<Collider2D>();
-        if (obstacleCollider == null) {
+        GameObject objectPrefab = objectList[Random.Range(0, objectList.Count)];
+        Collider2D objectCollider = objectPrefab.GetComponent<Collider2D>();
+        if (objectCollider == null) {
             Debug.LogError("Obstacle prefab does not have a Collider2D component!");
             return;
         }
 
-        float obstacleWidth = Mathf.Clamp(7f, 2f, spaceBetweenWalls);
-        Debug.Log("soy tamaño supuesto de los obstacle"+obstacleWidth+" "+spaceBetweenWalls+""+obstacleCollider.bounds.size.x);
-        float minPosX = wallLeftPosition + obstacleWidth / 2;
-        float maxPosX = wallRightPosition - obstacleWidth / 2;
-        float obstacleXPosition = Random.Range(minPosX, maxPosX);
-        Vector3 obstaclePosition = new Vector3(obstacleXPosition, wallLeft.position.y, 0); 
-        GameObject obstacle = Instantiate(obstaclePrefab, obstaclePosition, Quaternion.identity);
-        _activeObstacles.Add(obstacle);
-        obstacle.transform.localScale = new Vector3(obstacleWidth, obstacle.transform.localScale.y, obstacle.transform.localScale.z);
+        float objectWidth = Mathf.Clamp(7f, 2f, spaceBetweenWalls);
+        Debug.Log("soy tamaño supuesto de los obstacle"+objectWidth+" "+spaceBetweenWalls+""+objectCollider.bounds.size.x);
+        float minPosX = wallLeftPosition + objectWidth / 2;
+        float maxPosX = wallRightPosition - objectWidth / 2;
+        float objectXPosition = Random.Range(minPosX, maxPosX);
+        Vector3 obstaclePosition = new Vector3(objectXPosition, wallLeft.position.y, 0); 
+        GameObject createdObject = Instantiate(objectPrefab, obstaclePosition, Quaternion.identity);
+        activeObjects.Add(createdObject);
+        createdObject.transform.localScale = new Vector3(objectWidth, createdObject.transform.localScale.y, createdObject.transform.localScale.z);
         DestroyOldObstacles();
+    }
+
+    private void SpawnObstacle(Transform wallLeft, Transform wallRight) {
+        SpawnObject(wallLeft, wallRight, _obstaclePrefabs, _activeObstacles);
+    }
+
+    private void SpawnPowerUp(Transform wallLeft, Transform wallRight) {
+        SpawnObject(wallLeft, wallRight, _powerUpPrefabs, _activePowerUps);
     }
 
     private void InitiateSegmentCreation(){
@@ -120,6 +141,16 @@ public class LevelGeneratorController : MonoBehaviour
         }
     }
 
+    private void DestroyOldPowerUps() {
+        for (int i = _activePowerUps.Count - 1; i >= 0; i--) {
+            if (Vector3.Distance(_player.GetPosition(), _activePowerUps[i].transform.position) > PLAYER_DISTANCE*2) {
+                Destroy(_activePowerUps[i]);
+                Debug.Log("Destroying power up at position: "+_activeSegments[i].position);
+                _activePowerUps.RemoveAt(i);
+            }
+        }
+    }	
+
     private void DestroyAllSegments() {
         foreach (Transform segment in _activeSegments) {
             Destroy(segment.gameObject);
@@ -134,9 +165,17 @@ public class LevelGeneratorController : MonoBehaviour
         _activeObstacles.Clear();
     }
 
+    private void DestroyAllPowerUps() {
+        foreach (GameObject powerUp in _activePowerUps) {
+            Destroy(powerUp);
+        }
+        _activePowerUps.Clear();
+    }
+
     public void ResetLevelGenerator() {
         DestroyAllSegments();
         DestroyAllObstacles();
+        DestroyAllPowerUps();
 
         InitiateSegmentCreation();
         _currentLevelSegmentCount = 0;

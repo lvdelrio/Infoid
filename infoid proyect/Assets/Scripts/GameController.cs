@@ -58,4 +58,20 @@ public class GameController : MonoBehaviour
         levelGenerator.GetComponent<LevelGeneratorController>().ResetLevelGenerator();
         enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllEnemies();
     }
+
+    public bool RollLuck(int minNumber, int maxNumber)
+    {
+        int roll;
+        int luck = player.GetComponent<PlayerController>().luck;
+        for (int i = 0; i < luck; i++)
+        {
+            roll = Random.Range(0, maxNumber);
+            if (roll > minNumber)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

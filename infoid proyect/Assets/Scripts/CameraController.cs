@@ -7,7 +7,7 @@ public float downwardSpeed = 5f;
 public float catchUpMultiplier = 1.2f; 
 public float speedUp = 1.0f; 
 
-void Update()
+void FixedUpdate()
 {
     if (player != null && player.GetComponent<PlayerController>().CanMove())
     {

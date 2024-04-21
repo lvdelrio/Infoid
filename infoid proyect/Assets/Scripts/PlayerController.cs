@@ -23,6 +23,12 @@ public class PlayerController : MonoBehaviour
     public float grappleSpeed = 20f;
     public float grappleLifetime = 1f;
 
+    [Header ("Stats")]
+    public int health = 100;
+    public int maxHealth = 100;
+    public int damage = 10;
+    public int luck = 1;
+
     [Header("Wall Jumping System")]
     bool isTouchingWall = false;
     bool isWallSliding = false;
@@ -43,7 +49,7 @@ public class PlayerController : MonoBehaviour
         lastYPosition = transform.position.y;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float moveInputx = Input.GetAxis("Horizontal");
         float moveInputy = Input.GetAxis("Vertical");
@@ -188,7 +194,26 @@ public class PlayerController : MonoBehaviour
                 break;
             case "PowerUp":
                 Debug.Log("Player hit power up!");
-                moveSpeed += 2;
+                int statToUpgrade = UnityEngine.Random.Range(0, 4);
+                switch (statToUpgrade)
+                {
+                    case 0:
+                        health += 10;
+                        maxHealth += 10;
+                        break;
+                    case 1:
+                        damage += 5;
+                        break;
+                    case 2:
+                        luck += 1;
+                        break;
+                    case 3:
+                        moveSpeed += 1;
+                        break;
+                    default:
+                        break;
+                }
+
                 break;
             default:
                 break;
