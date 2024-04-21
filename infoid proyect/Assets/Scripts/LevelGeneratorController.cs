@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LevelGeneratorController : MonoBehaviour
 {
-    private const float PLAYER_DISTANCE = 50F;
+    private const float PLAYER_DISTANCE = 60f;
     [SerializeField] private Transform _levelSegmentStart;
     [SerializeField] private List<Transform> _levelSegment;
     [SerializeField] private PlayerController _player; 
@@ -36,7 +36,7 @@ public class LevelGeneratorController : MonoBehaviour
         if(Vector3.Distance(_player.GetPosition(), _lastSegmentPosition) < PLAYER_DISTANCE) {
             SpawnSegment();
         }
-        DestroyOldSegments();
+        
 
     }
 
@@ -52,10 +52,12 @@ public class LevelGeneratorController : MonoBehaviour
             _currentLevelSegmentCount = 0;
         }
         _currentLevelSegmentCount++;
+        DestroyOldSegments();
     }
 
 
     private Transform CreateSegment(Transform segment_part, Vector3 spawn_position){
+        Debug.Log("Creating segment at position: "+spawn_position);
         return Instantiate(segment_part, spawn_position, Quaternion.identity);
     } 
 
@@ -87,6 +89,7 @@ public class LevelGeneratorController : MonoBehaviour
         GameObject obstacle = Instantiate(obstaclePrefab, obstaclePosition, Quaternion.identity);
         _activeObstacles.Add(obstacle);
         obstacle.transform.localScale = new Vector3(obstacleWidth, obstacle.transform.localScale.y, obstacle.transform.localScale.z);
+        DestroyOldObstacles();
     }
 
     private void InitiateSegmentCreation(){
@@ -99,8 +102,9 @@ public class LevelGeneratorController : MonoBehaviour
     
     private void DestroyOldSegments() {
         for (int i = _activeSegments.Count - 1; i >= 0; i--) {
-            if (Vector3.Distance(_player.GetPosition(), _activeSegments[i].position) > PLAYER_DISTANCE) {
+            if (Vector3.Distance(_player.GetPosition(), _activeSegments[i].position) > PLAYER_DISTANCE*2) {
                 Destroy(_activeSegments[i].gameObject);
+                Debug.Log("Destroying segment at position: "+_activeSegments[i].position);
                 _activeSegments.RemoveAt(i);  
             }
         }
@@ -108,8 +112,9 @@ public class LevelGeneratorController : MonoBehaviour
 
     private void DestroyOldObstacles() {
         for (int i = _activeObstacles.Count - 1; i >= 0; i--) {
-            if (Vector3.Distance(_player.GetPosition(), _activeObstacles[i].transform.position) > PLAYER_DISTANCE) {
+            if (Vector3.Distance(_player.GetPosition(), _activeObstacles[i].transform.position) > PLAYER_DISTANCE*2) {
                 Destroy(_activeObstacles[i]);
+                Debug.Log("Destroying obstacle at position: "+_activeSegments[i].position);
                 _activeObstacles.RemoveAt(i);
             }
         }
