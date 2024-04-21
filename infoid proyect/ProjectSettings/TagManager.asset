@@ -9,6 +9,8 @@ TagManager:
   - EdgeCollider
   - Enemy
   - Spawner
+  - PowerUp
+  - Grappler
   layers:
   - Default
   - TransparentFX
