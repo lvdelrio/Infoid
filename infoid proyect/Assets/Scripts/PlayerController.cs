@@ -186,6 +186,10 @@ public class PlayerController : MonoBehaviour
             case "Enemy":
                 Debug.Log("PLayer hit enemy!");
                 break;
+            case "PowerUp":
+                Debug.Log("Player hit power up!");
+                moveSpeed += 2;
+                break;
             default:
                 break;
         }
