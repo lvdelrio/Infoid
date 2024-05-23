@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     private PolygonCollider2D collider;
     public Camera camera;
-    public Collider2D verticalCollider;
     public Animator animator;
     public GameObject grapplingHookPrefab;
 
@@ -24,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public float grappleSpeed = 20f;
     public float grappleLifetime = 1f;
 
-    [Header ("Stats")]
+    [Header("Stats")]
     public int health = 100;
     public int maxHealth = 100;
     public int damage = 10;
@@ -33,31 +32,34 @@ public class PlayerController : MonoBehaviour
     [Header("Wall Jumping System")]
     bool isTouchingWall = false;
     bool isWallSliding = false;
-    private bool canMove;
+    private bool canMove = true;
     public float wallSlidingSpeed;
     public float wallJumpDuration;
     public float jumpAngle = 45f;
     public float wallJumpForce;
     bool wallJumping;
-    private int wallCollisionCount = 0;
+    private bool wantsToJump = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<PolygonCollider2D>();
-
-        verticalCollider.enabled = true;
-        canMove = true;
         lastYPosition = transform.position.y;
+    }
+
+    void Update()
+    {
+        if (isTouchingWall && Input.GetKeyDown(KeyCode.Space))
+        {
+            wantsToJump = true;
+        }
     }
 
     void FixedUpdate()
     {
         float moveInputx = Input.GetAxis("Horizontal");
         float moveInputy = Input.GetAxis("Vertical");
-        Vector2 moveInput = new Vector2(moveInputx, moveInputy).normalized;
 
-        // isTouchingWall = Physics2D.OverlapBox(wallCheck.position, new Vector2(0.15f, 0.2f), LayerMask.GetMask("Wall"));
         if (canMove)
         {
             if (isTouchingWall)
@@ -70,11 +72,19 @@ public class PlayerController : MonoBehaviour
                 isWallSliding = false;
             }
 
-            if (isWallSliding)
+            if (wallJumping)
+            {
+                float jumpAngleRadians = jumpAngle * Mathf.Deg2Rad;
+                Vector2 jumpDirection = new Vector2(Mathf.Cos(jumpAngleRadians), Mathf.Sin(jumpAngleRadians));
+
+                jumpDirection.x = Mathf.Abs(jumpDirection.x) * wallDirection;
+                rb.velocity = new Vector2(jumpDirection.x * wallJumpForce, jumpDirection.y * wallJumpForce);
+            }
+            else if (isWallSliding)
             {
                 rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
 
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (wantsToJump)
                 {
                     Jump();
                 }
@@ -86,20 +96,6 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 transform.localScale = new Vector3(7, 7, 1);
             }
-
-            if (wallJumping)
-            {
-                float jumpAngleRadians = jumpAngle * Mathf.Deg2Rad;
-                Vector2 jumpDirection = new Vector2(Mathf.Cos(jumpAngleRadians), Mathf.Sin(jumpAngleRadians));
-
-                if (wallDirection < 0)
-                {
-                    jumpDirection.x *= -1;
-                }
-                // rb.velocity = new Vector2(wallJumpForce.x * wallDirection, wallJumpForce.y);
-                rb.velocity = new Vector2(jumpDirection.x * wallJumpForce, jumpDirection.y * wallJumpForce);
-            }
-
 
             float currentYPosition = transform.position.y;
 
@@ -131,7 +127,11 @@ public class PlayerController : MonoBehaviour
     {
         wallJumping = true;
         isTouchingWall = false;
+        wantsToJump = false;
+
         Invoke("StopWallJump", wallJumpDuration);
+
+
 
 
         // rb.AddForce(jumpDirection.normalized * jumpForce, ForceMode2D.Impulse);
@@ -141,16 +141,77 @@ public class PlayerController : MonoBehaviour
     void StopWallJump()
     {
         wallJumping = false;
+
+        collider.SetPath(0, new Vector2[58] {
+            new Vector2(0.0552864634f, 0.2803506f),
+            new Vector2(0.0550761372f, 0.299890578f),
+            new Vector2(0.04470165f, 0.299836069f),
+            new Vector2(0.04524698f, 0.330095351f),
+            new Vector2(0.0361101851f, 0.329888254f),
+            new Vector2(0.0355839431f, 0.339785784f),
+            new Vector2(0.0148250069f, 0.340248972f),
+            new Vector2(0.0156925954f, 0.3302632f),
+            new Vector2(0.00488289958f, 0.33017382f),
+            new Vector2(-0.00490501756f, 0.320395142f),
+            new Vector2(-0.0143141048f, 0.3201608f),
+            new Vector2(-0.0141140707f, 0.3300757f),
+            new Vector2(-0.0353403278f, 0.330305725f),
+            new Vector2(-0.0347424559f, 0.320226222f),
+            new Vector2(-0.045871377f, 0.320232719f),
+            new Vector2(-0.04521325f, 0.290394753f),
+            new Vector2(-0.05517704f, 0.2905533f),
+            new Vector2(-0.05551745f, 0.270272166f),
+            new Vector2(-0.06504053f, 0.270251453f),
+            new Vector2(-0.06528434f, 0.229420245f),
+            new Vector2(-0.0549932644f, 0.229712173f),
+            new Vector2(-0.05553746f, 0.180211529f),
+            new Vector2(-0.175243586f, 0.1808208f),
+            new Vector2(-0.17521663f, 0.149605229f),
+            new Vector2(-0.16562295f, 0.1496776f),
+            new Vector2(-0.165343389f, 0.13973105f),
+            new Vector2(-0.155070588f, 0.139949039f),
+            new Vector2(-0.1548189f, 0.129677236f),
+            new Vector2(-0.144407183f, 0.129680961f),
+            new Vector2(-0.144315124f, 0.139540315f),
+            new Vector2(-0.0857621f, 0.139176279f),
+            new Vector2(-0.08557672f, 0.1296526f),
+            new Vector2(-0.03556893f, 0.129227549f),
+            new Vector2(-0.0352877043f, 0.06971218f),
+            new Vector2(-0.0250399448f, 0.06945452f),
+            new Vector2(-0.0250795223f, 0.0598905236f),
+            new Vector2(-0.0156539157f, 0.0599504672f),
+            new Vector2(-0.0153169436f, 0.0494862124f),
+            new Vector2(0.025364574f, 0.0497826673f),
+            new Vector2(0.0251459926f, 0.0595907979f),
+            new Vector2(0.0353552848f, 0.059666004f),
+            new Vector2(0.0354882665f, 0.0691755f),
+            new Vector2(0.0456979163f, 0.06934117f),
+            new Vector2(0.04552823f, 0.129455358f),
+            new Vector2(0.08533574f, 0.129193753f),
+            new Vector2(0.08570391f, 0.139756113f),
+            new Vector2(0.154444963f, 0.139598086f),
+            new Vector2(0.154488578f, 0.129637361f),
+            new Vector2(0.165537953f, 0.129384488f),
+            new Vector2(0.165323287f, 0.139413878f),
+            new Vector2(0.175042644f, 0.1397692f),
+            new Vector2(0.175366551f, 0.149668232f),
+            new Vector2(0.185f, 0.149641246f),
+            new Vector2(0.185000017f, 0.170215935f),
+            new Vector2(0.175468817f, 0.169782147f),
+            new Vector2(0.175483733f, 0.180244222f),
+            new Vector2(0.06477666f, 0.180611655f),
+            new Vector2(0.06510662f, 0.2802139f),
+        });
+
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
+        transform.localScale = new Vector3(7, 7, 1);
+        animator.SetBool("onWall", false);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall") && !wallJumping)
         {
-            wallCollisionCount++;
-            isTouchingWall = true;
-            animator.SetBool("onWall", true);
-
             collider.SetPath(0, new Vector2[97] {
                 new Vector2(0.0564007f, 0.339855939f),
                 new Vector2(0.0553022027f, 0.349401683f),
@@ -251,92 +312,21 @@ public class PlayerController : MonoBehaviour
                 new Vector2(0.06626815f, 0.3400416f),
             });
 
+            isTouchingWall = true;
+            animator.SetBool("onWall", true);
             wallDirection = collision.GetContact(0).normal.x;
 
             if (transform.localPosition.x < 0)
             {
                 transform.localRotation = Quaternion.Euler(0, 0, -90);
                 transform.localScale = new Vector3(7, 7, 1);
+                transform.localPosition = new Vector3(-9.48f, transform.localPosition.y, transform.localPosition.z);
             }
             else if (transform.localPosition.x > 0)
             {
                 transform.localRotation = Quaternion.Euler(0, 0, -90);
                 transform.localScale = new Vector3(7, -7, 1);
-            }
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            wallCollisionCount--;
-
-            if (wallCollisionCount == 0)
-            {
-                transform.rotation = Quaternion.identity;
-                animator.SetBool("onWall", false);
-
-                collider.SetPath(0, new Vector2[58] {
-                new Vector2(0.0552864634f, 0.2803506f),
-                new Vector2(0.0550761372f, 0.299890578f),
-                new Vector2(0.04470165f, 0.299836069f),
-                new Vector2(0.04524698f, 0.330095351f),
-                new Vector2(0.0361101851f, 0.329888254f),
-                new Vector2(0.0355839431f, 0.339785784f),
-                new Vector2(0.0148250069f, 0.340248972f),
-                new Vector2(0.0156925954f, 0.3302632f),
-                new Vector2(0.00488289958f, 0.33017382f),
-                new Vector2(-0.00490501756f, 0.320395142f),
-                new Vector2(-0.0143141048f, 0.3201608f),
-                new Vector2(-0.0141140707f, 0.3300757f),
-                new Vector2(-0.0353403278f, 0.330305725f),
-                new Vector2(-0.0347424559f, 0.320226222f),
-                new Vector2(-0.045871377f, 0.320232719f),
-                new Vector2(-0.04521325f, 0.290394753f),
-                new Vector2(-0.05517704f, 0.2905533f),
-                new Vector2(-0.05551745f, 0.270272166f),
-                new Vector2(-0.06504053f, 0.270251453f),
-                new Vector2(-0.06528434f, 0.229420245f),
-                new Vector2(-0.0549932644f, 0.229712173f),
-                new Vector2(-0.05553746f, 0.180211529f),
-                new Vector2(-0.175243586f, 0.1808208f),
-                new Vector2(-0.17521663f, 0.149605229f),
-                new Vector2(-0.16562295f, 0.1496776f),
-                new Vector2(-0.165343389f, 0.13973105f),
-                new Vector2(-0.155070588f, 0.139949039f),
-                new Vector2(-0.1548189f, 0.129677236f),
-                new Vector2(-0.144407183f, 0.129680961f),
-                new Vector2(-0.144315124f, 0.139540315f),
-                new Vector2(-0.0857621f, 0.139176279f),
-                new Vector2(-0.08557672f, 0.1296526f),
-                new Vector2(-0.03556893f, 0.129227549f),
-                new Vector2(-0.0352877043f, 0.06971218f),
-                new Vector2(-0.0250399448f, 0.06945452f),
-                new Vector2(-0.0250795223f, 0.0598905236f),
-                new Vector2(-0.0156539157f, 0.0599504672f),
-                new Vector2(-0.0153169436f, 0.0494862124f),
-                new Vector2(0.025364574f, 0.0497826673f),
-                new Vector2(0.0251459926f, 0.0595907979f),
-                new Vector2(0.0353552848f, 0.059666004f),
-                new Vector2(0.0354882665f, 0.0691755f),
-                new Vector2(0.0456979163f, 0.06934117f),
-                new Vector2(0.04552823f, 0.129455358f),
-                new Vector2(0.08533574f, 0.129193753f),
-                new Vector2(0.08570391f, 0.139756113f),
-                new Vector2(0.154444963f, 0.139598086f),
-                new Vector2(0.154488578f, 0.129637361f),
-                new Vector2(0.165537953f, 0.129384488f),
-                new Vector2(0.165323287f, 0.139413878f),
-                new Vector2(0.175042644f, 0.1397692f),
-                new Vector2(0.175366551f, 0.149668232f),
-                new Vector2(0.185f, 0.149641246f),
-                new Vector2(0.185000017f, 0.170215935f),
-                new Vector2(0.175468817f, 0.169782147f),
-                new Vector2(0.175483733f, 0.180244222f),
-                new Vector2(0.06477666f, 0.180611655f),
-                new Vector2(0.06510662f, 0.2802139f),
-            });
+                transform.localPosition = new Vector3(9.48f, transform.localPosition.y, transform.localPosition.z);
             }
         }
     }

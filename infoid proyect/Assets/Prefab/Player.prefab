@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2315465939567158431}
   - component: {fileID: 5614544590644315448}
-  - component: {fileID: 7917755439032015840}
   - component: {fileID: 3669922412637009501}
   - component: {fileID: 2296132609637100785}
   - component: {fileID: 2974203802174516786}
@@ -89,41 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &7917755439032015840
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2303701813654969168}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.15, y: 0.2}
-  m_Direction: 0
 --- !u!50 &3669922412637009501
 Rigidbody2D:
   serializedVersion: 4
@@ -166,7 +130,6 @@ MonoBehaviour:
   gameController: {fileID: 0}
   rb: {fileID: 3669922412637009501}
   camera: {fileID: 0}
-  verticalCollider: {fileID: 7917755439032015840}
   animator: {fileID: 2974203802174516786}
   grapplingHookPrefab: {fileID: 7514924824357064001, guid: ade7da20cd8b5c5448387dd253b81104, type: 3}
   moveSpeed: 11.5
@@ -174,6 +137,10 @@ MonoBehaviour:
   FallingConst: 5
   grappleSpeed: 20
   grappleLifetime: 2
+  health: 100
+  maxHealth: 100
+  damage: 10
+  luck: 1
   wallSlidingSpeed: 5
   wallJumpDuration: 0.25
   jumpAngle: 25

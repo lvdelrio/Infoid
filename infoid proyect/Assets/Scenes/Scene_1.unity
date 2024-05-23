@@ -1002,6 +1002,10 @@ PrefabInstance:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 639463327}
+    - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: verticalCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2303701813654969168, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1044,6 +1048,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2315465939567158431, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7860940296247835003, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1072484408}
+    - target: {fileID: 7917755439032015840, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
