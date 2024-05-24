@@ -12,8 +12,11 @@ GameObject:
   - component: {fileID: 5614544590644315448}
   - component: {fileID: 3669922412637009501}
   - component: {fileID: 2296132609637100785}
+  - component: {fileID: 2789566645255998383}
+  - component: {fileID: 2532109602776105877}
   - component: {fileID: 2974203802174516786}
   - component: {fileID: 7860940296247835003}
+  - component: {fileID: 6647298282327731249}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -77,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 5405677768181819343, guid: 164eff21ee009df4d83e2081a738ee9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -124,19 +127,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2303701813654969168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c1b7f2b79da3a04ea21f47f5f645031, type: 3}
+  m_Script: {fileID: 11500000, guid: d9a3066625ddb9d46bb9be0a6e6afe4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 0}
+  inventoryController: {fileID: 0}
   rb: {fileID: 3669922412637009501}
   camera: {fileID: 0}
   animator: {fileID: 2974203802174516786}
   grapplingHookPrefab: {fileID: 7514924824357064001, guid: ade7da20cd8b5c5448387dd253b81104, type: 3}
-  moveSpeed: 11.5
+  moveSpeed: 12
   distance: 0
   FallingConst: 5
   grappleSpeed: 20
-  grappleLifetime: 2
+  grappleLifetime: 1
   health: 100
   maxHealth: 100
   damage: 10
@@ -145,6 +149,34 @@ MonoBehaviour:
   wallJumpDuration: 0.25
   jumpAngle: 25
   wallJumpForce: 25
+--- !u!114 &2789566645255998383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2303701813654969168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94c4a5c540119c4aa24378c50d36ae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2532109602776105877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2303701813654969168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cfa89e5471a512449f798e61c040964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 2296132609637100785}
+  activeItems: []
+  passiveItems: []
+  maxActiveItems: 2
 --- !u!95 &2974203802174516786
 Animator:
   serializedVersion: 5
@@ -175,8 +207,53 @@ MonoBehaviour:
   m_GameObject: {fileID: 2303701813654969168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 688cf95077d947c41a151d27c95a1312, type: 3}
+  m_Script: {fileID: 11500000, guid: 1951e4bef7dc84d4e9a49aa2e1fd05b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2974203802174516786}
-  player: {fileID: 0}
+  player: {fileID: 2303701813654969168}
+--- !u!61 &6647298282327731249
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2303701813654969168}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.004998416, y: 0.1929394}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5416666, y: -0.1724138}
+    oldSize: {x: 0.36, y: 0.29}
+    newSize: {x: 1, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.369934, y: 0.3019553}
+  m_EdgeRadius: 0

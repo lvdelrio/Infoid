@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Objects")]
     public GameController gameController;
+    public InventoryController inventoryController;
     public Rigidbody2D rb;
     public Camera camera;
     public Animator animator;
@@ -120,6 +121,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void IncreaseStats(StatBonus statBonus)
+    {
+        this.moveSpeed += statBonus.moveSpeedBonus;
+        this.maxHealth += statBonus.maxHealthBonus;
+        this.damage += statBonus.damageBonus;
+        this.luck += statBonus.luckBonus;
+    }
+
+
+    public void DecreaseStats(StatBonus statBonus)
+    {
+        this.moveSpeed -= statBonus.moveSpeedBonus;
+        this.maxHealth -= statBonus.maxHealthBonus;
+        this.damage -= statBonus.damageBonus;
+        this.luck -= statBonus.luckBonus;
+    }
+
 
     void Jump()
     {
@@ -165,52 +183,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        switch (other.tag)
-        {
-            case "obstacle":
-                Debug.Log("Player hit an obstacle!");
-                break;
-            case "EdgeCollider":
-                Debug.Log("Player hit the edge!");
-                //canMove = false;
-                gameController.EndLevel();
-                //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-                //camera.GetComponent<CameraController>().ResetCameraPosition();
-                //canMove = true;
-                break;
-            case "Enemy":
-                Debug.Log("PLayer hit enemy!");
-                break;
-            case "PowerUp":
-                Debug.Log("Player hit power up!");
-                int statToUpgrade = UnityEngine.Random.Range(0, 4);
-                switch (statToUpgrade)
-                {
-                    case 0:
-                        health += 10;
-                        maxHealth += 10;
-                        break;
-                    case 1:
-                        damage += 5;
-                        break;
-                    case 2:
-                        luck += 1;
-                        break;
-                    case 3:
-                        moveSpeed += 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                break;
-            default:
-                break;
-        }
-
-    }
 
     public void ResetPlayerPosition()
     {
