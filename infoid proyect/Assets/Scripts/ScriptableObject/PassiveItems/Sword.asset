@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8be686e43b46441b5bafd8ef2a0199, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  itemName: 
-  description: 
+  itemName: Sword
+  description: Sword
   statBonus:
     moveSpeedBonus: 0
     maxHealthBonus: 0
-    damageBonus: 0
+    damageBonus: 5
     luckBonus: 0

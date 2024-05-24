@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8be686e43b46441b5bafd8ef2a0199, type: 3}
   m_Name: Shield
   m_EditorClassIdentifier: 
-  itemName: 
-  description: 
+  itemName: Shield
+  description: Shield
   statBonus:
     moveSpeedBonus: 0
-    maxHealthBonus: 0
+    maxHealthBonus: 15
     damageBonus: 0
     luckBonus: 0
