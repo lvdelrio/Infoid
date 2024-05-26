@@ -141,10 +141,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7514924824357064001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b805699711dbdb4eb0041c3d093072f, type: 3}
+  m_Script: {fileID: 11500000, guid: 78e561309706a0142a84ddff33ab9293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2303701813654969168, guid: 2299a200e22e75d48a112696235de455, type: 3}
+  player: {fileID: 0}
   offSet: 5
 --- !u!50 &7807186527837923817
 Rigidbody2D:

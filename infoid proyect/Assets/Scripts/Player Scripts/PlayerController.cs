@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public float wallJumpForce;
     bool wallJumping;
     private bool wantsToJump = false;
+    private bool wantsToUseGrapplingHook = false;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
@@ -58,6 +59,11 @@ public class PlayerController : MonoBehaviour
         if (isTouchingWall && Input.GetKeyDown(KeyCode.Space))
         {
             wantsToJump = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            wantsToUseGrapplingHook = true;
         }
     }
 
@@ -117,7 +123,7 @@ public class PlayerController : MonoBehaviour
             float maxY = Camera.main.transform.position.y + (verticalExtent - 2);
             transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minY, maxY), transform.position.z);
 
-            if (Input.GetKeyDown(KeyCode.J))
+            if (wantsToUseGrapplingHook)
             {
                 FireGrapplingHook();
             }
@@ -126,19 +132,20 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(0, 0);
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Attack();
-        }  
+        }
     }
 
-    private void OnDrawGizmosSelected() {
-        Gizmos.DrawWireSphere(attackPoint.position,attackRange);
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
     void Attack()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        foreach(Collider2D enemy in hitEnemies)
+        foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("Enemy was hit");
             enemy.GetComponent<SimpleEnemyController>().Die();
@@ -229,35 +236,44 @@ public class PlayerController : MonoBehaviour
         return canMove;
     }
 
-    public void MoveToEnemy(Vector3 enemyPosition)
+    public void MoveToEnemy(Vector3 enemyPosition, GameObject grapple)
     {
-        StartCoroutine(MoveTowardsPosition(enemyPosition));
+        StartCoroutine(MoveTowardsPosition(enemyPosition, grapple));
     }
 
-    IEnumerator MoveTowardsPosition(Vector3 position)
+    IEnumerator MoveTowardsPosition(Vector3 position, GameObject grapple)
     {
         float startTime = Time.time;
         Vector3 startPosition = transform.position;
         float journeyLength = Vector3.Distance(startPosition, position);
         float journeyTime = journeyLength / grappleSpeed;
 
+        float initialGrappleHeight = grapple.transform.localScale.y;
+
         while (Time.time - startTime < journeyTime)
         {
             float fracJourney = (Time.time - startTime) / journeyTime;
             transform.position = Vector3.Lerp(startPosition, position, fracJourney);
+
+            float newHeight = Mathf.Lerp(initialGrappleHeight, 0, fracJourney);
+            Vector3 grappleScale = grapple.transform.localScale;
+            grappleScale.y = newHeight;
+            grapple.transform.localScale = grappleScale;
+
             yield return null;
         }
+
+        Destroy(grapple);
     }
 
     void FireGrapplingHook()
     {
+        wantsToUseGrapplingHook = false;
+
         float offsetDistance = 5.0f;
         Vector3 spawnPosition = transform.position + Vector3.down * offsetDistance;
         GameObject grapple = Instantiate(grapplingHookPrefab, spawnPosition, Quaternion.identity);
         Rigidbody2D rb = grapple.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, grappleSpeed);
-        Debug.Log("disparo y destruyendo");
-        Destroy(grapple, 2f);
-        Debug.Log("se destruyo en teoria");
     }
 }
