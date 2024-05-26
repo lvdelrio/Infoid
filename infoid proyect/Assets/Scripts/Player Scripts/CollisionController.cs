@@ -8,7 +8,10 @@ public class CollisionController : MonoBehaviour
     PlayerController playerController;
     InventoryController inventoryController;
     public ItemDatabase itemDatabase;
-    // Start is called before the first frame update
+    private bool playerInParryZone = false;
+    private SimpleEnemyController currentEnemy;
+    private GameObject currentEnemyGameObject;
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -19,7 +22,11 @@ public class CollisionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerInParryZone && Input.GetKeyDown(KeyCode.K) && currentEnemyGameObject && currentEnemy && !currentEnemy.hasCollideWithPlayer)
+        {
+            Destroy(currentEnemyGameObject);
+            playerController.onPerry();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -27,8 +34,19 @@ public class CollisionController : MonoBehaviour
         switch (other.tag)
         {
             case "obstacle":
-                Debug.Log("Player hit an obstacle!");
+                if (playerController.isOnPerryBoost)
+                {
+                    Debug.Log("Player hit an obstacle on perry boost!");
+
+                }
+                else
+                {
+                    Debug.Log("Player hit an obstacle!");
+
+                }
+
                 break;
+
             case "EdgeCollider":
                 Debug.Log("Player hit the edge!");
                 //canMove = false;
@@ -37,9 +55,21 @@ public class CollisionController : MonoBehaviour
                 //camera.GetComponent<CameraController>().ResetCameraPosition();
                 //canMove = true;
                 break;
+
             case "Enemy":
-                Debug.Log("PLayer hit enemy!");
+                Debug.Log("Player hit enemy!");
+                currentEnemy = other.GetComponentInParent<SimpleEnemyController>();
+                currentEnemy.collidedWithPlayer();
+
                 break;
+
+            case "Perry":
+                playerInParryZone = true;
+                currentEnemy = other.GetComponentInParent<SimpleEnemyController>();
+                currentEnemyGameObject = other.transform.parent.gameObject;
+
+                break;
+
             case "PowerUp":
                 Debug.Log("Player hit power up!");
                 Debug.Log(itemDatabase.allPassiveItems.Count);
@@ -47,9 +77,17 @@ public class CollisionController : MonoBehaviour
                 Debug.Log(statToUpgrade);
                 inventoryController.AddPassiveItem(itemDatabase.allPassiveItems[statToUpgrade]);
                 break;
+
             default:
                 break;
         }
+    }
 
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Perry"))
+        {
+            playerInParryZone = false;
+        }
     }
 }

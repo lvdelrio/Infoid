@@ -11,6 +11,7 @@ TagManager:
   - Spawner
   - PowerUp
   - Grappler
+  - Perry
   layers:
   - Default
   - TransparentFX

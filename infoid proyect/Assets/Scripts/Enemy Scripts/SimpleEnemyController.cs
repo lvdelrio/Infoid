@@ -13,6 +13,8 @@ public class SimpleEnemyController : MonoBehaviour
     public float deathTime;
     private float Timer;
     private GameObject player;
+    private bool _hasCollideWithPlayer = false;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -47,5 +49,15 @@ public class SimpleEnemyController : MonoBehaviour
     public void Die()
     {
         Destroy(this.gameObject);
+    }
+
+    public bool hasCollideWithPlayer
+    {
+        get { return _hasCollideWithPlayer; }
+    }
+
+    public void collidedWithPlayer()
+    {
+        _hasCollideWithPlayer = true;
     }
 }

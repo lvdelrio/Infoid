@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     bool wallJumping;
     private bool wantsToJump = false;
     private bool wantsToUseGrapplingHook = false;
+    private bool _isOnPerryBoost = false;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
@@ -158,6 +159,18 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(boostDuration);
         moveSpeed = DefaultMoveSpeed;
     }
+
+    IEnumerator perryBoost()
+    {
+        _isOnPerryBoost = true;
+        moveSpeed += moveSpeedBoost;
+
+        yield return new WaitForSeconds(boostDuration);
+
+        moveSpeed = DefaultMoveSpeed;
+        _isOnPerryBoost = false;
+    }
+
     public void IncreaseStats(StatBonus statBonus)
     {
         this.moveSpeed += statBonus.moveSpeedBonus;
@@ -275,5 +288,15 @@ public class PlayerController : MonoBehaviour
         GameObject grapple = Instantiate(grapplingHookPrefab, spawnPosition, Quaternion.identity);
         Rigidbody2D rb = grapple.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, grappleSpeed);
+    }
+
+    public void onPerry()
+    {
+        StartCoroutine(perryBoost());
+    }
+
+    public bool isOnPerryBoost
+    {
+        get { return _isOnPerryBoost; }
     }
 }
