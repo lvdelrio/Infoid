@@ -44,4 +44,8 @@ public class SimpleEnemyController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void Die()
+    {
+        Destroy(this.gameObject);
+    }
 }

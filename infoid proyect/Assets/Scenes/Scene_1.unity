@@ -513,6 +513,37 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb1ea99ebd90fa248b192371fc5393af, type: 2}
   - {fileID: 11400000, guid: 0296287441b16f945bf7bb93d29a7612, type: 2}
   - {fileID: 11400000, guid: 8162def5b75ceed43ad5df7e475a77f0, type: 2}
+--- !u!1 &765024530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 765024531}
+  m_Layer: 0
+  m_Name: attackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &765024531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765024530}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1072484437}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &794165847
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,6 +874,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cfa89e5471a512449f798e61c040964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1072484437 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2315465939567158431, guid: 2299a200e22e75d48a112696235de455, type: 3}
+  m_PrefabInstance: {fileID: 9059637777522909667}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1465457043
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,9 +960,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1008009218}
     - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: moveSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: attackPoint
+      value: 
+      objectReference: {fileID: 765024531}
+    - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: attackRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 639463327}
+    - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: enemyLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: inventoryController
       value: 
@@ -981,7 +1033,10 @@ PrefabInstance:
       objectReference: {fileID: 639463328}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2315465939567158431, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 765024531}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2299a200e22e75d48a112696235de455, type: 3}
 --- !u!1660057539 &9223372036854775807

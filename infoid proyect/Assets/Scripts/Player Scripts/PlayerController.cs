@@ -14,7 +14,10 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Player Movement")]
-    public float moveSpeed = 7f;
+    public float moveSpeed = 10f;
+    private float DefaultMoveSpeed = 10f;
+    private float moveSpeedBoost = 2f;
+    private float boostDuration = 3f;
     public float distance;
     public float FallingConst = 5f;
 
@@ -39,6 +42,10 @@ public class PlayerController : MonoBehaviour
     public float wallJumpForce;
     bool wallJumping;
     private bool wantsToJump = false;
+
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enemyLayers;
 
     void Start()
     {
@@ -119,8 +126,31 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(0, 0);
         }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Attack();
+        }  
     }
 
+    private void OnDrawGizmosSelected() {
+        Gizmos.DrawWireSphere(attackPoint.position,attackRange);
+    }
+    void Attack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("Enemy was hit");
+            enemy.GetComponent<SimpleEnemyController>().Die();
+            StartCoroutine(boost());
+        }
+    }
+    IEnumerator boost()
+    {
+        moveSpeed += moveSpeedBoost;
+        yield return new WaitForSeconds(boostDuration);
+        moveSpeed = DefaultMoveSpeed;
+    }
     public void IncreaseStats(StatBonus statBonus)
     {
         this.moveSpeed += statBonus.moveSpeedBonus;
