@@ -6,7 +6,7 @@ public class InventoryController : MonoBehaviour
 {
     // Start is called before the first frame update
     public PlayerController playerController;
-    public List<ActiveItem> activeItems = new List<ActiveItem>();
+    public List<ActiveItemData> activeItems = new List<ActiveItemData>();
     public List<PassiveItemData> passiveItems = new List<PassiveItemData>();
 
     public int maxActiveItems = 2;
@@ -16,16 +16,13 @@ public class InventoryController : MonoBehaviour
         playerController = GetComponent<PlayerController>();
     }
 
-    public void AddActiveItem(ActiveItem item)
+    public void AddActiveItem(ActiveItemData item)
     {
-        if (activeItems.Count < maxActiveItems)
+        if (activeItems.Count >= maxActiveItems)
         {
-            activeItems.Add(item);
+            activeItems.RemoveAt(0);
         }
-        else
-        {
-            Debug.Log("Inventory is full!");
-        }
+        activeItems.Add(item);
     }
 
     public void AddPassiveItem(PassiveItemData item)

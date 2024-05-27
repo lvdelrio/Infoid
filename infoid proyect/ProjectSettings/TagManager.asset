@@ -12,6 +12,7 @@ TagManager:
   - PowerUp
   - Grappler
   - Perry
+  - Weapon
   layers:
   - Default
   - TransparentFX

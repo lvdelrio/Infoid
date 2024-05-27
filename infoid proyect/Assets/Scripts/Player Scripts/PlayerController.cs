@@ -299,4 +299,13 @@ public class PlayerController : MonoBehaviour
     {
         get { return _isOnPerryBoost; }
     }
+    public void PickupActiveItem(ActiveItemPickup itemPickup)
+{
+    if (inventoryController != null)
+    {
+        inventoryController.AddActiveItem(itemPickup.itemData);
+        Destroy(itemPickup.gameObject);
+    }
 }
+}
+

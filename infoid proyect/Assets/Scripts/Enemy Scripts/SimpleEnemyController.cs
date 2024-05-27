@@ -41,7 +41,10 @@ public class SimpleEnemyController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Grappler"))
+        if (collision.CompareTag("Grappler") || collision.CompareTag("Weapon"))
+        {
+            Die();
+        }
         {
             Destroy(gameObject);
         }
