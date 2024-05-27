@@ -9,7 +9,7 @@ public class InventoryController : MonoBehaviour
     public List<ActiveItemData> activeItems = new List<ActiveItemData>();
     public List<PassiveItemData> passiveItems = new List<PassiveItemData>();
 
-    public int maxActiveItems = 2;
+    public int maxActiveItems = 6;
 
     void Start()
     {
