@@ -8,12 +8,11 @@ public class PlayerController : MonoBehaviour
     public GameController gameController;
     public InventoryController inventoryController;
     public Rigidbody2D rb;
-    public Camera camera;
+    public new Camera camera;
     public Animator animator;
     public GameObject grapplingHookPrefab;
 
     private Color originalColor;
-
 
     [Header("Player Movement")]
     public float moveSpeed = 7f;
@@ -41,6 +40,11 @@ public class PlayerController : MonoBehaviour
     public float wallJumpForce;
     bool wallJumping;
     private bool wantsToJump = false;
+
+    [Header("deathsdoor")]
+    public float deathsDoorTimer;
+    public bool isInDeathsDoor;
+
 
     void Start()
     {
@@ -257,16 +261,9 @@ public class PlayerController : MonoBehaviour
         isInDeathsDoor = false;
         animator.SetTrigger("ExitDeathsDoor");
     }
-
-    public void EndLevel()
+    public void restart()
     {
-        currentLevel++;
-        player.GetComponent<PlayerController>().ResetPlayerPosition();
-
-        camera.GetComponent<CameraController>().ResetCameraPosition();
-
-        levelGenerator.GetComponent<LevelGeneratorController>().ResetLevelGenerator();
-        enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllEnemies();
+        gameController.EndLevel();
     }
 
 }

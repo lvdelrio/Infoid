@@ -8,11 +8,13 @@ public class GameController : MonoBehaviour
     public GameObject player;
     public GameObject levelGenerator;
     public GameObject enemySpawner;
+    public GameObject otherGameObject;
 
     public int score;
     public int currentLevel;
     private float _distance;
     private float _currentDistance;
+
 
 
 
@@ -53,7 +55,7 @@ public class GameController : MonoBehaviour
     {
         currentLevel++;
         player.GetComponent<PlayerController>().ResetPlayerPosition();
-        camera.GetComponent<CameraController>().ResetCameraPosition();
+        CameraController cameraController = otherGameObject.GetComponent<CameraController>();
         levelGenerator.GetComponent<LevelGeneratorController>().ResetLevelGenerator();
         enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllEnemies();
     }

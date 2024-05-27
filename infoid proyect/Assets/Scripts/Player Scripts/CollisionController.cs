@@ -41,7 +41,7 @@ public class CollisionController : MonoBehaviour
                 Debug.Log("Player hit enemy!");
                 if (playerController.isInDeathsDoor)
                 {
-                    playerController.Die();
+                    playerController.restart();
                 }
                 else
                 {
