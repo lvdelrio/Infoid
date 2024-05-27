@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject grapplingHookPrefab;
 
+    private Color originalColor;
+
 
     [Header("Player Movement")]
     public float moveSpeed = 7f;
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         lastYPosition = transform.position.y;
+        originalColor = GetComponent<SpriteRenderer>().color;
     }
 
     void Update()
@@ -52,10 +55,23 @@ public class PlayerController : MonoBehaviour
         {
             wantsToJump = true;
         }
+
+        if (isInDeathsDoor)
+        {
+            deathsDoorTimer -= Time.deltaTime;
+            if (deathsDoorTimer <= 0)
+            {
+                ExitDeathsDoor();
+            }
+        }
+
+    
     }
 
     void FixedUpdate()
     {
+        if (isInDeathsDoor) return;
+
         float moveInputx = Input.GetAxis("Horizontal");
         float moveInputy = Input.GetAxis("Vertical");
 
@@ -226,8 +242,31 @@ public class PlayerController : MonoBehaviour
         GameObject grapple = Instantiate(grapplingHookPrefab, spawnPosition, Quaternion.identity);
         Rigidbody2D rb = grapple.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, grappleSpeed);
-        Debug.Log("disparo y destruyendo");
         Destroy(grapple, 2f);
-        Debug.Log("se destruyo en teoria");
     }
+
+    public void EnterDeathsDoor()
+    {
+        isInDeathsDoor = true;
+        deathsDoorTimer = 5f; 
+        animator.SetTrigger("DeathsDoor");
+    }
+
+    private void ExitDeathsDoor()
+    {
+        isInDeathsDoor = false;
+        animator.SetTrigger("ExitDeathsDoor");
+    }
+
+    public void EndLevel()
+    {
+        currentLevel++;
+        player.GetComponent<PlayerController>().ResetPlayerPosition();
+
+        camera.GetComponent<CameraController>().ResetCameraPosition();
+
+        levelGenerator.GetComponent<LevelGeneratorController>().ResetLevelGenerator();
+        enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllEnemies();
+    }
+
 }

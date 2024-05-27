@@ -7,7 +7,6 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     public GameObject player;
     public GameObject levelGenerator;
-    public GameObject camera;
     public GameObject enemySpawner;
 
     public int score;

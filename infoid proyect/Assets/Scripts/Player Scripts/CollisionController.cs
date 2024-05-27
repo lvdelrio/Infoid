@@ -38,7 +38,15 @@ public class CollisionController : MonoBehaviour
                 //canMove = true;
                 break;
             case "Enemy":
-                Debug.Log("PLayer hit enemy!");
+                Debug.Log("Player hit enemy!");
+                if (playerController.isInDeathsDoor)
+                {
+                    playerController.Die();
+                }
+                else
+                {
+                    playerController.EnterDeathsDoor();
+                }
                 break;
             case "PowerUp":
                 Debug.Log("Player hit power up!");
