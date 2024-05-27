@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     bool wallJumping;
     private bool wantsToJump = false;
     private bool wantsToUseGrapplingHook = false;
-    private bool _isOnPerryBoost = false;
+    private bool _isOnParryBoost = false;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
@@ -160,15 +160,15 @@ public class PlayerController : MonoBehaviour
         moveSpeed = DefaultMoveSpeed;
     }
 
-    IEnumerator perryBoost()
+    IEnumerator parryBoost()
     {
-        _isOnPerryBoost = true;
+        _isOnParryBoost = true;
         moveSpeed += moveSpeedBoost;
 
         yield return new WaitForSeconds(boostDuration);
 
         moveSpeed = DefaultMoveSpeed;
-        _isOnPerryBoost = false;
+        _isOnParryBoost = false;
     }
 
     public void IncreaseStats(StatBonus statBonus)
@@ -290,22 +290,22 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(0, grappleSpeed);
     }
 
-    public void onPerry()
+    public void onParry()
     {
-        StartCoroutine(perryBoost());
+        StartCoroutine(parryBoost());
     }
 
-    public bool isOnPerryBoost
+    public bool isOnParryBoost
     {
-        get { return _isOnPerryBoost; }
+        get { return _isOnParryBoost; }
     }
     public void PickupActiveItem(ActiveItemPickup itemPickup)
-{
-    if (inventoryController != null)
     {
-        inventoryController.AddActiveItem(itemPickup.itemData);
-        Destroy(itemPickup.gameObject);
+        if (inventoryController != null)
+        {
+            inventoryController.AddActiveItem(itemPickup.itemData);
+            Destroy(itemPickup.gameObject);
+        }
     }
-}
 }
 

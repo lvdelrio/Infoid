@@ -25,7 +25,7 @@ public class CollisionController : MonoBehaviour
         if (playerInParryZone && Input.GetKeyDown(KeyCode.K) && currentEnemyGameObject && currentEnemy && !currentEnemy.hasCollideWithPlayer)
         {
             Destroy(currentEnemyGameObject);
-            playerController.onPerry();
+            playerController.onParry();
         }
     }
 
@@ -34,9 +34,9 @@ public class CollisionController : MonoBehaviour
         switch (other.tag)
         {
             case "obstacle":
-                if (playerController.isOnPerryBoost)
+                if (playerController.isOnParryBoost)
                 {
-                    Debug.Log("Player hit an obstacle on perry boost!");
+                    Debug.Log("Player hit an obstacle on parry boost!");
 
                 }
                 else
@@ -63,7 +63,7 @@ public class CollisionController : MonoBehaviour
 
                 break;
 
-            case "Perry":
+            case "Parry":
                 playerInParryZone = true;
                 currentEnemy = other.GetComponentInParent<SimpleEnemyController>();
                 currentEnemyGameObject = other.transform.parent.gameObject;
@@ -85,7 +85,7 @@ public class CollisionController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Perry"))
+        if (other.CompareTag("Parry"))
         {
             playerInParryZone = false;
         }

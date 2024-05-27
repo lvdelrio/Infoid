@@ -43,9 +43,6 @@ public class SimpleEnemyController : MonoBehaviour
     {
         if (collision.CompareTag("Grappler") || collision.CompareTag("Weapon"))
         {
-            Die();
-        }
-        {
             Destroy(gameObject);
         }
     }

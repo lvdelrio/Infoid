@@ -29,7 +29,7 @@ public class Grappler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!touchedEnemy && (collision.CompareTag("Enemy") || collision.CompareTag("Perry")))
+        if (!touchedEnemy && (collision.CompareTag("Enemy") || collision.CompareTag("Parry")))
         {
             touchedEnemy = true;
             player.GetComponent<PlayerController>().MoveToEnemy(collision.transform.position, gameObject);
