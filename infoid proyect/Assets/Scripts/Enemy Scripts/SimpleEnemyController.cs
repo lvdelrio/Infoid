@@ -48,6 +48,7 @@ public class SimpleEnemyController : MonoBehaviour
     }
     public void Die()
     {
+        Debug.Log("Enemy died");
         Destroy(this.gameObject);
     }
 

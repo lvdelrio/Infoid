@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public Camera camera;
     public Animator animator;
     public GameObject grapplingHookPrefab;
+    public SpriteRenderer spriteRenderer;
+    public int framesToShow = 5;
 
 
     [Header("Player Movement")]
@@ -65,6 +67,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
             wantsToUseGrapplingHook = true;
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Attack();
         }
     }
 
@@ -128,15 +134,13 @@ public class PlayerController : MonoBehaviour
             {
                 FireGrapplingHook();
             }
+            
         }
         else
         {
             rb.velocity = new Vector2(0, 0);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Attack();
-        }
+        
     }
 
     private void OnDrawGizmosSelected()
@@ -145,12 +149,18 @@ public class PlayerController : MonoBehaviour
     }
     void Attack()
     {
+        Debug.Log("Attacking");
+        ShowAttack();
+        StartCoroutine(ShowSpriteForFrames());
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log("Enemy was hit");
-            enemy.GetComponent<SimpleEnemyController>().Die();
-            StartCoroutine(boost());
+            if (enemy.tag == "Enemy")
+            {
+                enemy.GetComponent<SimpleEnemyController>().Die();
+                StartCoroutine(boost());
+                
+            }
         }
     }
     IEnumerator boost()
@@ -169,6 +179,20 @@ public class PlayerController : MonoBehaviour
 
         moveSpeed = DefaultMoveSpeed;
         _isOnParryBoost = false;
+    }
+
+    public void ShowAttack()
+    {
+        StartCoroutine(ShowSpriteForFrames());
+    }
+
+    private IEnumerator ShowSpriteForFrames()
+    {
+        spriteRenderer.enabled = true; 
+
+        yield return new WaitForSeconds(.1f);
+
+        spriteRenderer.enabled = false;
     }
 
     public void IncreaseStats(StatBonus statBonus)
