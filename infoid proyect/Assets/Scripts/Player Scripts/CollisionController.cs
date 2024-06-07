@@ -20,14 +20,6 @@ public class CollisionController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (playerInParryZone && Input.GetKeyDown(KeyCode.K) && currentEnemyGameObject && currentEnemy && !currentEnemy.hasCollideWithPlayer)
-        {
-            Destroy(currentEnemyGameObject);
-            playerController.onParry();
-        }
-    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -63,13 +55,6 @@ public class CollisionController : MonoBehaviour
 
                 break;
 
-            case "Parry":
-                playerInParryZone = true;
-                currentEnemy = other.GetComponentInParent<SimpleEnemyController>();
-                currentEnemyGameObject = other.transform.parent.gameObject;
-
-                break;
-
             case "PowerUp":
                 Debug.Log("Player hit power up!");
                 Debug.Log(itemDatabase.allPassiveItems.Count);
@@ -83,11 +68,4 @@ public class CollisionController : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Parry"))
-        {
-            playerInParryZone = false;
-        }
-    }
 }

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject grapplingHookPrefab;
     public SpriteRenderer spriteRenderer;
+    public ParryController parryController;
     public int framesToShow = 5;
 
 
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
     private bool _isOnParryBoost = false;
 
     public Transform attackPoint;
+
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
 
@@ -71,6 +73,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             Attack();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            parryController.Parry();
         }
     }
 
@@ -170,7 +176,7 @@ public class PlayerController : MonoBehaviour
         moveSpeed = DefaultMoveSpeed;
     }
 
-    IEnumerator parryBoost()
+    public IEnumerator parryBoost()
     {
         _isOnParryBoost = true;
         moveSpeed += moveSpeedBoost;
