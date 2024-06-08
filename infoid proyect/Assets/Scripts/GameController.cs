@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class GameController : MonoBehaviour
     public GameObject levelGenerator;
     public GameObject camera;
     public GameObject enemySpawner;
+    public GameObject eventSystem;
 
     public int score;
     public int currentLevel;
@@ -20,7 +23,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         score = 0;
-        currentLevel = 1;
+        currentLevel = 0;
     }
 
     // Update is called once per frame
@@ -52,6 +55,9 @@ public class GameController : MonoBehaviour
 
     public void EndLevel()
     {
+        if (currentLevel == 0){
+            eventSystem.GetComponent<LoadNextScene>().LoadNextLevel();
+        }
         currentLevel++;
         player.GetComponent<PlayerController>().ResetPlayerPosition();
         camera.GetComponent<CameraController>().ResetCameraPosition();
