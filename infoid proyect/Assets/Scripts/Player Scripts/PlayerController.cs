@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Camera camera;
     public Animator animator;
-    public GameObject grapplingHookPrefab;
+    public GameObject grapplingHookReachPrefab;
     public SpriteRenderer spriteRenderer;
     public ParryController parryController;
     public int framesToShow = 5;
@@ -21,9 +22,9 @@ public class PlayerController : MonoBehaviour
     private float DefaultMoveSpeed = 10f;
     private float moveSpeedBoost = 2f;
     private float boostDuration = 3f;
+    private bool isUsingHook = false;
     public float distance;
     public float FallingConst = 5f;
-
     private float lastYPosition;
     private float wallDirection = 0f;
     public float grappleSpeed = 20f;
@@ -66,14 +67,16 @@ public class PlayerController : MonoBehaviour
             wantsToJump = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J) && !isUsingHook && !isTouchingWall)
         {
             wantsToUseGrapplingHook = true;
         }
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             Attack();
         }
+
         if (Input.GetKeyDown(KeyCode.K))
         {
             parryController.Parry();
@@ -140,13 +143,13 @@ public class PlayerController : MonoBehaviour
             {
                 FireGrapplingHook();
             }
-            
+
         }
         else
         {
             rb.velocity = new Vector2(0, 0);
         }
-        
+
     }
 
     private void OnDrawGizmosSelected()
@@ -165,7 +168,7 @@ public class PlayerController : MonoBehaviour
             {
                 enemy.GetComponent<SimpleEnemyController>().Die();
                 StartCoroutine(boost());
-                
+
             }
         }
     }
@@ -194,7 +197,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ShowSpriteForFrames()
     {
-        spriteRenderer.enabled = true; 
+        spriteRenderer.enabled = true;
 
         yield return new WaitForSeconds(.1f);
 
@@ -284,28 +287,47 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(MoveTowardsPosition(enemyPosition, grapple));
     }
 
-    IEnumerator MoveTowardsPosition(Vector3 position, GameObject grapple)
+    IEnumerator MoveTowardsPosition(Vector3 targetPosition, GameObject grapple)
     {
+        isUsingHook = true;
         float startTime = Time.time;
         Vector3 startPosition = transform.position;
-        float journeyLength = Vector3.Distance(startPosition, position);
+        float journeyLength = Vector3.Distance(startPosition, targetPosition);
         float journeyTime = journeyLength / grappleSpeed;
 
-        float initialGrappleHeight = grapple.transform.localScale.y;
+        // Initial scale of the grapple
+        float initialGrappleLength = grapple.transform.localScale.x;
 
         while (Time.time - startTime < journeyTime)
         {
             float fracJourney = (Time.time - startTime) / journeyTime;
-            transform.position = Vector3.Lerp(startPosition, position, fracJourney);
 
-            float newHeight = Mathf.Lerp(initialGrappleHeight, 0, fracJourney);
-            Vector3 grappleScale = grapple.transform.localScale;
-            grappleScale.y = newHeight;
-            grapple.transform.localScale = grappleScale;
+            // Move the player towards the target position
+            Vector3 currentPosition = Vector3.Lerp(startPosition, targetPosition, fracJourney);
+            transform.position = currentPosition;
+
+            // Calculate the new length of the grapple
+            float newLength = Mathf.Lerp(initialGrappleLength, 0.6f, fracJourney);
+
+            // Calculate the current direction from the player to the target position
+            Vector3 currentDirection = (targetPosition - currentPosition).normalized;
+
+            // Adjust the grapple's scale to simulate shrinking from one end
+            grapple.transform.localScale = new Vector3(newLength, grapple.transform.localScale.y, grapple.transform.localScale.z);
+
+            // Adjust grapple position to start from the current player position
+            grapple.transform.position = currentPosition + (currentDirection * newLength / 2);
 
             yield return null;
         }
 
+        // Ensure the player reaches the exact target position and grapple has shrunk completely at the end
+        transform.position = targetPosition;
+        grapple.transform.localScale = new Vector3(0.6f, grapple.transform.localScale.y, grapple.transform.localScale.z);
+        Vector3 finalDirection = (targetPosition - startPosition).normalized;
+        grapple.transform.position = startPosition + (finalDirection * 0.6f / 2);
+
+        isUsingHook = false;
         Destroy(grapple);
     }
 
@@ -315,7 +337,7 @@ public class PlayerController : MonoBehaviour
 
         float offsetDistance = 5.0f;
         Vector3 spawnPosition = transform.position + Vector3.down * offsetDistance;
-        GameObject grapple = Instantiate(grapplingHookPrefab, spawnPosition, Quaternion.identity);
+        GameObject grapple = Instantiate(grapplingHookReachPrefab, spawnPosition, Quaternion.identity);
         Rigidbody2D rb = grapple.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, grappleSpeed);
     }
