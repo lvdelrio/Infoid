@@ -13,8 +13,10 @@ public class SimpleEnemyController : MonoBehaviour
     public float deathTime;
     private float Timer;
     private GameObject player;
+    GameObject targetGameObject;
     private bool _hasCollideWithPlayer = false;
 
+    [SerializeField] int experience_reward = 400;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -48,6 +50,8 @@ public class SimpleEnemyController : MonoBehaviour
     }
     public void Die()
     {
+        targetGameObject = GameObject.FindGameObjectWithTag("Player");
+        targetGameObject.GetComponent<Level>().AddExperience(experience_reward);
         Debug.Log("Enemy died");
         Destroy(this.gameObject);
     }
@@ -61,4 +65,6 @@ public class SimpleEnemyController : MonoBehaviour
     {
         _hasCollideWithPlayer = true;
     }
+
+
 }
