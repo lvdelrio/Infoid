@@ -12,9 +12,11 @@ public class ItemSpawnerController : MonoBehaviour
 
     private List<GameObject> _items = new List<GameObject>();
     private float _timer;
+    
+    
 
     void FixedUpdate()
-    {
+    {        
         if (_timer >= spawnRate && _items.Count < maxItems)
         {
             SpawnItem();
