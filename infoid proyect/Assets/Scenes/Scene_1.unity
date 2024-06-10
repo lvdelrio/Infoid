@@ -1599,6 +1599,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiniBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 3200397707476952253, guid: 45fd8770ab0dde2428caf6fd6d4bc69a, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200397707476952253, guid: 45fd8770ab0dde2428caf6fd6d4bc69a, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200397707476952253, guid: 45fd8770ab0dde2428caf6fd6d4bc69a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6679219870871197432, guid: 45fd8770ab0dde2428caf6fd6d4bc69a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.499358
