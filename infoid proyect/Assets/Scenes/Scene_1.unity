@@ -345,6 +345,11 @@ MonoBehaviour:
   - {fileID: 514951601929996677, guid: 7b98e5b34f94dcb43b85d6882dcde5af, type: 3}
   - {fileID: 8750481286133293265, guid: e267e7742f6dca64d9b7dec1bf150ba5, type: 3}
   _edgeColliderPrefab: {fileID: 2459065755106015141, guid: 29286780d7d39eb428b8684d6527e2e4, type: 3}
+  materialBackground:
+  - {fileID: 2100000, guid: eb601d885127ae44ba4d3065e6bcdad7, type: 2}
+  - {fileID: 2100000, guid: cdb1910064227124f8e20f01a9aa3010, type: 2}
+  - {fileID: 2100000, guid: 17c3832962f86d74ebe1107353213070, type: 2}
+  materialPrefab: []
   initialSegmentPosition: {fileID: 4090060790347573340, guid: 4477afef248316446a2c2c68226e6714, type: 3}
   levelSegmentCount: 12
 --- !u!4 &178116777

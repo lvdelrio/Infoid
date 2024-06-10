@@ -55,9 +55,9 @@ public class GameController : MonoBehaviour
 
     public void EndLevel()
     {
-        if (currentLevel == 0){
-            eventSystem.GetComponent<LoadNextScene>().LoadNextLevel();
-        }
+        // if (currentLevel == 0){
+        //     eventSystem.GetComponent<LoadNextScene>().LoadNextLevel();
+        // }
         currentLevel++;
         player.GetComponent<PlayerController>().ResetPlayerPosition();
         camera.GetComponent<CameraController>().ResetCameraPosition();

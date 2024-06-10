@@ -10,6 +10,6 @@ public class LoadNextScene : MonoBehaviour
     public void LoadNextLevel()
     {
         Debug.Log("Cambie de pantalla");
-        SceneManager.LoadScene(nextSceneIndex);
+        //SceneManager.LoadScene(nextSceneIndex);
     }
 }

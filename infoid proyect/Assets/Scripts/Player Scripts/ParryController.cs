@@ -44,6 +44,7 @@ public class ParryController : MonoBehaviour
 
         foreach (SimpleEnemyController enemy in enemies)
         {
+            //Debug.Log(Vector3.Distance(transform.position, enemy.transform.position));
             if (enemy == null)
             {
                 enemiesToRemove.Add(enemy);

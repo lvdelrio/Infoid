@@ -14,6 +14,11 @@ public class LevelGeneratorController : MonoBehaviour
     [SerializeField] private List<GameObject> _powerUpPrefabs;
     [SerializeField] private GameObject _edgeColliderPrefab;
 
+    public Material[] materialBackground;
+    public Material[] materialPrefab;
+    private Camera _mainCamera;
+    private int currentLevel;
+
     private Vector3 _lastSegmentPosition;
 
     private List<Transform> _activeSegments = new List<Transform>();
@@ -30,6 +35,7 @@ public class LevelGeneratorController : MonoBehaviour
 
     private void Awake() {
         InitiateSegmentCreation();
+        _mainCamera = Camera.main;
         
     }
     
@@ -173,11 +179,20 @@ public class LevelGeneratorController : MonoBehaviour
     }
 
     public void ResetLevelGenerator() {
+        currentLevel++;
         DestroyAllSegments();
         DestroyAllObstacles();
         DestroyAllPowerUps();
 
         InitiateSegmentCreation();
         _currentLevelSegmentCount = 0;
+
+        //cambiar de nivel al volver al principio, cambiando de color el background de la camara
+        _mainCamera.backgroundColor = materialBackground[currentLevel].color;
+            // Cambiar el material de los prefabs
+        // foreach (GameObject prefab in spawnedPrefabs) {
+        //     prefab.GetComponent<Renderer>().material = prefabMaterials[currentLevel];
+        // }
+
     }
 }
