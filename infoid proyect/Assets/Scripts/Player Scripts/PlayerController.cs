@@ -164,11 +164,18 @@ public class PlayerController : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
+            Debug.Log("We hit " + enemy.name);
             if (enemy.tag == "Enemy")
             {
                 enemy.GetComponent<SimpleEnemyController>().Die();
                 StartCoroutine(boost());
 
+            }
+            if (enemy.tag == "Boss")
+            {
+                Debug.Log("Boss hit");
+                enemy.GetComponent<BossController>().TakeDamage(damage);
+                StartCoroutine(boost());
             }
         }
     }

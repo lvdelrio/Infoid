@@ -16,6 +16,6 @@ MonoBehaviour:
   description: Steel armor
   statBonus:
     moveSpeedBonus: 1
-    maxHealthBonus: 10
+    maxHealthBonus: 25
     damageBonus: 0
     luckBonus: 0

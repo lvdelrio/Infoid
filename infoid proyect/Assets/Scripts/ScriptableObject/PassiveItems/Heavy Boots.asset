@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Heavy boots
   description: Boots
   statBonus:
-    moveSpeedBonus: 1
-    maxHealthBonus: 10
+    moveSpeedBonus: 2
+    maxHealthBonus: 5
     damageBonus: 0
     luckBonus: 0

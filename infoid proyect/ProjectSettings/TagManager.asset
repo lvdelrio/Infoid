@@ -13,6 +13,7 @@ TagManager:
   - Grappler
   - Weapon
   - Parry
+  - Boss
   layers:
   - Default
   - TransparentFX

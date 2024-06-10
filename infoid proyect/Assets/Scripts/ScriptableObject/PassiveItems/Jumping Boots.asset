@@ -16,6 +16,6 @@ MonoBehaviour:
   description: Boots
   statBonus:
     moveSpeedBonus: 1
-    maxHealthBonus: 10
+    maxHealthBonus: 0
     damageBonus: 0
     luckBonus: 0

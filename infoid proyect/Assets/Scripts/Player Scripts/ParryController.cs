@@ -28,8 +28,11 @@ public class ParryController : MonoBehaviour
     {
         foreach (SimpleEnemyController enemy in enemies)
         {
-            enemy.Die();
-            StartCoroutine(playerController.parryBoost());
+            if (enemy != null)
+            {
+                enemy.Die();
+                StartCoroutine(playerController.parryBoost());
+            }
         }
         enemies.Clear();
     }
@@ -41,7 +44,12 @@ public class ParryController : MonoBehaviour
 
         foreach (SimpleEnemyController enemy in enemies)
         {
-            Debug.Log(Vector3.Distance(transform.position, enemy.transform.position));
+            if (enemy == null)
+            {
+                enemiesToRemove.Add(enemy);
+                continue;
+            }
+
             if (Vector3.Distance(transform.position, enemy.transform.position) > colliderRadius)
             {
                 enemiesToRemove.Add(enemy);
@@ -53,5 +61,8 @@ public class ParryController : MonoBehaviour
         {
             enemies.Remove(enemy);
         }
+
+        // Double buffer to remove null references safely
+        enemies.RemoveAll(enemy => enemy == null);
     }
 }

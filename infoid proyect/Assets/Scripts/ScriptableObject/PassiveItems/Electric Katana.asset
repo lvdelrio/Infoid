@@ -16,6 +16,6 @@ MonoBehaviour:
   description: Electric Katana
   statBonus:
     moveSpeedBonus: 1
-    maxHealthBonus: 10
-    damageBonus: 0
+    maxHealthBonus: 0
+    damageBonus: 5
     luckBonus: 0

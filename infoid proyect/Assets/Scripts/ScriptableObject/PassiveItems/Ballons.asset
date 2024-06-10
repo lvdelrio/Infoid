@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8be686e43b46441b5bafd8ef2a0199, type: 3}
   m_Name: Ballons
   m_EditorClassIdentifier: 
-  itemName: Ballons
-  description: Ballons
+  itemName: Balloons
+  description: Balloons
   statBonus:
-    moveSpeedBonus: 1
-    maxHealthBonus: 10
+    moveSpeedBonus: 5
+    maxHealthBonus: 0
     damageBonus: 0
-    luckBonus: 0
+    luckBonus: 1
