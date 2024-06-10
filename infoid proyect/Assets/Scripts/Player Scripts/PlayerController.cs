@@ -116,8 +116,15 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                rb.velocity = new Vector2(moveInputx * moveSpeed, moveInputy != 0 ? moveInputy * moveSpeed : -FallingConst);
-
+                
+                if (moveInputy == 0 && rb.velocity.y < 0)
+                {
+                    rb.velocity = new Vector2(moveInputx * moveSpeed, Mathf.Lerp(rb.velocity.y, -FallingConst, 0.1f));
+                }
+                else
+                {
+                    rb.velocity = new Vector2(moveInputx * moveSpeed, moveInputy * moveSpeed);
+                }
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 transform.localScale = new Vector3(7, 7, 1);
             }
