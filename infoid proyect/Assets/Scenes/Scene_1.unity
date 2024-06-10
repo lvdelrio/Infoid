@@ -349,7 +349,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: eb601d885127ae44ba4d3065e6bcdad7, type: 2}
   - {fileID: 2100000, guid: cdb1910064227124f8e20f01a9aa3010, type: 2}
   - {fileID: 2100000, guid: 17c3832962f86d74ebe1107353213070, type: 2}
-  materialPrefab: []
+  materialPrefab:
+  - {fileID: 2100000, guid: 17a4c7bb6ef0c684e99b72ba53b0159f, type: 2}
+  - {fileID: 2100000, guid: e1a6c9fa58f3bbe45ab98ffc46fec7eb, type: 2}
+  - {fileID: 2100000, guid: 351ec408a86196943857664bfefbe820, type: 2}
   initialSegmentPosition: {fileID: 4090060790347573340, guid: 4477afef248316446a2c2c68226e6714, type: 3}
   levelSegmentCount: 12
 --- !u!4 &178116777
@@ -1776,10 +1779,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1008009219}
+  - {fileID: 178116777}
   - {fileID: 9059637777522909667}
   - {fileID: 569676796}
   - {fileID: 1052333519}
-  - {fileID: 178116777}
   - {fileID: 186485573}
   - {fileID: 794165852}
   - {fileID: 1465457046}

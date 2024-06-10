@@ -76,8 +76,14 @@ public class LevelGeneratorController : MonoBehaviour
 
 
     private Transform CreateSegment(Transform segment_part, Vector3 spawn_position){
-        Debug.Log("Creating segment at position: "+spawn_position);
-        return Instantiate(segment_part, spawn_position, Quaternion.identity);
+        Debug.Log("Creating segment at position: "+spawn_position+"   "+currentLevel);
+        Transform newSegment = Instantiate(segment_part, spawn_position, Quaternion.identity);
+        Renderer[] renderers = newSegment.GetComponentsInChildren<SpriteRenderer>();
+        foreach (Renderer renderer in renderers)
+        {
+            renderer.material = materialPrefab[currentLevel];
+        }
+        return newSegment;
     } 
 
     private void SpawnObject(Transform wallLeft, Transform wallRight, List<GameObject> objectList, List<GameObject> activeObjects) {
@@ -191,7 +197,7 @@ public class LevelGeneratorController : MonoBehaviour
         _mainCamera.backgroundColor = materialBackground[currentLevel].color;
             // Cambiar el material de los prefabs
         // foreach (GameObject prefab in spawnedPrefabs) {
-        //     prefab.GetComponent<Renderer>().material = prefabMaterials[currentLevel];
+        //     prefab.GetComponent<Renderer>().material = materialPrefab[currentLevel];
         // }
 
     }
