@@ -34,6 +34,8 @@ public class CollisionController : MonoBehaviour
                 else
                 {
                     Debug.Log("Player hit an obstacle!");
+                    //enter Deathdoor
+                    playerController.StartDeathDoorCountdown();
 
                 }
 
@@ -43,6 +45,7 @@ public class CollisionController : MonoBehaviour
                 Debug.Log("Player hit the edge!");
                 //canMove = false;
                 gameController.EndLevel();
+                playerController.ResetDeathDoorState();
                 //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
                 //camera.GetComponent<CameraController>().ResetCameraPosition();
                 //canMove = true;
@@ -52,6 +55,8 @@ public class CollisionController : MonoBehaviour
                 Debug.Log("Player hit enemy!");
                 currentEnemy = other.GetComponentInParent<SimpleEnemyController>();
                 currentEnemy.collidedWithPlayer();
+                //enter Deathdoor
+                playerController.StartDeathDoorCountdown();
 
                 break;
 

@@ -52,6 +52,7 @@ public class SimpleEnemyController : MonoBehaviour
     {
         targetGameObject = GameObject.FindGameObjectWithTag("Player");
         targetGameObject.GetComponent<Level>().AddExperience(experience_reward);
+        //add currency reward
         Debug.Log("Enemy died");
         Destroy(this.gameObject);
     }

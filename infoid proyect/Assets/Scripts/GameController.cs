@@ -51,7 +51,15 @@ public class GameController : MonoBehaviour
         return _distance;
     }
 
-
+    public void FinishGame()
+    {
+        //me lo hizo el bot pero funciona
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
+    }
 
     public void EndLevel()
     {

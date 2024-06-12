@@ -53,6 +53,11 @@ public class PlayerController : MonoBehaviour
 
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
+    [Header("Death Door")]
+    public float deathDoorDuration = 5f;
+    private bool _inDeathDoor = false;
+    private bool _killedEnemyDuringDeathDoor = false;
+    private Coroutine _deathDoorCoroutine;
 
     void Start()
     {
@@ -169,6 +174,10 @@ public class PlayerController : MonoBehaviour
             {
                 enemy.GetComponent<SimpleEnemyController>().Die();
                 StartCoroutine(boost());
+                if (_inDeathDoor)
+                {
+                    RegisterEnemyKill();
+                }
 
             }
             if (enemy.tag == "Boss")
@@ -176,6 +185,10 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Boss hit");
                 enemy.GetComponent<BossController>().TakeDamage(damage);
                 StartCoroutine(boost());
+                if (_inDeathDoor)
+                {
+                    RegisterEnemyKill();
+                }
             }
         }
     }
@@ -195,6 +208,61 @@ public class PlayerController : MonoBehaviour
 
         moveSpeed = DefaultMoveSpeed;
         _isOnParryBoost = false;
+    }
+
+    public void StartDeathDoorCountdown()
+    {
+        if(_inDeathDoor)return;
+
+        if (_deathDoorCoroutine != null)
+            StopCoroutine(_deathDoorCoroutine);
+
+        _deathDoorCoroutine = StartCoroutine(DeathDoorCountdown());
+    }
+
+    public void RegisterEnemyKill()
+    {
+        Debug.Log("sobreviviste al Death Door");
+        _killedEnemyDuringDeathDoor = true;
+    }
+
+public bool InDeathDoor { get { return _inDeathDoor; } }
+
+    private IEnumerator DeathDoorCountdown()
+    {
+        Debug.Log("entre a Death Door ");
+        _inDeathDoor = true;
+        _killedEnemyDuringDeathDoor = false;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < deathDoorDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        if (_killedEnemyDuringDeathDoor)
+        {
+            // Reset the "Death Door" state
+            _inDeathDoor = false;
+        }
+        else
+        {
+            Debug.Log("moriste!! fin del juego");
+            gameController.FinishGame();
+        }
+    }
+
+    public void ResetDeathDoorState()
+    {
+        _inDeathDoor = false;
+        _killedEnemyDuringDeathDoor = false;
+        if (_deathDoorCoroutine != null)
+        {
+            StopCoroutine(_deathDoorCoroutine);
+            _deathDoorCoroutine = null;
+        }
     }
 
     public void ShowAttack()
