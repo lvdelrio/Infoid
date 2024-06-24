@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public GameObject camera;
     public GameObject enemySpawner;
     public GameObject eventSystem;
+    public GameObject blockHandPreFab;
 
     public int score;
     public int currentLevel;
@@ -53,7 +54,16 @@ public class GameController : MonoBehaviour
 
     public void FinishGame()
     {
+        //isntanciar al bloque que te persigue y termina el juego
+        Instantiate<GameObject>(blockHandPreFab, player.transform.position + new Vector3(0,30,0), Quaternion.identity);
         //me lo hizo el bot pero funciona
+        /* #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif */
+    }
+    public void finish(){
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
         #else

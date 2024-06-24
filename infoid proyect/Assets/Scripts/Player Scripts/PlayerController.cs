@@ -48,7 +48,8 @@ public class PlayerController : MonoBehaviour
     private bool wantsToJump = false;
     private bool wantsToUseGrapplingHook = false;
     private bool _isOnParryBoost = false;
-
+    public float cooldownDuration = 1.5f;
+    private bool canAttack = true;
     public Transform attackPoint;
 
     public float attackRange = 0.5f;
@@ -77,8 +78,10 @@ public class PlayerController : MonoBehaviour
             wantsToUseGrapplingHook = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && canAttack)
         {
+            canAttack = false;
+            StartCoroutine(AttackCooldown());
             Attack();
         }
 
@@ -192,6 +195,11 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(cooldownDuration); // Wait for the cooldown duration
+        canAttack = true; // Set canAttack to true to allow attacking again
+    }
     IEnumerator boost()
     {
         moveSpeed += moveSpeedBoost;
@@ -250,6 +258,7 @@ public bool InDeathDoor { get { return _inDeathDoor; } }
         else
         {
             Debug.Log("moriste!! fin del juego");
+            Debug.Log("instanciar BlockHands");
             gameController.FinishGame();
         }
     }
