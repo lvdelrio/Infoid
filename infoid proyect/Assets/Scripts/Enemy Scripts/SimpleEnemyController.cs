@@ -15,8 +15,11 @@ public class SimpleEnemyController : MonoBehaviour
     private GameObject player;
     GameObject targetGameObject;
     private bool _hasCollideWithPlayer = false;
+    private bool isFlyingAway = false;
+    private Vector2 flyAwayDirection;
 
     [SerializeField] int experience_reward = 400;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -25,22 +28,36 @@ public class SimpleEnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Crear y agregar direccion al objeto hacia el jugador
-        Vector2 direction = (player.transform.position - transform.position).normalized;
-
-        rb.AddForce(direction * speed);
-
-        if (rb.velocity.magnitude > maxSpeed)
+        if (isFlyingAway)
         {
-            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+            rb.AddForce(flyAwayDirection * speed);
+
+            if (IsOutsideScreen())
+            {
+                Destroy(this.gameObject);
+            }
         }
-
-        Timer += Time.fixedDeltaTime;
-        if (Timer >= deathTime)
+        else
         {
-            Destroy(this.gameObject);
+            //Crear y agregar direccion al objeto hacia el jugador
+            Vector2 direction = (player.transform.position - transform.position).normalized;
+
+            rb.AddForce(direction * speed);
+
+            if (rb.velocity.magnitude > maxSpeed)
+            {
+                rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+            }
+
+            Timer += Time.fixedDeltaTime;
+
+            if (Timer >= deathTime)
+            {
+                StartFlyingAway();
+            }
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Weapon"))
@@ -48,6 +65,7 @@ public class SimpleEnemyController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public void Die()
     {
         targetGameObject = GameObject.FindGameObjectWithTag("Player");
@@ -67,5 +85,16 @@ public class SimpleEnemyController : MonoBehaviour
         _hasCollideWithPlayer = true;
     }
 
+    void StartFlyingAway()
+    {
+        isFlyingAway = true;
+        flyAwayDirection = (transform.position - player.transform.position).normalized;
+        rb.velocity = Vector2.zero;
+    }
 
+    bool IsOutsideScreen()
+    {
+        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+        return screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1;
+    }
 }
