@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: -189322804514177616}
+  gameController: {fileID: 3911935004259041039, guid: b91d593e772d9374db534cf9f0a85480, type: 3}
+  shurikenPrefab: {fileID: 8750481286133293265, guid: e267e7742f6dca64d9b7dec1bf150ba5, type: 3}
   speed: 1
   maxSpeed: 3
   deathTime: 10
