@@ -21,7 +21,7 @@ public class SimpleEnemyController : MonoBehaviour
     private Vector2 flyAwayDirection;
 
     [SerializeField] int experience_reward = 400;
-
+    [SerializeField] int Score_reward = 200;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");

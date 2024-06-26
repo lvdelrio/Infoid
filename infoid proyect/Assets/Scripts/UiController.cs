@@ -8,24 +8,28 @@ using UnityEngine.UI;
 public class UiController : MonoBehaviour
 {
     public GameObject player;
-    public GameController gameController; 
-    // PlayerController player;
-    Text distanceText;
-    private void Awake() {
-        // player = GameObject.Find("Player").GetComponent<PlayerController>();
-        distanceText = GameObject.Find("UiDist").GetComponent<Text>();
-    }
+    public GameController gameController;
+    public Text distanceText;
 
     void Start()
     {
-        
+        if (gameController == null)
+        {
+            gameController = FindObjectOfType<GameController>();
+        }
     }
+
     void Update()
     {
-        
-        //distanceText.text = distance.ToString("0.00")+" m";
-        // int  distance = Mathf.FloorToInt(player.distance);
-        distanceText.text = Mathf.FloorToInt(gameController.GetDistance())+" m";
-        
+        UpdateDistanceUI();
+    }
+
+    private void UpdateDistanceUI()
+    {
+        if (distanceText != null && gameController != null)
+        {
+            float totalDistance = gameController.GetTotalDistance();
+            distanceText.text = Mathf.FloorToInt(totalDistance) + " m";
+        }
     }
 }

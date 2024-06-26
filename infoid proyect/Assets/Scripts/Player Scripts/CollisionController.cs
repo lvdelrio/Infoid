@@ -37,6 +37,8 @@ public class CollisionController : MonoBehaviour
                 {
                     Debug.Log("Player hit an obstacle!");
                     //enter Deathdoor
+/*                     if(Camera.main.GetComponent<CameraController>().isZoomingIn)return;
+                    Camera.main.GetComponent<CameraController>().TriggerZoomIn(); */
                     playerController.StartDeathDoorCountdown();
 
                 }
@@ -55,10 +57,14 @@ public class CollisionController : MonoBehaviour
 
             case "Enemy":
                 Debug.Log("Player hit enemy!");
+                Debug.Log("you wwas hit");
                 currentEnemy = other.GetComponentInParent<SimpleEnemyController>();
                 currentEnemy.collidedWithPlayer();
                 cameraController.ShakeCamera();
                 //enter Deathdoor
+                // if(Camera.main.GetComponent<CameraController>().IsZoomIn)return;
+                /* if(Camera.main.GetComponent<CameraController>().isZoomingIn)return;
+                Camera.main.GetComponent<CameraController>().TriggerZoomIn(); */
                 playerController.StartDeathDoorCountdown();
 
                 break;
@@ -69,6 +75,9 @@ public class CollisionController : MonoBehaviour
                 int statToUpgrade = UnityEngine.Random.Range(0, itemDatabase.allPassiveItems.Count);
                 Debug.Log(statToUpgrade);
                 inventoryController.AddPassiveItem(itemDatabase.allPassiveItems[statToUpgrade]);
+                break;
+            case "deathEnemy":
+                gameController.finish();
                 break;
 
             default:
