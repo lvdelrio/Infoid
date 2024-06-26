@@ -7,6 +7,7 @@ public class CollisionController : MonoBehaviour
     GameController gameController;
     PlayerController playerController;
     InventoryController inventoryController;
+    private CameraController cameraController;
     public ItemDatabase itemDatabase;
     private bool playerInParryZone = false;
     private SimpleEnemyController currentEnemy;
@@ -17,6 +18,7 @@ public class CollisionController : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         gameController = playerController.gameController;
         inventoryController = playerController.inventoryController;
+        cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     // Update is called once per frame
@@ -55,6 +57,7 @@ public class CollisionController : MonoBehaviour
                 Debug.Log("Player hit enemy!");
                 currentEnemy = other.GetComponentInParent<SimpleEnemyController>();
                 currentEnemy.collidedWithPlayer();
+                cameraController.ShakeCamera();
                 //enter Deathdoor
                 playerController.StartDeathDoorCountdown();
 

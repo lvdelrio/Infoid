@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -9,6 +10,8 @@ public class CameraController : MonoBehaviour
     public float zoomOutSpeed = 15f;
     public float zoomInSpeed = 10f;
     private Camera cam;
+    public float shakeDuration = 0.3f;
+    public float shakeMagnitude = 0.5f;
 
     void Start()
     {
@@ -49,11 +52,33 @@ public class CameraController : MonoBehaviour
         }
     }
 
-
-
     public void ResetCameraPosition()
     {
         transform.position = new Vector3(0, 0, -10);
         cam.orthographicSize = 12f;
+    }
+
+    public void ShakeCamera()
+    {
+        StartCoroutine(Shake());
+    }
+
+    private IEnumerator Shake()
+    {
+        Vector3 originalPos = transform.localPosition;
+        float elapsed = 0.0f;
+
+        while (elapsed < shakeDuration)
+        {
+            float x = Random.Range(-1f, 1f) * shakeMagnitude;
+
+            transform.localPosition = new Vector3(originalPos.x + x, originalPos.y, originalPos.z);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        transform.localPosition = originalPos;
     }
 }
