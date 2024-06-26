@@ -640,6 +640,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7586304065619732019, guid: be2389a7d9e51e646bf6a9065ce2fe14, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d6142a36567eb7f43955bec267b0f3df, type: 2}
+    - target: {fileID: 3685318166057192478, guid: be2389a7d9e51e646bf6a9065ce2fe14, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1601562600, guid: 2824e315dbcc962489b5c2dc0b700638, type: 3}
     - target: {fileID: 4816572013587986203, guid: be2389a7d9e51e646bf6a9065ce2fe14, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
