@@ -24,10 +24,7 @@ public class PlayerController : MonoBehaviour
     private float boostDuration = 3f;
     private bool isUsingHook = false;
     public float distance;
-    public float fallingConst = 5f;
-    public float constantForceUpward = 0.5f;
-    public float constantForceDownward = 1.5f;
-
+    public float FallingConst = 5f;
     private float lastYPosition;
     private float wallDirection = 0f;
     public float grappleSpeed = 20f;
@@ -51,8 +48,7 @@ public class PlayerController : MonoBehaviour
     private bool wantsToJump = false;
     private bool wantsToUseGrapplingHook = false;
     private bool _isOnParryBoost = false;
-    public float cooldownDuration = 1.5f;
-    private bool canAttack = true;
+
     public Transform attackPoint;
 
     public float attackRange = 0.5f;
@@ -81,10 +77,8 @@ public class PlayerController : MonoBehaviour
             wantsToUseGrapplingHook = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.G) && canAttack)
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            canAttack = false;
-            StartCoroutine(AttackCooldown());
             Attack();
         }
 
@@ -96,26 +90,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        float moveInputX = Input.GetAxis("Horizontal");
-        float moveInputY = Input.GetAxis("Vertical");
-
-        float horizontalVelocity = moveInputX * moveSpeed;
-        float verticalVelocity;
-
-        if (moveInputY < 0) // Pressing S or down
-        {
-            verticalVelocity = moveInputY * moveSpeed * constantForceDownward;
-        }
-        else if (moveInputY > 0) // Pressing W or up
-        {
-            verticalVelocity = -fallingConst + (moveInputY * moveSpeed * constantForceUpward);
-        }
-        else // No vertical input
-        {
-            verticalVelocity = -fallingConst;
-        }
-
-        rb.velocity = new Vector2(horizontalVelocity, verticalVelocity);
+        float moveInputx = Input.GetAxis("Horizontal");
+        float moveInputy = Input.GetAxis("Vertical");
 
         if (canMove)
         {
@@ -148,6 +124,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                rb.velocity = new Vector2(moveInputx * moveSpeed, moveInputy != 0 ? moveInputy * moveSpeed : -FallingConst);
 
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 transform.localScale = new Vector3(7, 7, 1);
@@ -215,11 +192,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    IEnumerator AttackCooldown()
-    {
-        yield return new WaitForSeconds(cooldownDuration); // Wait for the cooldown duration
-        canAttack = true; // Set canAttack to true to allow attacking again
-    }
     IEnumerator boost()
     {
         moveSpeed += moveSpeedBoost;
@@ -278,7 +250,6 @@ public bool InDeathDoor { get { return _inDeathDoor; } }
         else
         {
             Debug.Log("moriste!! fin del juego");
-            Debug.Log("instanciar BlockHands");
             gameController.FinishGame();
         }
     }

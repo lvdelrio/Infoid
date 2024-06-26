@@ -14,7 +14,6 @@ TagManager:
   - Weapon
   - Parry
   - Boss
-  - deathEnemy
   layers:
   - Default
   - TransparentFX
