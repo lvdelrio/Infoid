@@ -6,8 +6,6 @@ public class SimpleEnemyController : MonoBehaviour
 {
     [Header("Required objects")]
     public Rigidbody2D rb;
-    [SerializeField] private GameController gameController;
-    public GameObject shurikenPrefab;
 
     [Header("Enemy Attributes")]
     public float speed;
@@ -17,8 +15,6 @@ public class SimpleEnemyController : MonoBehaviour
     private GameObject player;
     GameObject targetGameObject;
     private bool _hasCollideWithPlayer = false;
-    private bool isFlyingAway = false;
-    private Vector2 flyAwayDirection;
 
     [SerializeField] int experience_reward = 400;
     [SerializeField] int Score_reward = 200;
@@ -30,60 +26,35 @@ public class SimpleEnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isFlyingAway)
-        {
-            rb.AddForce(flyAwayDirection * speed);
+        //Crear y agregar direccion al objeto hacia el jugador
+        Vector2 direction = (player.transform.position - transform.position).normalized;
 
-            if (IsOutsideScreen())
-            {
-                Destroy(this.gameObject);
-            }
+        rb.AddForce(direction * speed);
+
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
         }
-        else
+
+        Timer += Time.fixedDeltaTime;
+        if (Timer >= deathTime)
         {
-            //Crear y agregar direccion al objeto hacia el jugador
-            Vector2 direction = (player.transform.position - transform.position).normalized;
-
-            rb.AddForce(direction * speed);
-
-            if (rb.velocity.magnitude > maxSpeed)
-            {
-                rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
-            }
-
-            Timer += Time.fixedDeltaTime;
-
-            if (Timer >= deathTime)
-            {
-                StartFlyingAway();
-            }
+            Destroy(this.gameObject);
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Weapon"))
         {
-            if (gameController.RollLuck(8, 10))
-            {
-                Instantiate(shurikenPrefab, transform.position, Quaternion.identity);
-            }
-
             Destroy(gameObject);
         }
     }
-
     public void Die()
     {
         targetGameObject = GameObject.FindGameObjectWithTag("Player");
         targetGameObject.GetComponent<Level>().AddExperience(experience_reward);
         //add currency reward
-
-        if (gameController.RollLuck(8, 10))
-        {
-            Instantiate(shurikenPrefab, transform.position, Quaternion.identity);
-        }
-
+        Debug.Log("Enemy died");
         Destroy(this.gameObject);
     }
 
@@ -97,16 +68,5 @@ public class SimpleEnemyController : MonoBehaviour
         _hasCollideWithPlayer = true;
     }
 
-    void StartFlyingAway()
-    {
-        isFlyingAway = true;
-        flyAwayDirection = (transform.position - player.transform.position).normalized;
-        rb.velocity = Vector2.zero;
-    }
 
-    bool IsOutsideScreen()
-    {
-        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
-        return screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1;
-    }
 }
