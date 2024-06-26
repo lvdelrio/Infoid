@@ -6,6 +6,8 @@ public class SimpleEnemyController : MonoBehaviour
 {
     [Header("Required objects")]
     public Rigidbody2D rb;
+    [SerializeField] private GameController gameController;
+    public GameObject shurikenPrefab;
 
     [Header("Enemy Attributes")]
     public float speed;
@@ -62,6 +64,11 @@ public class SimpleEnemyController : MonoBehaviour
     {
         if (collision.CompareTag("Weapon"))
         {
+            if (gameController.RollLuck(8, 10))
+            {
+                Instantiate(shurikenPrefab, transform.position, Quaternion.identity);
+            }
+
             Destroy(gameObject);
         }
     }
@@ -71,7 +78,12 @@ public class SimpleEnemyController : MonoBehaviour
         targetGameObject = GameObject.FindGameObjectWithTag("Player");
         targetGameObject.GetComponent<Level>().AddExperience(experience_reward);
         //add currency reward
-        Debug.Log("Enemy died");
+
+        if (gameController.RollLuck(8, 10))
+        {
+            Instantiate(shurikenPrefab, transform.position, Quaternion.identity);
+        }
+
         Destroy(this.gameObject);
     }
 
