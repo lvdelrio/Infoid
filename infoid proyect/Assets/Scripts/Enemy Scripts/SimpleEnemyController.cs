@@ -17,6 +17,7 @@ public class SimpleEnemyController : MonoBehaviour
     private bool _hasCollideWithPlayer = false;
 
     [SerializeField] int experience_reward = 400;
+    [SerializeField] int Score_reward = 200;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");

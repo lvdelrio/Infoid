@@ -18,39 +18,34 @@ public class GameController : MonoBehaviour
     public int currentLevel;
     private float _distance;
     private float _currentDistance;
-    private Vector2 _lastPosition;
     private float _totalDistance;
-    private float _currentLevelDistance;
-    private float _highestYPosition;
-
+    private float _loopDistance;
 
 
     void Start()
     {
         score = 0;
         currentLevel = 0;
-        _lastPosition = player.transform.position;
         _totalDistance = GameStats.TotalDistance;
-        _currentLevelDistance = 0;
+        _loopDistance = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 currentPosition = player.transform.position;
-        float distanceMoved = Vector2.Distance(_lastPosition, currentPosition);
-        float currentY = player.transform.position.y;
-        if(currentY < _highestYPosition){
-            float fallenDistance = _highestYPosition - currentY;
-            _totalDistance += fallenDistance;
-            _currentLevelDistance += fallenDistance;
-            _highestYPosition = currentY;
-        }
-        else if (currentY > _highestYPosition)
-        {
-            // Update the highest point if the player goes higher
-            _highestYPosition = currentY;
-        }
+        _currentDistance = Vector2.Distance(player.transform.position, new Vector2(0,0));
+    if (_currentDistance > _distance)
+    {
+        _distance = _currentDistance;
+    }
+
+    // Update loop distance
+    if (_distance > _loopDistance)
+    {
+        // Add the difference to total distance
+        _totalDistance += _distance - _loopDistance;
+        _loopDistance = _distance;
+    }
 
     }
 
@@ -81,13 +76,13 @@ public class GameController : MonoBehaviour
         //     eventSystem.GetComponent<LoadNextScene>().LoadNextLevel();
         // }
         GameStats.TotalDistance = _totalDistance;
+        _loopDistance = 0;
         //currentLevel++;
         player.GetComponent<PlayerController>().ResetPlayerPosition();
         camera.GetComponent<CameraController>().ResetCameraPosition();
         levelGenerator.GetComponent<LevelGeneratorController>().ResetLevelGenerator();
         enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllEnemies();
-        _currentLevelDistance = 0;
-        _highestYPosition = player.transform.position.y;
+
     }
 
     
@@ -119,10 +114,6 @@ public class GameController : MonoBehaviour
     public float GetDistance()
     {
         return _distance;
-    }
-        public float GetCurrentLevelDistance()
-    {
-        return _currentLevelDistance;
     }
 
     public float GetTotalDistance()
