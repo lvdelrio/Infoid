@@ -186,6 +186,9 @@ public class LevelGeneratorController : MonoBehaviour
 
     public void ResetLevelGenerator() {
         currentLevel++;
+        if (currentLevel >= materialPrefab.Length) {
+            currentLevel = 0;
+        }
         DestroyAllSegments();
         DestroyAllObstacles();
         DestroyAllPowerUps();
@@ -193,12 +196,7 @@ public class LevelGeneratorController : MonoBehaviour
         InitiateSegmentCreation();
         _currentLevelSegmentCount = 0;
 
-        //cambiar de nivel al volver al principio, cambiando de color el background de la camara
         _mainCamera.backgroundColor = materialBackground[currentLevel].color;
-            // Cambiar el material de los prefabs
-        // foreach (GameObject prefab in spawnedPrefabs) {
-        //     prefab.GetComponent<Renderer>().material = materialPrefab[currentLevel];
-        // }
 
     }
 }
