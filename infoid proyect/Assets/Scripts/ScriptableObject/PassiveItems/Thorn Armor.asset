@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Thorn Armor
   description: Thorn Armor
+  icon: {fileID: 4323271140470924259, guid: d2248d5d267cbb24c9b9f3765df030b1, type: 3}
   statBonus:
     moveSpeedBonus: 1
     maxHealthBonus: 25

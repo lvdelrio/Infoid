@@ -9,10 +9,10 @@ public class InventoryController : MonoBehaviour
     public List<PassiveItemData> passiveItems = new List<PassiveItemData>();
 
     public int maxActiveItems = 6;
-    public int itemsPerRow = 4; // Number of items per row
-    public float itemSpacing = 10f; // Spacing between items
-    public GameObject passiveItemUIPrefab; // Reference to the UI prefab
-    public Transform passiveItemUIParent; // Parent transform for UI elements
+    public int itemsPerRow = 2;
+    public float itemSpacing = 10f;
+    public GameObject passiveItemUIPrefab;
+    public Transform passiveItemUIParent;
 
     private Dictionary<string, GameObject> passiveItemUIDictionary = new Dictionary<string, GameObject>();
     private Dictionary<string, int> passiveItemCountDictionary = new Dictionary<string, int>();
@@ -52,11 +52,11 @@ public class InventoryController : MonoBehaviour
         {
             passiveItemCountDictionary[item.itemName] = 1;
             GameObject newItemUI = Instantiate(passiveItemUIPrefab, passiveItemUIParent);
-            newItemUI.transform.GetChild(0).GetComponent<Image>().sprite = item.icon; // Set item icon
-            newItemUI.transform.GetChild(1).GetComponent<Text>().text = "x1"; // Set item count
+            newItemUI.transform.GetChild(0).GetComponent<Image>().sprite = item.icon;
+            newItemUI.transform.GetChild(1).GetComponent<Text>().text = "x1";
 
             passiveItemUIDictionary.Add(item.itemName, newItemUI);
-            RearrangeGrid(); // Rearrange grid after adding item
+            RearrangeGrid(); 
         }
     }
 

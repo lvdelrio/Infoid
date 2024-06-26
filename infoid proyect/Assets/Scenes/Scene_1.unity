@@ -833,6 +833,7 @@ RectTransform:
   - {fileID: 431060305}
   - {fileID: 2015281950}
   - {fileID: 1458029875}
+  - {fileID: 990439276}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -901,6 +902,41 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e267e7742f6dca64d9b7dec1bf150ba5, type: 3}
+--- !u!1 &990439275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 990439276}
+  m_Layer: 5
+  m_Name: UIPassiveItem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &990439276
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990439275}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 794165852}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -521, y: 188}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1008009216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1772,6 +1808,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2532109602776105877, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: itemSpacing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532109602776105877, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: itemsPerRow
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532109602776105877, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: passiveItemUIParent
+      value: 
+      objectReference: {fileID: 990439276}
+    - target: {fileID: 2532109602776105877, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: passiveItemUIPrefab
+      value: 
+      objectReference: {fileID: 82697410804862298, guid: 1182d9a6400eba24cb37d50506afe046, type: 3}
     - target: {fileID: 2789566645255998383, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: itemDatabase
       value: 
