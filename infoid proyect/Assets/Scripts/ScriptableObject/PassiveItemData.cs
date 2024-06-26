@@ -5,6 +5,7 @@ public class PassiveItemData : ScriptableObject
 {
     public string itemName;
     public string description;
+    public Sprite icon;
     public StatBonus statBonus;
 }
 
