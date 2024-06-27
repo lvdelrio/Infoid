@@ -70,6 +70,9 @@ public class CollisionController : MonoBehaviour
                 Debug.Log(statToUpgrade);
                 inventoryController.AddPassiveItem(itemDatabase.allPassiveItems[statToUpgrade]);
                 break;
+            case "BlockHand":
+                gameController.finish();
+                break;
 
             default:
                 break;

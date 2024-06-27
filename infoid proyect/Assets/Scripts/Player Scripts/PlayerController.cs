@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour
     private float boostDuration = 3f;
     private bool isUsingHook = false;
     public float distance;
-    public float FallingConst = 5f;
+    public float fallingConst = 5f;
+    public float constantForceUpward = 0.5f;
+    public float constantForceDownward = 1.5f;
     private float lastYPosition;
     private float wallDirection = 0f;
     public float grappleSpeed = 20f;
@@ -90,9 +92,26 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        float moveInputx = Input.GetAxis("Horizontal");
-        float moveInputy = Input.GetAxis("Vertical");
+        float moveInputX = Input.GetAxis("Horizontal");
+        float moveInputY = Input.GetAxis("Vertical");
 
+        float horizontalVelocity = moveInputX * moveSpeed;
+        float verticalVelocity;
+
+        if (moveInputY < 0) // Pressing S or down
+        {
+            verticalVelocity = moveInputY * moveSpeed * constantForceDownward;
+        }
+        else if (moveInputY > 0) // Pressing W or up
+        {
+            verticalVelocity =  moveInputY * moveSpeed * constantForceUpward;
+        }
+        else
+        {
+            verticalVelocity = -fallingConst;
+        }
+
+        rb.velocity = new Vector2(horizontalVelocity, verticalVelocity);
         if (canMove)
         {
             if (isTouchingWall)
@@ -124,8 +143,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                rb.velocity = new Vector2(moveInputx * moveSpeed, moveInputy != 0 ? moveInputy * moveSpeed : -FallingConst);
-
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 transform.localScale = new Vector3(7, 7, 1);
             }
