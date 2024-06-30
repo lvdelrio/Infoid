@@ -136,12 +136,16 @@ MonoBehaviour:
   rb: {fileID: 3669922412637009501}
   camera: {fileID: 0}
   animator: {fileID: 2974203802174516786}
-  grapplingHookPrefab: {fileID: 7514924824357064001, guid: ade7da20cd8b5c5448387dd253b81104, type: 3}
+  grapplingHookReachPrefab: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  parryController: {fileID: 0}
   framesToShow: 5
+  hitMaterial: {fileID: 2100000, guid: 1f60fba15360d4a00a066cb9277b47f1, type: 2}
   moveSpeed: 12
   distance: 0
-  FallingConst: 5
+  fallingConst: 5
+  constantForceUpward: 0.5
+  constantForceDownward: 1.5
   grappleSpeed: 20
   grappleLifetime: 1
   health: 100
@@ -157,6 +161,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 8
+  deathDoorDuration: 5
 --- !u!114 &2789566645255998383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +175,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDatabase: {fileID: 0}
+  obstacleHitSound: {fileID: 0}
+  enemyHitSound: {fileID: 0}
+  powerUpSound: {fileID: 0}
 --- !u!114 &2532109602776105877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +194,11 @@ MonoBehaviour:
   activeItems: []
   passiveItems: []
   maxActiveItems: 2
+  itemsPerRow: 2
+  itemSpacing: 10
+  passiveItemUIPrefab: {fileID: 0}
+  passiveItemUIParent: {fileID: 0}
+  pickupSound: {fileID: 0}
 --- !u!95 &2974203802174516786
 Animator:
   serializedVersion: 5
@@ -281,7 +294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4342701011882246674
 Transform:
   m_ObjectHideFlags: 0

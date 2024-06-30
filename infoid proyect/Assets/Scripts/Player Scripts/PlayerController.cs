@@ -13,8 +13,11 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject grapplingHookReachPrefab;
     public SpriteRenderer spriteRenderer;
+    private SpriteRenderer playerSpriteRenderer;
     public ParryController parryController;
     public int framesToShow = 5;
+    public Material hitMaterial;
+    private Material originalMaterial;
 
 
     [Header("Player Movement")]
@@ -65,8 +68,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
         lastYPosition = transform.position.y;
         unBoostedMoveSpeed = moveSpeed;
+        originalMaterial = playerSpriteRenderer.material;
     }
 
     void Update()
@@ -111,7 +116,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (moveInputY > 0) // Pressing W or up
         {
-            verticalVelocity =  moveInputY * moveSpeed * constantForceUpward;
+            verticalVelocity = moveInputY * moveSpeed * constantForceUpward;
         }
         else
         {
@@ -189,9 +194,9 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Attacking");
         ShowAttack();
-        attackPoint.GetChild(1).gameObject.SetActive(true);   
+        attackPoint.GetChild(1).gameObject.SetActive(true);
         StartCoroutine(ShowSpriteForFrames());
-        
+
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
@@ -239,7 +244,7 @@ public class PlayerController : MonoBehaviour
 
     public void StartDeathDoorCountdown()
     {
-        if(_inDeathDoor)return;
+        if (_inDeathDoor) return;
 
         if (_deathDoorCoroutine != null)
             StopCoroutine(_deathDoorCoroutine);
@@ -253,7 +258,7 @@ public class PlayerController : MonoBehaviour
         _killedEnemyDuringDeathDoor = true;
     }
 
-public bool InDeathDoor { get { return _inDeathDoor; } }
+    public bool InDeathDoor { get { return _inDeathDoor; } }
 
     private IEnumerator DeathDoorCountdown()
     {
@@ -459,6 +464,18 @@ public bool InDeathDoor { get { return _inDeathDoor; } }
             inventoryController.AddActiveItem(itemPickup.itemData);
             Destroy(itemPickup.gameObject);
         }
+    }
+
+    public void ChangeMaterialOnHit()
+    {
+        StartCoroutine(TurnWhiteOnHit());
+    }
+
+    IEnumerator TurnWhiteOnHit()
+    {
+        playerSpriteRenderer.material = hitMaterial;
+        yield return new WaitForSeconds(0.1f);
+        playerSpriteRenderer.material = originalMaterial;
     }
 }
 
