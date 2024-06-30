@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,10 +17,18 @@ public class InventoryController : MonoBehaviour
 
     private Dictionary<string, GameObject> passiveItemUIDictionary = new Dictionary<string, GameObject>();
     private Dictionary<string, int> passiveItemCountDictionary = new Dictionary<string, int>();
-
+    public AudioClip pickupSound;
+    private AudioSource audioSource;
     void Start()
     {
         playerController = GetComponent<PlayerController>();
+        
+        // Get or add an AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     public void AddActiveItem(ActiveItemData item)
@@ -29,6 +38,7 @@ public class InventoryController : MonoBehaviour
             activeItems.RemoveAt(0);
         }
         activeItems.Add(item);
+        StartCoroutine(OnItemPickupCoroutine(item));
     }
 
     public void AddPassiveItem(PassiveItemData item)
@@ -37,6 +47,7 @@ public class InventoryController : MonoBehaviour
         playerController.IncreaseStats(item.statBonus);
         UpdatePassiveItemUI(item, 1);
         Debug.Log("Added passive item: " + item.itemName);
+        StartCoroutine(OnItemPickupCoroutine(item));
     }
 
     private void UpdatePassiveItemUI(PassiveItemData item, int change)
@@ -70,5 +81,19 @@ public class InventoryController : MonoBehaviour
             itemUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(column * (itemSpacing + itemUI.GetComponent<RectTransform>().sizeDelta.x), -row * (itemSpacing + itemUI.GetComponent<RectTransform>().sizeDelta.y));
             index++;
         }
+    }
+
+    private IEnumerator OnItemPickupCoroutine(object item)
+    {
+        if (pickupSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(pickupSound);
+        }
+        else
+        {
+            Debug.LogWarning("Pickup sound or AudioSource is missing!");
+        }
+
+        yield return null;
     }
 }

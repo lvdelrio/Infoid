@@ -13,15 +13,26 @@ public class CollisionController : MonoBehaviour
     private SimpleEnemyController currentEnemy;
     private GameObject currentEnemyGameObject;
 
+    [Header("Audio")]
+    public AudioClip obstacleHitSound;
+    public AudioClip enemyHitSound;
+    public AudioClip powerUpSound;
+    private AudioSource audioSource;
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
         gameController = playerController.gameController;
         inventoryController = playerController.inventoryController;
         cameraController = Camera.main.GetComponent<CameraController>();
-    }
 
-    // Update is called once per frame
+        // Get or add an AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -31,45 +42,37 @@ public class CollisionController : MonoBehaviour
                 if (playerController.isOnParryBoost)
                 {
                     Debug.Log("Player hit an obstacle on parry boost!");
-
                 }
                 else
                 {
                     Debug.Log("Player hit an obstacle!");
-                    //enter Deathdoor
+                    PlaySound(obstacleHitSound);
                     playerController.StartDeathDoorCountdown();
-
                 }
-
                 break;
 
             case "EdgeCollider":
                 Debug.Log("Player hit the edge!");
-                //canMove = false;
                 gameController.EndLevel();
                 playerController.ResetDeathDoorState();
-                //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-                //camera.GetComponent<CameraController>().ResetCameraPosition();
-                //canMove = true;
                 break;
 
             case "Enemy":
                 Debug.Log("Player hit enemy!");
+                PlaySound(enemyHitSound);
                 currentEnemy = other.GetComponentInParent<SimpleEnemyController>();
                 currentEnemy.collidedWithPlayer();
                 cameraController.ShakeCamera();
-                //enter Deathdoor
                 playerController.StartDeathDoorCountdown();
-
                 break;
 
             case "PowerUp":
                 Debug.Log("Player hit power up!");
-                Debug.Log(itemDatabase.allPassiveItems.Count);
-                int statToUpgrade = UnityEngine.Random.Range(0, itemDatabase.allPassiveItems.Count);
-                Debug.Log(statToUpgrade);
+                PlaySound(powerUpSound);
+                int statToUpgrade = Random.Range(0, itemDatabase.allPassiveItems.Count);
                 inventoryController.AddPassiveItem(itemDatabase.allPassiveItems[statToUpgrade]);
                 break;
+
             case "BlockHand":
                 gameController.finish();
                 break;
@@ -79,4 +82,15 @@ public class CollisionController : MonoBehaviour
         }
     }
 
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogWarning("Sound clip or AudioSource is missing!");
+        }
+    }
 }
