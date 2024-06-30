@@ -71,6 +71,7 @@ public class CollisionController : MonoBehaviour
                 PlaySound(enemyHitSound);
                 currentEnemy = other.GetComponentInParent<SimpleEnemyController>();
                 currentEnemy.collidedWithPlayer();
+                currentEnemy.Destroy();
                 cameraController.ShakeCamera();
                 playerController.StartDeathDoorCountdown();
                 playerController.ChangeMaterialOnHit();

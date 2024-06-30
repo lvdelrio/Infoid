@@ -33,10 +33,19 @@ public class LevelGeneratorController : MonoBehaviour
 
     public int levelSegmentCount = 5;
     private int _currentLevelSegmentCount = 0;
+    public ParticleSystem[] particleSystems;
+    private int currentSystemIndex = 0;
 
     void Start()
     {
         cameraController = _mainCamera.GetComponent<CameraController>();
+            // Asegúrate de que todos los sistemas estén detenidos al inicio
+        foreach (var system in particleSystems)
+        {
+            system.Stop();
+        }
+        // Inicia el primer sistema de partículas
+        particleSystems[currentSystemIndex].Play();
     }
 
     private void Awake()
@@ -241,10 +250,22 @@ public class LevelGeneratorController : MonoBehaviour
 
         //cambiar de nivel al volver al principio, cambiando de color el background de la camara
         _mainCamera.backgroundColor = materialBackground[currentLevel].color;
-        // Cambiar el material de los prefabs
-        // foreach (GameObject prefab in spawnedPrefabs) {
-        //     prefab.GetComponent<Renderer>().material = materialPrefab[currentLevel];
-        // }
+        StartNextParticleSystem();
 
+    }
+
+    private void StartNextParticleSystem()
+    {
+        // Detener el sistema actual si está activo
+        if (particleSystems[currentSystemIndex].isPlaying)
+        {
+            particleSystems[currentSystemIndex].Stop();
+        }
+
+        // Avanzar al siguiente sistema
+        currentSystemIndex = (currentSystemIndex + 1) % particleSystems.Length;
+
+        // Iniciar el nuevo sistema
+        particleSystems[currentSystemIndex].Play();
     }
 }

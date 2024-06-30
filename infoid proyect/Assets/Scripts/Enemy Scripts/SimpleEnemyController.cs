@@ -183,6 +183,10 @@ public class SimpleEnemyController : MonoBehaviour
             Instantiate(shurikenPrefab, transform.position, Quaternion.identity);
         }
 
+        Destroy();
+    }
+
+    public void Destroy(){
         Destroy(this.gameObject);
     }
 
