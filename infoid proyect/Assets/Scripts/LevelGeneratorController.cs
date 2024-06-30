@@ -229,6 +229,9 @@ public class LevelGeneratorController : MonoBehaviour
     public void ResetLevelGenerator()
     {
         currentLevel++;
+        if(currentLevel >= materialBackground.Length) {
+            currentLevel = 0;
+        }
         DestroyAllSegments();
         DestroyAllObstacles();
         DestroyAllPowerUps();

@@ -81,6 +81,7 @@ public class CollisionController : MonoBehaviour
                 break;
 
             case "BlockHand":
+                Debug.Log("Player hit block hand!");
                 gameController.finish();
                 break;
 
