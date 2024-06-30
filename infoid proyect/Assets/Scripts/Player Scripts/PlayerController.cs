@@ -88,6 +88,11 @@ public class PlayerController : MonoBehaviour
         {
             parryController.Parry();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameController.finish();
+        }
     }
 
     void FixedUpdate()
