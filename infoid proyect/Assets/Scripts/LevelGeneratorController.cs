@@ -17,6 +17,7 @@ public class LevelGeneratorController : MonoBehaviour
     public Material[] materialBackground;
     public Material[] materialPrefab;
     private Camera _mainCamera;
+    private CameraController cameraController;
     private int currentLevel;
 
     private Vector3 _lastSegmentPosition;
@@ -32,6 +33,11 @@ public class LevelGeneratorController : MonoBehaviour
 
     public int levelSegmentCount = 5;
     private int _currentLevelSegmentCount = 0;
+
+    void Start()
+    {
+        cameraController = _mainCamera.GetComponent<CameraController>();
+    }
 
     private void Awake()
     {
@@ -77,6 +83,7 @@ public class LevelGeneratorController : MonoBehaviour
         if (_currentLevelSegmentCount >= levelSegmentCount)
         {
             _edgeCollider = Instantiate(_edgeColliderPrefab, newestSegment.position, Quaternion.identity);
+            cameraController.SetBoundaryCollider(_edgeCollider);
             _currentLevelSegmentCount = 0;
         }
 
@@ -222,6 +229,9 @@ public class LevelGeneratorController : MonoBehaviour
     public void ResetLevelGenerator()
     {
         currentLevel++;
+        if(currentLevel >= materialBackground.Length) {
+            currentLevel = 0;
+        }
         DestroyAllSegments();
         DestroyAllObstacles();
         DestroyAllPowerUps();

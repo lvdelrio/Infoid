@@ -5841,6 +5841,7 @@ MonoBehaviour:
   zoomInSpeed: 10
   shakeDuration: 0.3
   shakeMagnitude: 0.25
+  followSpeed: 0.2
 --- !u!1 &1072484408 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2303701813654969168, guid: 2299a200e22e75d48a112696235de455, type: 3}
@@ -6744,6 +6745,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5865044982883606523, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865044982883606523, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: m_TagString
+      value: Parry
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647298282327731249, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6647298282327731249, guid: 2299a200e22e75d48a112696235de455, type: 3}

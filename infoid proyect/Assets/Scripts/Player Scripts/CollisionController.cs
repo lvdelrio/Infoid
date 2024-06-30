@@ -19,6 +19,9 @@ public class CollisionController : MonoBehaviour
     public AudioClip powerUpSound;
     private AudioSource audioSource;
 
+    [HideInInspector]
+    public bool skipTrigger = false;
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -36,6 +39,12 @@ public class CollisionController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (skipTrigger)
+        {
+            skipTrigger = false;
+            return;
+        }
+
         switch (other.tag)
         {
             case "obstacle":
@@ -89,6 +98,7 @@ public class CollisionController : MonoBehaviour
                 break;
 
             case "BlockHand":
+                Debug.Log("Player hit block hand!");
                 gameController.finish();
                 break;
 

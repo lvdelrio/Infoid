@@ -483,6 +483,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeMaterialOnHit()
     {
+        transform.position += new Vector3(0, 160f * Time.deltaTime, 0);
         StartCoroutine(TurnWhiteOnHit());
     }
 
