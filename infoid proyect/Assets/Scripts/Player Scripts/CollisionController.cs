@@ -72,6 +72,12 @@ public class CollisionController : MonoBehaviour
                 int statToUpgrade = Random.Range(0, itemDatabase.allPassiveItems.Count);
                 inventoryController.AddPassiveItem(itemDatabase.allPassiveItems[statToUpgrade]);
                 break;
+            
+            case "ActiveItem":
+                Debug.Log("Player hit active item!");
+                inventoryController.AddActiveItem(other.GetComponent<ActiveItemPickup>().itemData);
+                Destroy(other.gameObject);
+                break;
 
             case "BlockHand":
                 gameController.finish();

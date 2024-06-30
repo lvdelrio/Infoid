@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Movement")]
     public float moveSpeed = 10f;
+    private float unBoostedMoveSpeed;
     private float DefaultMoveSpeed = 10f;
     private float moveSpeedBoost = 2f;
     private float boostDuration = 3f;
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         lastYPosition = transform.position.y;
+        unBoostedMoveSpeed = moveSpeed;
     }
 
     void Update()
@@ -187,7 +189,9 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Attacking");
         ShowAttack();
+        attackPoint.GetChild(1).gameObject.SetActive(true);   
         StartCoroutine(ShowSpriteForFrames());
+        
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
@@ -213,12 +217,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        attackPoint.GetChild(1).gameObject.SetActive(false);
     }
     IEnumerator boost()
     {
         moveSpeed += moveSpeedBoost;
         yield return new WaitForSeconds(boostDuration);
-        moveSpeed = DefaultMoveSpeed;
+        moveSpeed = unBoostedMoveSpeed;
     }
 
     public IEnumerator parryBoost()
@@ -228,7 +233,7 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(boostDuration);
 
-        moveSpeed = DefaultMoveSpeed;
+        moveSpeed = unBoostedMoveSpeed;
         _isOnParryBoost = false;
     }
 
@@ -304,6 +309,7 @@ public bool InDeathDoor { get { return _inDeathDoor; } }
     public void IncreaseStats(StatBonus statBonus)
     {
         this.moveSpeed += statBonus.moveSpeedBonus;
+        this.unBoostedMoveSpeed += statBonus.moveSpeedBonus;
         this.maxHealth += statBonus.maxHealthBonus;
         this.damage += statBonus.damageBonus;
         this.luck += statBonus.luckBonus;
@@ -313,6 +319,7 @@ public bool InDeathDoor { get { return _inDeathDoor; } }
     public void DecreaseStats(StatBonus statBonus)
     {
         this.moveSpeed -= statBonus.moveSpeedBonus;
+        this.unBoostedMoveSpeed -= statBonus.moveSpeedBonus;
         this.maxHealth -= statBonus.maxHealthBonus;
         this.damage -= statBonus.damageBonus;
         this.luck -= statBonus.luckBonus;
@@ -326,9 +333,6 @@ public bool InDeathDoor { get { return _inDeathDoor; } }
         wantsToJump = false;
 
         Invoke("StopWallJump", wallJumpDuration);
-
-        // rb.AddForce(jumpDirection.normalized * jumpForce, ForceMode2D.Impulse);
-        // transform.rotation = Quaternion.identity;
     }
 
     void StopWallJump()

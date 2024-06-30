@@ -15,6 +15,7 @@ TagManager:
   - Parry
   - Boss
   - BlockHand
+  - ActiveItem
   layers:
   - Default
   - TransparentFX

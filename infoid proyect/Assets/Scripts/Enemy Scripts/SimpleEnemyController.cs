@@ -22,6 +22,13 @@ public class SimpleEnemyController : MonoBehaviour
 
     [SerializeField] int experience_reward = 400;
 
+    [Header("Boid Attributes")]
+    public float neighborRadius = 2f;
+    public float separationRadius = 1f;
+    public float alignmentWeight = 1f;
+    public float cohesionWeight = 1f;
+    public float separationWeight = 1.5f;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -41,10 +48,11 @@ public class SimpleEnemyController : MonoBehaviour
         }
         else
         {
-            //Crear y agregar direccion al objeto hacia el jugador
-            Vector2 direction = (player.transform.position - transform.position).normalized;
+            Vector2 boidForce = BoidBehavior();
 
-            rb.AddForce(direction * speed);
+            // Add the boid force to the enemy's movement towards the player
+            Vector2 direction = (player.transform.position - transform.position).normalized;
+            rb.AddForce((direction * speed) + boidForce);
 
             if (rb.velocity.magnitude > maxSpeed)
             {
@@ -58,6 +66,97 @@ public class SimpleEnemyController : MonoBehaviour
                 StartFlyingAway();
             }
         }
+    }
+
+    Vector2 BoidBehavior()
+    {
+        Vector2 alignment = Alignment() * alignmentWeight;
+        Vector2 cohesion = Cohesion() * cohesionWeight;
+        Vector2 separation = Separation() * separationWeight;
+
+        return alignment + cohesion + separation;
+    }
+
+    Vector2 Alignment()
+    {
+        Vector2 steering = Vector2.zero;
+        int count = 0;
+
+        foreach (SimpleEnemyController boid in GetNeighbors())
+        {
+            steering += boid.rb.velocity;
+            count++;
+        }
+
+        if (count > 0)
+        {
+            steering /= count;
+            steering = steering.normalized * maxSpeed - rb.velocity;
+        }
+
+        return steering;
+    }
+
+    Vector2 Cohesion()
+    {
+        Vector2 steering = Vector2.zero;
+        int count = 0;
+
+        foreach (SimpleEnemyController boid in GetNeighbors())
+        {
+            steering += (Vector2)boid.transform.position;
+            count++;
+        }
+
+        if (count > 0)
+        {
+            steering /= count;
+            steering = steering - (Vector2)transform.position;
+            steering = steering.normalized * maxSpeed - rb.velocity;
+        }
+
+        return steering;
+    }
+
+    Vector2 Separation()
+    {
+        Vector2 steering = Vector2.zero;
+        int count = 0;
+
+        foreach (SimpleEnemyController boid in GetNeighbors())
+        {
+            float distance = Vector2.Distance(transform.position, boid.transform.position);
+            if (distance < separationRadius)
+            {
+                Vector2 diff = (Vector2)transform.position - (Vector2)boid.transform.position;
+                steering += diff.normalized / distance;
+                count++;
+            }
+        }
+
+        if (count > 0)
+        {
+            steering /= count;
+            steering = steering.normalized * maxSpeed - rb.velocity;
+        }
+
+        return steering;
+    }
+
+    List<SimpleEnemyController> GetNeighbors()
+    {
+        List<SimpleEnemyController> neighbors = new List<SimpleEnemyController>();
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, neighborRadius);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider != GetComponent<Collider2D>() && collider.GetComponent<SimpleEnemyController>())
+            {
+                neighbors.Add(collider.GetComponent<SimpleEnemyController>());
+            }
+        }
+
+        return neighbors;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

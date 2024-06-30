@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Thorn Armor
   icon: {fileID: 4323271140470924259, guid: d2248d5d267cbb24c9b9f3765df030b1, type: 3}
   statBonus:
-    moveSpeedBonus: 1
+    moveSpeedBonus: 0
     maxHealthBonus: 25
     damageBonus: 5
     luckBonus: 0

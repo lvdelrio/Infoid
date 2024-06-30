@@ -5751,10 +5751,10 @@ MonoBehaviour:
   downwardSpeed: 2
   catchUpMultiplier: 1.2
   speedUp: 1
-  zoomOutSpeed: 15
+  zoomOutSpeed: 5
   zoomInSpeed: 10
   shakeDuration: 0.3
-  shakeMagnitude: 0.5
+  shakeMagnitude: 0.25
 --- !u!1 &1072484408 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2303701813654969168, guid: 2299a200e22e75d48a112696235de455, type: 3}
@@ -5811,18 +5811,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   experienceBar: {fileID: 1458029878}
---- !u!114 &1072484450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072484408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 967134cef9f104040b9fc182a7b74d47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1072484458
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5949,6 +5937,51 @@ MonoBehaviour:
   playerController: {fileID: 1072484413}
   enemies: []
   colliderRadius: 2
+--- !u!61 &1449500390
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449500382}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1458029874
 GameObject:
   m_ObjectHideFlags: 0
@@ -6590,9 +6623,29 @@ PrefabInstance:
       propertyPath: obstacleHitSound
       value: 
       objectReference: {fileID: 8300000, guid: de791e57baf998d499df3fb3dced13b9, type: 3}
+    - target: {fileID: 4642952924318466784, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393728251816958179, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865044982883606523, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647298282327731249, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6813413094481834929, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076353358748173787, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7216379335580878283, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: m_Enabled
@@ -6602,7 +6655,12 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8696895365051301389, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8696895365051301389, guid: 2299a200e22e75d48a112696235de455, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2315465939567158431, guid: 2299a200e22e75d48a112696235de455, type: 3}
@@ -6617,13 +6675,13 @@ PrefabInstance:
       addedObject: {fileID: 1072484442}
     - targetCorrespondingSourceObject: {fileID: 2303701813654969168, guid: 2299a200e22e75d48a112696235de455, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1072484450}
-    - targetCorrespondingSourceObject: {fileID: 2303701813654969168, guid: 2299a200e22e75d48a112696235de455, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1072484458}
     - targetCorrespondingSourceObject: {fileID: 5865044982883606523, guid: 2299a200e22e75d48a112696235de455, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1449500386}
+    - targetCorrespondingSourceObject: {fileID: 5865044982883606523, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1449500390}
   m_SourcePrefab: {fileID: 100100000, guid: 2299a200e22e75d48a112696235de455, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
