@@ -5,18 +5,23 @@ using UnityEngine;
 public class ParryController : MonoBehaviour
 {
     public PlayerController playerController;
+    private CollisionController collisionController;
     public List<SimpleEnemyController> enemies = new List<SimpleEnemyController>();
     public float colliderRadius;
 
     void Start()
     {
+        collisionController = playerController.GetComponent<CollisionController>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Enemy")
         {
+            collisionController.skipTrigger = true;
+
             SimpleEnemyController enemy = other.GetComponent<SimpleEnemyController>();
+
             if (enemy != null)
             {
                 enemies.Add(enemy);
