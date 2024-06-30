@@ -6,11 +6,17 @@ public class SimpleSpawnerController : MonoBehaviour
 {
     [Header("Enemy to Spawn")]
     public GameObject enemyPrefab;
+    public GameObject miniBossPrefab;
+    public GameObject bossPrefab;
+
+
     public float spawnRate;
     public float distanceToSpawn;
     public int maxEnemies;
     
     private List<GameObject> _enemies = new List<GameObject>();
+    private List<GameObject> _miniBosses = new List<GameObject>();
+    private List<GameObject> _bosses = new List<GameObject>();
     private float _timer;
 
     void FixedUpdate()
@@ -46,5 +52,51 @@ public class SimpleSpawnerController : MonoBehaviour
             Destroy(enemy);
         }
         _enemies.Clear();
+    }
+
+    public void SpawnMiniBoss()
+    {
+        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Vector3 spawnPosition = new Vector2(Random.Range(-7f, 7f), playerPosition.y - distanceToSpawn);
+        GameObject newMiniBoss = Instantiate(miniBossPrefab, spawnPosition, Quaternion.identity);
+        _miniBosses.Add(newMiniBoss);
+    }
+
+    public void DestroyMiniBoss(GameObject miniBoss)
+    {
+        _miniBosses.Remove(miniBoss);
+        Destroy(miniBoss);
+    }
+
+    public void DestroyAllMiniBosses()
+    {
+        foreach (GameObject miniBoss in _miniBosses)
+        {
+            Destroy(miniBoss);
+        }
+        _miniBosses.Clear();
+    }
+
+    public void SpawnBoss()
+    {
+        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Vector3 spawnPosition = new Vector2(Random.Range(-7f, 7f), playerPosition.y - distanceToSpawn);
+        GameObject newBoss = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
+        _bosses.Add(newBoss);
+    }
+
+    public void DestroyBoss(GameObject boss)
+    {
+        _bosses.Remove(boss);
+        Destroy(boss);
+    }
+
+    public void DestroyAllBosses()
+    {
+        foreach (GameObject boss in _bosses)
+        {
+            Destroy(boss);
+        }
+        _bosses.Clear();
     }
 }

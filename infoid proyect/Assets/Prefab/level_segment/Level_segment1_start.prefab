@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5482445743779477065}
   - component: {fileID: 2437767495164008297}
   - component: {fileID: 1923512179556740227}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_left
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4090060790347573340}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Level_segment1_start
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 7981729962551779211}
   - component: {fileID: 4977024503317868289}
   - component: {fileID: 6830198001961693552}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Right
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -359,7 +359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3658365015201407296}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: end_segment
   m_TagString: Untagged
   m_Icon: {fileID: 0}

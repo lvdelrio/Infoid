@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 204248057961454485}
   - component: {fileID: -4343710129706854490}
   - component: {fileID: 9004797257129275444}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FireBall
-  m_TagString: Untagged
+  m_TagString: Proyectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 200
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -162,3 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  projectileCreator: {fileID: 0}

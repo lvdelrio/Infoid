@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
     [Header("Required objects")]
     public Rigidbody2D rb;
+    public GameObject projectilePrefab;
 
     [Header("Enemy Attributes")]
     public int health;
@@ -21,47 +21,86 @@ public class BossController : MonoBehaviour
     public float resumeDistance;  // Distance at which the enemy resumes moving downwards
 
     private bool isStopped;
+    private Coroutine shootingCoroutine;
 
     [Header("Boundary Constraints")]
     public float minX;
     public float maxX;
 
-    // Start is called before the first frame update
+    private DecisionTreeNode decisionTree;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         speed = player.GetComponent<PlayerController>().moveSpeed * 0.85f;
         rb = GetComponent<Rigidbody2D>();
+        BuildDecisionTree();
         StartCoroutine(SideToSideMovement());
     }
 
-    // FixedUpdate is called at a fixed interval and is independent of frame rate
     void FixedUpdate()
     {
-        MoveDown();
+        decisionTree.Execute(this);
     }
 
-    void MoveDown()
+    void BuildDecisionTree()
     {
-        float playerY = player.transform.position.y;
-        float enemyY = transform.position.y;
-        float distanceToPlayer = playerY - enemyY;
+        decisionTree = new DecisionNode(
+            boss => boss.IsAbovePlayer(),
+            new ActionNode(boss => boss.MoveDownFast()),
+            new DecisionNode(
+                boss => boss.IsFarFromPlayer(),
+                new ActionNode(boss => boss.StopAndShootContinuously()),
+                new ActionNode(boss => boss.MoveDown())
+            )
+        );
+    }
 
-        if (distanceToPlayer < 0)
-        {
-            float currentSpeed = speed * 2;
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-            rb.velocity = new Vector2(rb.velocity.x, -currentSpeed);
-        }
+    public bool IsAbovePlayer()
+    {
+        return transform.position.y > player.transform.position.y;
+    }
 
-        if (distanceToPlayer > stopDistance)
+    public bool IsFarFromPlayer()
+    {
+        float distanceToPlayer = player.transform.position.y - transform.position.y;
+        return distanceToPlayer > stopDistance;
+    }
+
+    public void MoveDownFast()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, -speed * 2);
+    }
+
+    public void MoveDown()
+    {
+        if (!isStopped)
         {
-            isStopped = true;
-            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.velocity = new Vector2(rb.velocity.x, -speed);
         }
-        else if (distanceToPlayer < resumeDistance)
+    }
+
+    public void StopMoving()
+    {
+        isStopped = true;
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+    }
+
+    public void StopAndShootContinuously()
+    {
+        StopMoving();
+        if (shootingCoroutine == null)
         {
-            isStopped = false;
+            shootingCoroutine = StartCoroutine(ShootContinuously());
+        }
+    }
+
+    IEnumerator ShootContinuously()
+    {
+        while (isStopped)
+        {
+            Shoot();
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -107,6 +146,24 @@ public class BossController : MonoBehaviour
         if (health <= 0)
         {
             Die();
+        }
+    }
+
+    private void Shoot()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            Vector2 playerPosition = player.transform.position;
+            Vector2 enemyPosition = transform.position;
+            Vector2 directionToPlayer = (playerPosition - enemyPosition).normalized;
+            
+            var projectile = Instantiate(projectilePrefab, enemyPosition, Quaternion.identity);
+            projectile.GetComponent<Projectile>().Launch(directionToPlayer, gameObject);
+        }
+        else
+        {
+            Debug.LogError("Player object not found. Ensure your player has the 'Player' tag.");
         }
     }
 }

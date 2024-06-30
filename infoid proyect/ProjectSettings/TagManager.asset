@@ -16,6 +16,7 @@ TagManager:
   - Boss
   - BlockHand
   - ActiveItem
+  - Proyectile
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - Enemies
   - Water
   - UI
-  - 
-  - 
+  - Proyectile
+  - World
   - 
   - 
   - 
