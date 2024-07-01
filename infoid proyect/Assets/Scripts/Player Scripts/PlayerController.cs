@@ -70,6 +70,9 @@ public class PlayerController : MonoBehaviour
     private bool canParry = true;
     private float attackCooldown = 0.5f;
     private float parryCooldown = 1f;
+    private AudioSource audioSource;
+    public AudioClip katanaHitSound;
+    public AudioClip parryHitSound;
 
     void Start()
     {
@@ -78,6 +81,11 @@ public class PlayerController : MonoBehaviour
         lastYPosition = transform.position.y;
         unBoostedMoveSpeed = moveSpeed;
         originalMaterial = playerSpriteRenderer.material;
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     void Update()
@@ -95,12 +103,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G) && canAttack)
         {
             Attack();
+            audioSource.PlayOneShot(katanaHitSound);
             StartCoroutine(AttackCooldown());
         }
 
         if (Input.GetKeyDown(KeyCode.K) && canParry)
         {
             parryController.Parry();
+            audioSource.PlayOneShot(parryHitSound);
             StartCoroutine(ParryCooldown());
         }
 
