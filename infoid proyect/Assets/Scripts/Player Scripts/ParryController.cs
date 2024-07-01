@@ -23,7 +23,7 @@ public class ParryController : MonoBehaviour
         Debug.Log("Parrying");
         attackPoint.GetChild(2).gameObject.SetActive(true);
         playerController.ShowParry();
-        Collider2D[] hitEntities = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, parryLayer);
+        Collider2D[] hitEntities = Physics2D.OverlapCircleAll(attackPoint.position, attackRange*2, parryLayer);
         foreach (Collider2D entity in hitEntities)
         {
             Debug.Log("We hit " + entity.name);
