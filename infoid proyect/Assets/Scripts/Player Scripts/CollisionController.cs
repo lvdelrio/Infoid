@@ -5,6 +5,7 @@ using UnityEngine;
 public class CollisionController : MonoBehaviour
 {
     GameController gameController;
+    public ChangeScene changeScene;
     PlayerController playerController;
     InventoryController inventoryController;
     private CameraController cameraController;
@@ -104,7 +105,7 @@ public class CollisionController : MonoBehaviour
 
             case "BlockHand":
                 Debug.Log("Player hit block hand!");
-                gameController.finish();
+                changeScene.MoveToScene(0);
                 break;
 
             default:
