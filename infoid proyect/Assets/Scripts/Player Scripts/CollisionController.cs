@@ -57,6 +57,9 @@ public class CollisionController : MonoBehaviour
                     Debug.Log("Player hit an obstacle!");
                     PlaySound(obstacleHitSound);
                     playerController.StartDeathDoorCountdown();
+                    cameraController.ShakeCamera();
+                    playerController.StartDeathDoorCountdown();
+                    playerController.ChangeMaterialOnHit();
                 }
                 break;
 
@@ -74,6 +77,7 @@ public class CollisionController : MonoBehaviour
                 cameraController.ShakeCamera();
                 playerController.StartDeathDoorCountdown();
                 playerController.ChangeMaterialOnHit();
+                Destroy(other.gameObject);
                 break;
 
             case "Proyectile":

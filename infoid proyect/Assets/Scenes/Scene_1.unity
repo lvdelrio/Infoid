@@ -5181,7 +5181,14 @@ MonoBehaviour:
   _levelSegmentStart: {fileID: 4090060790347573340, guid: 4477afef248316446a2c2c68226e6714, type: 3}
   _levelSegment:
   - {fileID: 7342282830343563534, guid: abcface388d5cb446a172b5b9356eb4c, type: 3}
+  - {fileID: 4090060790347573340, guid: 4477afef248316446a2c2c68226e6714, type: 3}
   - {fileID: 40316255635428381, guid: 796cfbdc87a90b74bbe5b19bfb18e05a, type: 3}
+  - {fileID: 40316255635428381, guid: b1335a35440dfa44dbd5b06eaf5654fb, type: 3}
+  - {fileID: 40316255635428381, guid: 33d9b8f2d40099b4cbfddd92136f1d5e, type: 3}
+  - {fileID: 40316255635428381, guid: 69e594d1f1c0a574fb34ac43afe2023b, type: 3}
+  - {fileID: 40316255635428381, guid: 91b12a7eab30c51489a69b77eee44c81, type: 3}
+  - {fileID: 40316255635428381, guid: d04826db29d8a2b40a4dc9bb101d1237, type: 3}
+  - {fileID: 40316255635428381, guid: 51e9fff62a259b14d9896eecef2df22a, type: 3}
   _player: {fileID: 1072484413}
   _obstaclePrefabs:
   - {fileID: 514951601929996677, guid: fe2c9a1907fd2ab4599d7a7358e37d5f, type: 3}
@@ -5841,7 +5848,7 @@ MonoBehaviour:
   zoomInSpeed: 10
   shakeDuration: 0.3
   shakeMagnitude: 0.25
-  followSpeed: 0.2
+  followSpeed: 0.5
 --- !u!1 &1072484408 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2303701813654969168, guid: 2299a200e22e75d48a112696235de455, type: 3}
