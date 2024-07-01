@@ -267,6 +267,19 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("sobreviviste al Death Door");
         _killedEnemyDuringDeathDoor = true;
+        StopDeathDoorCountdown();
+    }
+
+    private void StopDeathDoorCountdown()
+    {
+        inDeathDoor = false;
+        _killedEnemyDuringDeathDoor = false;
+
+        if (_deathDoorCoroutine != null)
+        {
+            StopCoroutine(_deathDoorCoroutine);
+            _deathDoorCoroutine = null;
+        }
     }
 
     public bool InDeathDoor { get { return inDeathDoor; } }
@@ -281,6 +294,12 @@ public class PlayerController : MonoBehaviour
 
         while (elapsedTime < deathDoorDuration)
         {
+            if (_killedEnemyDuringDeathDoor)
+            {
+                // Stop the coroutine if an enemy is killed during death door
+                yield break;
+            }
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -299,13 +318,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetDeathDoorState()
     {
-        inDeathDoor = false;
-        _killedEnemyDuringDeathDoor = false;
-        if (_deathDoorCoroutine != null)
-        {
-            StopCoroutine(_deathDoorCoroutine);
-            _deathDoorCoroutine = null;
-        }
+        StopDeathDoorCountdown();
     }
 
     public void ShowAttack()
