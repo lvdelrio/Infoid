@@ -5123,7 +5123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 2040823772266752980, guid: 17049591b66bac64b911843c0ad6f59d, type: 3}
-  miniBossPrefab: {fileID: 0}
+  miniBossPrefab: {fileID: 2248134320753291968, guid: 45fd8770ab0dde2428caf6fd6d4bc69a, type: 3}
   bossPrefab: {fileID: 0}
   spawnRate: 1.3
   distanceToSpawn: 25

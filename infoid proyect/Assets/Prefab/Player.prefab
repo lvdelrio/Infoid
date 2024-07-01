@@ -138,6 +138,7 @@ MonoBehaviour:
   animator: {fileID: 2974203802174516786}
   grapplingHookReachPrefab: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  parrySpriteRenderer: {fileID: 0}
   parryController: {fileID: 0}
   framesToShow: 5
   hitMaterial: {fileID: 2100000, guid: 1f60fba15360d4a00a066cb9277b47f1, type: 2}
@@ -156,12 +157,14 @@ MonoBehaviour:
   wallJumpDuration: 0.25
   jumpAngle: 25
   wallJumpForce: 25
+  _isOnParryBoost: 0
   attackPoint: {fileID: 4342701011882246674}
   attackRange: 0.5
   enemyLayers:
     serializedVersion: 2
     m_Bits: 8
   deathDoorDuration: 5
+  inDeathDoor: 0
 --- !u!114 &2789566645255998383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +181,7 @@ MonoBehaviour:
   obstacleHitSound: {fileID: 0}
   enemyHitSound: {fileID: 0}
   powerUpSound: {fileID: 0}
+  skipTrigger: 0
 --- !u!114 &2532109602776105877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +270,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.004998416, y: 0.1929394}
+  m_Offset: {x: -0.02, y: 0.1929394}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5416666, y: -0.1724138}
@@ -277,7 +281,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.369934, y: 0.3019553}
+  m_Size: {x: 0.14, y: 0.3019553}
   m_EdgeRadius: 0
 --- !u!1 &4642952924318466784
 GameObject:
