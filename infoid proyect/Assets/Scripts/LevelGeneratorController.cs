@@ -173,7 +173,7 @@ public class LevelGeneratorController : MonoBehaviour
     {
         for (int i = _activeSegments.Count - 1; i >= 0; i--)
         {
-            if (Vector3.Distance(_player.GetPosition(), _activeSegments[i].position) > PLAYER_DISTANCE * 2)
+            if (Vector3.Distance(_player.GetPosition(), _activeSegments[i].position) > PLAYER_DISTANCE * 4)
             {
                 Destroy(_activeSegments[i].gameObject);
                 Debug.Log("Destroying segment at position: " + _activeSegments[i].position);
@@ -186,7 +186,7 @@ public class LevelGeneratorController : MonoBehaviour
     {
         for (int i = _activeObstacles.Count - 1; i >= 0; i--)
         {
-            if (Vector3.Distance(_player.GetPosition(), _activeObstacles[i].transform.position) > PLAYER_DISTANCE * 2)
+            if (Vector3.Distance(_player.GetPosition(), _activeObstacles[i].transform.position) > PLAYER_DISTANCE * 4)
             {
                 Destroy(_activeObstacles[i]);
                 Debug.Log("Destroying obstacle at position: " + _activeSegments[i].position);
@@ -199,7 +199,7 @@ public class LevelGeneratorController : MonoBehaviour
     {
         for (int i = _activePowerUps.Count - 1; i >= 0; i--)
         {
-            if (Vector3.Distance(_player.GetPosition(), _activePowerUps[i].transform.position) > PLAYER_DISTANCE * 2)
+            if (Vector3.Distance(_player.GetPosition(), _activePowerUps[i].transform.position) > PLAYER_DISTANCE * 4)
             {
                 Destroy(_activePowerUps[i]);
                 Debug.Log("Destroying power up at position: " + _activeSegments[i].position);
