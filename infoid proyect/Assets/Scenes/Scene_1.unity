@@ -5189,6 +5189,7 @@ MonoBehaviour:
   - {fileID: 40316255635428381, guid: 91b12a7eab30c51489a69b77eee44c81, type: 3}
   - {fileID: 40316255635428381, guid: d04826db29d8a2b40a4dc9bb101d1237, type: 3}
   - {fileID: 40316255635428381, guid: 51e9fff62a259b14d9896eecef2df22a, type: 3}
+  - {fileID: 40316255635428381, guid: 3507a1105b66be34985bc4c92bd24fd6, type: 3}
   _player: {fileID: 1072484413}
   _obstaclePrefabs:
   - {fileID: 514951601929996677, guid: fe2c9a1907fd2ab4599d7a7358e37d5f, type: 3}

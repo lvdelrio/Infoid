@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private float unBoostedMoveSpeed;
     private float DefaultMoveSpeed = 10f;
     private float moveSpeedBoost = 2f;
-    private float boostDuration = 3f;
+    private float boostDuration = 1f;
     private bool isUsingHook = false;
     public float distance;
     public float fallingConst = 5f;
@@ -483,7 +483,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeMaterialOnHit()
     {
-        transform.position += new Vector3(0, 160f * Time.deltaTime, 0);
+        transform.position += new Vector3(0, 60f * Time.deltaTime, 0);
         StartCoroutine(TurnWhiteOnHit());
     }
 
