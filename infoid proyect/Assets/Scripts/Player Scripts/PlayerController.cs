@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject grapplingHookReachPrefab;
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer parrySpriteRenderer;
     private SpriteRenderer playerSpriteRenderer;
     public ParryController parryController;
     public int framesToShow = 5;
@@ -61,7 +62,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask enemyLayers;
     [Header("Death Door")]
     public float deathDoorDuration = 5f;
-    private bool _inDeathDoor = false;
+    public bool inDeathDoor = false;
     private bool _killedEnemyDuringDeathDoor = false;
     private Coroutine _deathDoorCoroutine;
 
@@ -194,7 +195,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Attacking");
         ShowAttack();
-        attackPoint.GetChild(1).gameObject.SetActive(true);
+        attackPoint.GetChild(2).gameObject.SetActive(true);
         StartCoroutine(ShowSpriteForFrames());
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
@@ -205,7 +206,7 @@ public class PlayerController : MonoBehaviour
             {
                 enemy.GetComponent<SimpleEnemyController>().Die();
                 StartCoroutine(boost());
-                if (_inDeathDoor)
+                if (inDeathDoor)
                 {
                     RegisterEnemyKill();
                 }
@@ -216,13 +217,13 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Boss hit");
                 enemy.GetComponent<BossController>().TakeDamage(damage);
                 StartCoroutine(boost());
-                if (_inDeathDoor)
+                if (inDeathDoor)
                 {
                     RegisterEnemyKill();
                 }
             }
         }
-        attackPoint.GetChild(1).gameObject.SetActive(false);
+        attackPoint.GetChild(2).gameObject.SetActive(false);
     }
     IEnumerator boost()
     {
@@ -244,7 +245,7 @@ public class PlayerController : MonoBehaviour
 
     public void StartDeathDoorCountdown()
     {
-        if (_inDeathDoor) return;
+        if (inDeathDoor) return;
 
         if (_deathDoorCoroutine != null)
             StopCoroutine(_deathDoorCoroutine);
@@ -258,12 +259,12 @@ public class PlayerController : MonoBehaviour
         _killedEnemyDuringDeathDoor = true;
     }
 
-    public bool InDeathDoor { get { return _inDeathDoor; } }
+    public bool InDeathDoor { get { return inDeathDoor; } }
 
     private IEnumerator DeathDoorCountdown()
     {
         Debug.Log("entre a Death Door ");
-        _inDeathDoor = true;
+        inDeathDoor = true;
         _killedEnemyDuringDeathDoor = false;
 
         float elapsedTime = 0f;
@@ -277,7 +278,7 @@ public class PlayerController : MonoBehaviour
         if (_killedEnemyDuringDeathDoor)
         {
             // Reset the "Death Door" state
-            _inDeathDoor = false;
+            inDeathDoor = false;
         }
         else
         {
@@ -288,7 +289,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetDeathDoorState()
     {
-        _inDeathDoor = false;
+        inDeathDoor = false;
         _killedEnemyDuringDeathDoor = false;
         if (_deathDoorCoroutine != null)
         {
@@ -302,13 +303,27 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(ShowSpriteForFrames());
     }
 
-    private IEnumerator ShowSpriteForFrames()
+    public IEnumerator ShowSpriteForFrames()
     {
         spriteRenderer.enabled = true;
 
         yield return new WaitForSeconds(.1f);
 
         spriteRenderer.enabled = false;
+    }
+
+    public void ShowParry()
+    {
+        StartCoroutine(ShowParrySpriteForFrames());
+    }
+
+    public IEnumerator ShowParrySpriteForFrames()
+    {
+        parrySpriteRenderer.enabled = true;
+
+        yield return new WaitForSeconds(.1f);
+
+        parrySpriteRenderer.enabled = false;
     }
 
     public void IncreaseStats(StatBonus statBonus)

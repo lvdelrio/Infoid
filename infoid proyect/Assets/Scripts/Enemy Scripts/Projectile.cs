@@ -4,12 +4,17 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 5f;
     private Vector2 direction;
+    public GameObject projectileCreator;
 
-    public void Launch(Vector2 initialDirection)
+    public void Launch(Vector2 initialDirection, GameObject creator)
     {
         direction = initialDirection;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        projectileCreator = creator;
+
+        // Schedule the projectile for destruction after 10 seconds
+        Invoke(nameof(DestroySelf), 10f);
     }
 
     void Update()
@@ -24,9 +29,14 @@ public class Projectile : MonoBehaviour
             Debug.Log("Enemy hit the player!");
             Destroy(gameObject);
         }
-        else if (other.gameObject != gameObject)
+        else if (other.gameObject != projectileCreator)
         {
             Destroy(gameObject);
         }
+    }
+
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }

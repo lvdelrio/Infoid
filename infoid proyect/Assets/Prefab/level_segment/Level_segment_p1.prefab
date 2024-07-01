@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4890052265978720639}
   - component: {fileID: 3184840202068485224}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8867316127483560790}
   - component: {fileID: 2844217099276802521}
   - component: {fileID: 6981021443946937168}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_left
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 40316255635428381}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Level_segment_p1
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -286,7 +286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8040718135697571072}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: end_segment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 1393485952791567729}
   - component: {fileID: 3440848053038530938}
   - component: {fileID: 1200317613425648908}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_right
   m_TagString: Wall
   m_Icon: {fileID: 0}

@@ -9,8 +9,22 @@ public class ParryController : MonoBehaviour
     public List<SimpleEnemyController> enemies = new List<SimpleEnemyController>();
     public float colliderRadius;
 
+    public Transform attackPoint;
+    public float attackRange;
+    public LayerMask parryLayer;
+
+
+
+    
+
     void Start()
     {
+<<<<<<< HEAD
+        attackPoint = playerController.attackPoint;
+        attackRange = playerController.attackRange/2;
+    }
+
+=======
         collisionController = playerController.GetComponent<CollisionController>();
     }
 
@@ -28,47 +42,54 @@ public class ParryController : MonoBehaviour
             }
         }
     }
+>>>>>>> 442af4a0d64c42b3a7d1494681ba98eb8a683fbb
 
     public void Parry()
     {
-        foreach (SimpleEnemyController enemy in enemies)
+        Debug.Log("Parrying");
+        attackPoint.GetChild(2).gameObject.SetActive(true);
+        playerController.ShowParry();
+        Collider2D[] hitEntities = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, parryLayer);
+        foreach (Collider2D entity in hitEntities)
         {
-            if (enemy != null)
+            Debug.Log("We hit " + entity.name);
+            if (entity.tag == "Enemy")
             {
-                enemy.Die();
+                entity.GetComponent<SimpleEnemyController>().Die();
                 StartCoroutine(playerController.parryBoost());
+                if (playerController.inDeathDoor)
+                {
+                    playerController.RegisterEnemyKill();
+                }
+
+            }
+            if (entity.tag == "Boss")
+            {
+                Debug.Log("Boss hit");
+                entity.GetComponent<BossController>().TakeDamage(playerController.damage);
+                StartCoroutine(playerController.parryBoost());
+                if (playerController.inDeathDoor)
+                {
+                    playerController.RegisterEnemyKill();
+                }
+            }
+            if (entity.tag == "Proyectile")
+            {
+                GameObject proyectileCreator = entity.GetComponent<Projectile>().projectileCreator;
+                if (proyectileCreator.tag == "Enemy")
+                {
+                    proyectileCreator.GetComponent<SimpleEnemyController>().Die();
+                    Destroy(entity.gameObject);
+                }
+                if (proyectileCreator.tag == "Boss")
+                {
+                    proyectileCreator.GetComponent<BossController>().TakeDamage(playerController.damage);
+                    Destroy(entity.gameObject);
+                }
+                Destroy(entity.gameObject);
             }
         }
-        enemies.Clear();
+        attackPoint.GetChild(2).gameObject.SetActive(false);
     }
 
-    void Update()
-    {
-        // Create a list to store enemies that need to be removed
-        List<SimpleEnemyController> enemiesToRemove = new List<SimpleEnemyController>();
-
-        foreach (SimpleEnemyController enemy in enemies)
-        {
-            //Debug.Log(Vector3.Distance(transform.position, enemy.transform.position));
-            if (enemy == null)
-            {
-                enemiesToRemove.Add(enemy);
-                continue;
-            }
-
-            if (Vector3.Distance(transform.position, enemy.transform.position) > colliderRadius)
-            {
-                enemiesToRemove.Add(enemy);
-            }
-        }
-
-        // Remove enemies outside the main loop
-        foreach (SimpleEnemyController enemy in enemiesToRemove)
-        {
-            enemies.Remove(enemy);
-        }
-
-        // Double buffer to remove null references safely
-        enemies.RemoveAll(enemy => enemy == null);
-    }
 }

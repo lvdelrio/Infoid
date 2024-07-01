@@ -77,6 +77,14 @@ public class CollisionController : MonoBehaviour
                 playerController.ChangeMaterialOnHit();
                 break;
 
+            case "Proyectile":
+                Debug.Log("Player hit projectile!");
+                PlaySound(enemyHitSound);
+                cameraController.ShakeCamera();
+                playerController.StartDeathDoorCountdown();
+                playerController.ChangeMaterialOnHit();
+                break;
+
             case "PowerUp":
                 Debug.Log("Player hit power up!");
                 PlaySound(powerUpSound);

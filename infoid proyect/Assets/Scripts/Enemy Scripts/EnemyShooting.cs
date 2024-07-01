@@ -37,7 +37,7 @@ public class EnemyShooting : MonoBehaviour
             Vector2 directionToPlayer = (playerPosition - enemyPosition).normalized;
             
             var projectile = Instantiate(projectilePrefab, enemyPosition, Quaternion.identity);
-            projectile.GetComponent<Projectile>().Launch(directionToPlayer);
+            projectile.GetComponent<Projectile>().Launch(directionToPlayer, gameObject);
         }
         else
         {
