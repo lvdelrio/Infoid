@@ -1512,9 +1512,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1008009218}
     - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: parryHitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 65e25830e958b714eae240f564309d5a, type: 3}
+    - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 639463327}
+    - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: katanaHitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: a698c7356ebb92b47848f20bd80167b9, type: 3}
     - target: {fileID: 2303701813654969168, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: m_Name
       value: Player
