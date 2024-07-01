@@ -66,6 +66,11 @@ public class PlayerController : MonoBehaviour
     private bool _killedEnemyDuringDeathDoor = false;
     private Coroutine _deathDoorCoroutine;
 
+    private bool canAttack = true;
+    private bool canParry = true;
+    private float attackCooldown = 0.5f;
+    private float parryCooldown = 1f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -87,14 +92,16 @@ public class PlayerController : MonoBehaviour
             wantsToUseGrapplingHook = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && canAttack)
         {
             Attack();
+            StartCoroutine(AttackCooldown());
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && canParry)
         {
             parryController.Parry();
+            StartCoroutine(ParryCooldown());
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -510,6 +517,20 @@ public class PlayerController : MonoBehaviour
         playerSpriteRenderer.material = hitMaterial;
         yield return new WaitForSeconds(0.1f);
         playerSpriteRenderer.material = originalMaterial;
+    }
+
+    private IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
+    }
+
+    private IEnumerator ParryCooldown()
+    {
+        canParry = false;
+        yield return new WaitForSeconds(parryCooldown);
+        canParry = true;
     }
 }
 
