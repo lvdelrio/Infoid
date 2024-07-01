@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Jumping Boots
   description: Boots
-  icon: {fileID: 815210300947118427, guid: d2248d5d267cbb24c9b9f3765df030b1, type: 3}
+  icon: {fileID: 1441752558569355836, guid: c816dceb3305cdd4fa09ddfb012585d3, type: 3}
   statBonus:
     moveSpeedBonus: 1
     maxHealthBonus: 0

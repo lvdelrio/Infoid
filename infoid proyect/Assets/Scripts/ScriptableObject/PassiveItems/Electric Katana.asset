@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Electric Katana
   description: Electric Katana
-  icon: {fileID: 21300000, guid: d7b30b19344a8624fbff524291720b89, type: 3}
+  icon: {fileID: -5025342136419041639, guid: aa55d716cd1cfa7438af1a842c013811, type: 3}
   statBonus:
     moveSpeedBonus: 1
     maxHealthBonus: 0

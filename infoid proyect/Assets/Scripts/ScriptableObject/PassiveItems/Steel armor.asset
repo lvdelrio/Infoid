@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Steel armor
   description: Steel armor
-  icon: {fileID: -3574526435496659777, guid: d2248d5d267cbb24c9b9f3765df030b1, type: 3}
+  icon: {fileID: 5555013515108849885, guid: 86c6bdd11b98ff040afd63093746bbe5, type: 3}
   statBonus:
     moveSpeedBonus: 0
     maxHealthBonus: 25

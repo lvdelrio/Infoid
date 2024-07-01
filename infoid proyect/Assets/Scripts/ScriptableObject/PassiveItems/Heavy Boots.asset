@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Heavy boots
   description: Boots
-  icon: {fileID: 815210300947118427, guid: d2248d5d267cbb24c9b9f3765df030b1, type: 3}
+  icon: {fileID: -5875743660142362808, guid: 2f4e9f58fb60b7440ac2bead19545cca, type: 3}
   statBonus:
     moveSpeedBonus: 2
     maxHealthBonus: 5
