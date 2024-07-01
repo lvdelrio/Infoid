@@ -1512,6 +1512,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1008009218}
     - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
+      propertyPath: sceneChanger
+      value: 
+      objectReference: {fileID: 188888124}
+    - target: {fileID: 2296132609637100785, guid: 2299a200e22e75d48a112696235de455, type: 3}
       propertyPath: parryHitSound
       value: 
       objectReference: {fileID: 8300000, guid: 65e25830e958b714eae240f564309d5a, type: 3}

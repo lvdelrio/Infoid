@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip katanaHitSound;
     public AudioClip parryHitSound;
+    public ChangeScene sceneChanger;
 
     void Start()
     {
@@ -114,9 +115,13 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ParryCooldown());
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
             gameController.finish();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            sceneChanger.MoveToScene(0);
         }
     }
 
