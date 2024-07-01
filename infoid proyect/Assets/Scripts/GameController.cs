@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour
         score = 0;
         currentLevel = 0;
         _loopDistance = 0;
+        enemySpawner.GetComponent<SimpleSpawnerController>().SpawnMiniBoss();
     }
 
     void Update()
@@ -67,7 +68,10 @@ public class GameController : MonoBehaviour
         camera.GetComponent<CameraController>().ResetCameraPosition();
         levelGenerator.GetComponent<LevelGeneratorController>().ResetLevelGenerator();
         enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllEnemies();
+        enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllMiniBosses();
+        enemySpawner.GetComponent<SimpleSpawnerController>().SpawnMiniBoss();
         blockHandPreFab.GetComponent<blockHandsController>().Destroy();
+
 
     }
 

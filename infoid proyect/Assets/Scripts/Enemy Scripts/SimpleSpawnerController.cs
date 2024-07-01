@@ -62,8 +62,9 @@ public class SimpleSpawnerController : MonoBehaviour
         _miniBosses.Add(newMiniBoss);
     }
 
-    public void DestroyMiniBoss(GameObject miniBoss)
+    public void DestroyMiniBoss()
     {
+        GameObject miniBoss = _miniBosses[0];
         _miniBosses.Remove(miniBoss);
         Destroy(miniBoss);
     }
