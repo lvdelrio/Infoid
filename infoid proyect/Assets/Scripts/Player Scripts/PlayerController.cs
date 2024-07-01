@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     bool wallJumping;
     private bool wantsToJump = false;
     private bool wantsToUseGrapplingHook = false;
-    private bool _isOnParryBoost = false;
+    public bool _isOnParryBoost = false;
 
     public Transform attackPoint;
 
@@ -232,15 +232,25 @@ public class PlayerController : MonoBehaviour
         moveSpeed = unBoostedMoveSpeed;
     }
 
-    public IEnumerator parryBoost()
+    public void TriggerParryBoost()
     {
-        _isOnParryBoost = true;
-        moveSpeed += moveSpeedBoost;
+        StartCoroutine(ParryBoost());
+    }
 
-        yield return new WaitForSeconds(boostDuration);
+    public IEnumerator ParryBoost()
+    {
+        if (!_isOnParryBoost)
+        {
+            _isOnParryBoost = true;
+            moveSpeed += moveSpeedBoost;
+            Debug.Log("Parry boost started. Move speed boosted to " + moveSpeed);
 
-        moveSpeed = unBoostedMoveSpeed;
-        _isOnParryBoost = false;
+            yield return new WaitForSeconds(boostDuration);
+
+            moveSpeed = unBoostedMoveSpeed;
+            _isOnParryBoost = false;
+            Debug.Log("Parry boost ended. Move speed reset to " + moveSpeed);
+        }
     }
 
     public void StartDeathDoorCountdown()
@@ -461,11 +471,6 @@ public class PlayerController : MonoBehaviour
         GameObject grapple = Instantiate(grapplingHookReachPrefab, spawnPosition, Quaternion.identity);
         Rigidbody2D rb = grapple.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, grappleSpeed);
-    }
-
-    public void onParry()
-    {
-        StartCoroutine(parryBoost());
     }
 
     public bool isOnParryBoost

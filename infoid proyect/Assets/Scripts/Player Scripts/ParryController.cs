@@ -30,7 +30,7 @@ public class ParryController : MonoBehaviour
             if (entity.tag == "Enemy")
             {
                 entity.GetComponent<SimpleEnemyController>().Die();
-                StartCoroutine(playerController.parryBoost());
+                playerController.TriggerParryBoost();
                 if (playerController.inDeathDoor)
                 {
                     playerController.RegisterEnemyKill();
@@ -41,7 +41,7 @@ public class ParryController : MonoBehaviour
             {
                 Debug.Log("Boss hit");
                 entity.GetComponent<BossController>().TakeDamage(playerController.damage);
-                StartCoroutine(playerController.parryBoost());
+                playerController.TriggerParryBoost();
                 if (playerController.inDeathDoor)
                 {
                     playerController.RegisterEnemyKill();
@@ -50,7 +50,7 @@ public class ParryController : MonoBehaviour
             if (entity.tag == "Proyectile")
             {
                 GameObject proyectileCreator = entity.GetComponent<Projectile>().projectileCreator;
-                StartCoroutine(playerController.parryBoost());
+                playerController.TriggerParryBoost();
                 if (proyectileCreator.tag == "Enemy")
                 {
                     proyectileCreator.GetComponent<SimpleEnemyController>().Die();
