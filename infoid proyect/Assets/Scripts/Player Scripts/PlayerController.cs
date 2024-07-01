@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public SpriteRenderer parrySpriteRenderer;
     private SpriteRenderer playerSpriteRenderer;
     public ParryController parryController;
+    public ItemDatabase itemDatabase;
     public int framesToShow = 5;
     public Material hitMaterial;
     private Material originalMaterial;
@@ -122,6 +123,32 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             sceneChanger.MoveToScene(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P) && Input.GetKey(KeyCode.LeftShift))
+        {
+            Debug.Log("ENDING LEVEL");
+            gameController.EndLevel();
+        }
+
+        if (Input.GetKeyDown(KeyCode.O) & Input.GetKey(KeyCode.LeftShift))
+        {
+            Debug.Log("GIVING RANDOM ITEM");
+            int statToUpgrade = UnityEngine.Random.Range(0, itemDatabase.allPassiveItems.Count);
+            inventoryController.AddPassiveItem(itemDatabase.allPassiveItems[statToUpgrade]);
+        }
+
+        if (Input.GetKeyDown(KeyCode.I) & Input.GetKey(KeyCode.LeftShift))
+        {
+            Debug.Log("SAVING MYSELF");
+            ResetDeathDoorState();
+            gameController.enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllEnemies();
+        }
+
+        if (Input.GetKeyDown(KeyCode.U) & Input.GetKey(KeyCode.LeftShift))
+        {
+            Debug.Log("INCREASING SCORE");
+            gameController.IncreaseScore(100);
         }
     }
 

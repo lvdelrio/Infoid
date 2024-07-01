@@ -62,9 +62,8 @@ public class SimpleSpawnerController : MonoBehaviour
         _miniBosses.Add(newMiniBoss);
     }
 
-    public void DestroyMiniBoss()
+    public void DestroyMiniBoss(GameObject miniBoss)
     {
-        GameObject miniBoss = _miniBosses[0];
         _miniBosses.Remove(miniBoss);
         Destroy(miniBoss);
     }
@@ -78,26 +77,5 @@ public class SimpleSpawnerController : MonoBehaviour
         _miniBosses.Clear();
     }
 
-    public void SpawnBoss()
-    {
-        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-        Vector3 spawnPosition = new Vector2(Random.Range(-7f, 7f), playerPosition.y - distanceToSpawn);
-        GameObject newBoss = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
-        _bosses.Add(newBoss);
-    }
 
-    public void DestroyBoss(GameObject boss)
-    {
-        _bosses.Remove(boss);
-        Destroy(boss);
-    }
-
-    public void DestroyAllBosses()
-    {
-        foreach (GameObject boss in _bosses)
-        {
-            Destroy(boss);
-        }
-        _bosses.Clear();
-    }
 }

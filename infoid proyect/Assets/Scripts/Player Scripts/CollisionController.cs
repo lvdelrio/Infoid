@@ -105,12 +105,33 @@ public class CollisionController : MonoBehaviour
 
             case "BlockHand":
                 Debug.Log("Player hit block hand!");
-                changeScene.MoveToScene(0);
+                StartDeathDoorCountdown();
+                
                 break;
 
             default:
                 break;
         }
+    }
+
+    private void StartDeathDoorCountdown()
+    {
+        StartCoroutine(playDeathSound());
+    }
+
+
+    private IEnumerator playDeathSound()
+    {
+        PlaySound(enemyHitSound);
+        yield return new WaitForSeconds(0.1f);
+        PlaySound(enemyHitSound);
+        yield return new WaitForSeconds(0.1f);
+        PlaySound(enemyHitSound);
+        yield return new WaitForSeconds(0.2f);
+        PlaySound(enemyHitSound);
+        yield return new WaitForSeconds(0.1f);
+        PlaySound(enemyHitSound);
+        changeScene.MoveToScene(0);
     }
 
     private void PlaySound(AudioClip clip)
