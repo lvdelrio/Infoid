@@ -65,7 +65,7 @@ public class CameraController : MonoBehaviour
 
                 if (moveInputy < 0)
                 {
-                    cam.orthographicSize = Mathf.MoveTowards(cam.orthographicSize, 17f, zoomInSpeed * Time.deltaTime);
+                    cam.orthographicSize = Mathf.MoveTowards(cam.orthographicSize, 14f, zoomInSpeed * Time.deltaTime);
                 }
                 else
                 {
