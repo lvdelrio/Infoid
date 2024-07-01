@@ -10,4 +10,12 @@ public class blockHandsController : MonoBehaviour
     {
         this.transform.Translate(0, -speed * Time.deltaTime, 0);
     }
+
+    public void ResetBlockHand(){
+        this.transform.position = new Vector3(0, 0, 0);
+    }
+
+    public void Destroy(){
+        Destroy(this.gameObject);
+    }
 }

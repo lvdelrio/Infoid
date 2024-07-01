@@ -67,6 +67,7 @@ public class GameController : MonoBehaviour
         camera.GetComponent<CameraController>().ResetCameraPosition();
         levelGenerator.GetComponent<LevelGeneratorController>().ResetLevelGenerator();
         enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllEnemies();
+        blockHandPreFab.GetComponent<blockHandsController>().Destroy();
 
     }
 
