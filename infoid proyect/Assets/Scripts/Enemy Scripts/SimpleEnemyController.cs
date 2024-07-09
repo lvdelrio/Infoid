@@ -29,6 +29,9 @@ public class SimpleEnemyController : MonoBehaviour
     public float cohesionWeight = 1f;
     public float separationWeight = 1.5f;
 
+    [Header("Effects")]
+    public GameObject explosionParticlePrefab;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -176,7 +179,9 @@ public class SimpleEnemyController : MonoBehaviour
     {
         targetGameObject = GameObject.FindGameObjectWithTag("Player");
         targetGameObject.GetComponent<Level>().AddExperience(experience_reward);
+        Instantiate(explosionParticlePrefab, transform.position, Quaternion.identity);
         //add currency reward
+
 
         if (gameController.RollLuck(8, 10))
         {

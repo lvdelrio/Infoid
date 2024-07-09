@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3480485344644605635}
-  projectilePrefab: {fileID: 5974533618607250118, guid: 3d31953ee30113c4fabba9ab264a65a4, type: 3}
+  projectilePrefab: {fileID: 3598593013090895892, guid: 121b8a6c89ead1443bf92dc3d7f5f402, type: 3}
   health: 100
   speed: 0
   maxSpeed: 0

@@ -175,6 +175,7 @@ MonoBehaviour:
   alignmentWeight: 1
   cohesionWeight: 1
   separationWeight: 1.5
+  explosionParticlePrefab: {fileID: 8259061773046296464, guid: bf43ca679ecb0f84f8e8f6386e1a2fae, type: 3}
 --- !u!1 &6886497413176875834
 GameObject:
   m_ObjectHideFlags: 0

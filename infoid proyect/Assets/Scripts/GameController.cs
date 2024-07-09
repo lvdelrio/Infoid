@@ -70,7 +70,7 @@ public class GameController : MonoBehaviour
         enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllEnemies();
         enemySpawner.GetComponent<SimpleSpawnerController>().DestroyAllMiniBosses();
         enemySpawner.GetComponent<SimpleSpawnerController>().SpawnMiniBoss();
-        blockHandPreFab.GetComponent<blockHandsController>().Destroy();
+        //blockHandPreFab.GetComponent<blockHandsController>().Destroy();
 
 
     }

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public int framesToShow = 5;
     public Material hitMaterial;
     private Material originalMaterial;
+    //public ParticleSystem hitParticleSystem;
 
 
     [Header("Player Movement")]
@@ -75,7 +76,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip katanaHitSound;
     public AudioClip parryHitSound;
     public ChangeScene sceneChanger;
-
+    public float attackReturnForce = 2f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -248,6 +249,23 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(ShowSpriteForFrames());
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        if (hitEnemies.Length > 0)
+        {
+            Debug.Log("hit enemies: " + hitEnemies.Length);
+            // Calculate the average position of all hit enemies
+            Vector2 averageEnemyPosition = Vector2.zero;
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                averageEnemyPosition += (Vector2)enemy.transform.position;
+            }
+            averageEnemyPosition /= hitEnemies.Length;
+
+            // Calculate the direction from the average enemy position to the player
+            Vector2 returnDirection = ((Vector2)transform.position - averageEnemyPosition).normalized;
+
+            // Apply the return force to the player
+            rb.AddForce(returnDirection * attackReturnForce, ForceMode2D.Impulse);
+        }
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("We hit " + enemy.name);
@@ -550,7 +568,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeMaterialOnHit()
     {
-        transform.position += new Vector3(0, 60f * Time.deltaTime, 0);
+        transform.position += new Vector3(0, 180f * Time.deltaTime, 0);
         StartCoroutine(TurnWhiteOnHit());
     }
 
