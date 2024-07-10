@@ -58,7 +58,7 @@ public class ParryController : MonoBehaviour
                 }
                 if (proyectileCreator.tag == "Boss")
                 {
-                    proyectileCreator.GetComponent<BossController>().TakeDamage(playerController.damage, transform.position);
+                    //proyectileCreator.GetComponent<BossController>().TakeDamage(playerController.damage, transform.position);
                     Destroy(entity.gameObject);
                 }
                 Destroy(entity.gameObject);

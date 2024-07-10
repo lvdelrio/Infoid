@@ -28,8 +28,8 @@ public class BossController : MonoBehaviour
     public float maxX;
 
     private DecisionTreeNode decisionTree;
-    public float knockbackForce = 10f;
-    public float knockbackDuration = 0.2f;
+    public float knockbackForce = 100f;
+    public float knockbackDuration = 0.5f;
     private bool isKnockedBack = false;
 
     void Start()
@@ -88,14 +88,19 @@ public class BossController : MonoBehaviour
 
     public void MoveDownFast()
     {
-        rb.velocity = new Vector2(rb.velocity.x, -speed * 2);
+        if(!isKnockedBack){
+            rb.velocity = new Vector2(rb.velocity.x, -speed * 2);
+        }
     }
 
     public void MoveDown()
     {
-        if (!isStopped)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, -speed);
+        if (!isKnockedBack){
+            if (!isStopped)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, -speed);
+            }
+
         }
     }
 
@@ -154,17 +159,22 @@ public class BossController : MonoBehaviour
         {
             Die();
         }
-        StartCoroutine(pushHit(player));
+       Vector2 knockbackDirection = ((Vector2)transform.position - player).normalized;
+        StartCoroutine(ApplyKnockback(knockbackDirection));
     }
 
-    public IEnumerator pushHit(Vector2 player)
+    private IEnumerator ApplyKnockback(Vector2 knockbackDirection)
     {
         isKnockedBack = true;
-        Vector2 direction = (Vector2)transform.position - player;
-        direction = direction.normalized;
-        Debug.Log(direction + "" + "MIRENMEEE AQUI ESTOY");
-        rb.AddRelativeForce(direction*knockbackForce);
+        rb.velocity = Vector2.zero; // Resetea la velocidad actual
+        rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+        
+        Debug.DrawRay(transform.position, knockbackDirection * knockbackForce, Color.red, knockbackDuration);
+        Debug.Log($"Knockback aplicado: {knockbackDirection * knockbackForce}");
+
         yield return new WaitForSeconds(knockbackDuration);
+
+        rb.velocity = Vector2.zero; // Resetea la velocidad después del knockback
         isKnockedBack = false;
     }
     private void Shoot()

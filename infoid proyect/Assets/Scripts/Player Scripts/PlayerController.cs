@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
     public Transform attackPoint;
 
-    public float attackRange = 0.5f;
+    public float attackRange;
     public LayerMask enemyLayers;
     [Header("Death Door")]
     public float deathDoorDuration = 5f;
