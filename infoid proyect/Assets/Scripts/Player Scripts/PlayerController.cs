@@ -260,10 +260,7 @@ public class PlayerController : MonoBehaviour
             }
             averageEnemyPosition /= hitEnemies.Length;
 
-            // Calculate the direction from the average enemy position to the player
             Vector2 returnDirection = ((Vector2)transform.position - averageEnemyPosition).normalized;
-
-            // Apply the return force to the player
             rb.AddForce(returnDirection * attackReturnForce, ForceMode2D.Impulse);
         }
         foreach (Collider2D enemy in hitEnemies)
@@ -282,7 +279,7 @@ public class PlayerController : MonoBehaviour
             if (enemy.tag == "Boss")
             {
                 Debug.Log("Boss hit");
-                enemy.GetComponent<BossController>().TakeDamage(damage);
+                enemy.GetComponent<BossController>().TakeDamage(damage, this.transform.forward);
                 StartCoroutine(boost());
                 if (inDeathDoor)
                 {

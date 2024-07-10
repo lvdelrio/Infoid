@@ -40,7 +40,7 @@ public class ParryController : MonoBehaviour
             if (entity.tag == "Boss")
             {
                 Debug.Log("Boss hit");
-                entity.GetComponent<BossController>().TakeDamage(playerController.damage);
+                entity.GetComponent<BossController>().TakeDamage(playerController.damage, transform.position);
                 playerController.TriggerParryBoost();
                 if (playerController.inDeathDoor)
                 {
@@ -58,7 +58,7 @@ public class ParryController : MonoBehaviour
                 }
                 if (proyectileCreator.tag == "Boss")
                 {
-                    proyectileCreator.GetComponent<BossController>().TakeDamage(playerController.damage);
+                    proyectileCreator.GetComponent<BossController>().TakeDamage(playerController.damage, transform.position);
                     Destroy(entity.gameObject);
                 }
                 Destroy(entity.gameObject);

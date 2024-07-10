@@ -28,6 +28,9 @@ public class BossController : MonoBehaviour
     public float maxX;
 
     private DecisionTreeNode decisionTree;
+    public float knockbackForce = 10f;
+    public float knockbackDuration = 0.2f;
+    private bool isKnockedBack = false;
 
     void Start()
     {
@@ -40,7 +43,23 @@ public class BossController : MonoBehaviour
 
     void FixedUpdate()
     {
-        decisionTree.Execute(this);
+        if(!isKnockedBack){
+            decisionTree.Execute(this);
+        }
+    }
+    void Update()
+    {
+        if(!isKnockedBack){
+            if (isMovingSideToSide)
+            {
+                rb.velocity = new Vector2(sideToSideDirection.x * speed, rb.velocity.y);
+            }
+
+            Vector3 clampedPosition = transform.position;
+            clampedPosition.x = Mathf.Clamp(clampedPosition.x, minX, maxX);
+            transform.position = clampedPosition;
+
+        }
     }
 
     void BuildDecisionTree()
@@ -119,18 +138,6 @@ public class BossController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (isMovingSideToSide)
-        {
-            rb.velocity = new Vector2(sideToSideDirection.x * speed, rb.velocity.y);
-        }
-
-        // Clamp the enemy's position to the specified x bounds
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, minX, maxX);
-        transform.position = clampedPosition;
-    }
 
     public void Die()
     {
@@ -140,15 +147,26 @@ public class BossController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector2 player)
     {
         health -= damage;
         if (health <= 0)
         {
             Die();
         }
+        StartCoroutine(pushHit(player));
     }
 
+    public IEnumerator pushHit(Vector2 player)
+    {
+        isKnockedBack = true;
+        Vector2 direction = (Vector2)transform.position - player;
+        direction = direction.normalized;
+        Debug.Log(direction + "" + "MIRENMEEE AQUI ESTOY");
+        rb.AddRelativeForce(direction*knockbackForce);
+        yield return new WaitForSeconds(knockbackDuration);
+        isKnockedBack = false;
+    }
     private void Shoot()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
