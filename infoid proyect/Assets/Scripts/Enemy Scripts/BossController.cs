@@ -31,6 +31,8 @@ public class BossController : MonoBehaviour
     public float knockbackForce = 100f;
     public float knockbackDuration = 0.5f;
     private bool isKnockedBack = false;
+    [Header("particle system")]
+    public ParticleSystem particleSystem;
 
     void Start()
     {
@@ -148,6 +150,7 @@ public class BossController : MonoBehaviour
     {
         targetGameObject = GameObject.FindGameObjectWithTag("Player");
         targetGameObject.GetComponent<Level>().AddExperience(1000);
+        Instantiate(particleSystem, transform.position, Quaternion.identity);
         Debug.Log("Enemy died");
         Destroy(this.gameObject);
     }

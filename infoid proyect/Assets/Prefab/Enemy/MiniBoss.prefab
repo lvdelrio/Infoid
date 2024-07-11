@@ -111,6 +111,7 @@ MonoBehaviour:
   maxX: 9
   knockbackForce: 50
   knockbackDuration: 0.2
+  particleSystem: {fileID: 5062206489133489931, guid: c149a9a15d525c94b8086e84e38cfcd8, type: 3}
 --- !u!50 &3480485344644605635
 Rigidbody2D:
   serializedVersion: 4
